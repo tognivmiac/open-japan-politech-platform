@@ -2,12 +2,20 @@
  * 衆議院議員シードスクリプト — 全465議席
  *
  * 第50回衆議院議員総選挙（2024年10月27日投開票）の結果に基づく実データ。
- * 時事通信、NHK、各政党公式サイト等の公開情報を基に作成。
+ * 小選挙区289議席 + 比例代表176議席 = 465議席。
  *
- * 小選挙区289 + 比例代表176 = 465議席
+ * データソース:
+ *   - 時事ドットコム 第50回衆議院選挙（衆院選2024）
+ *     https://www.jiji.com/jc/2024syu
+ *   - 総務省 第50回衆議院議員総選挙
+ *     https://www.soumu.go.jp/senkyo/senkyo_s/data/shugiin50/
+ *   - 選挙ドットコム 第50回衆議院議員総選挙
+ *     https://shugiin.go2senkyo.com/50
  *
  * 政党別: 自民191、立憲148、維新38、国民28、公明24、
  *          れいわ9、共産8、参政3、保守3、社民1、無所属12
+ *
+ * 令和8年2月13日現在のデータ。
  */
 
 import { prisma } from "@ojpp/db";
@@ -23,17 +31,19 @@ interface RepresentativeData {
   nameKana: string | null;
   /** 政党名（DBの Party.name と一致させる） */
   party: string;
-  /** 選挙区名（例: "北海道1区", "比例北海道"） */
+  /** 選挙区名 (e.g. "東京1区" or "比例東京") */
   district: string;
-  /** 都道府県名 */
+  /** 都道府県名（比例代表の場合 null） */
   prefecture: string | null;
 }
 
 // ============================================
-// 自由民主党（191議席: 小選挙区132 + 比例59）
+// 自由民主党（191名 = 小選挙区132 + 比例59）
 // ============================================
 
 const LDP_MEMBERS: RepresentativeData[] = [
+  // ======== 小選挙区当選（132名） ========
+
   // ---- 北海道 ----
   { name: "東国幹", nameKana: "ヒガシ クニモト", party: "自由民主党", district: "北海道6区", prefecture: "北海道" },
   { name: "鈴木貴子", nameKana: "スズキ タカコ", party: "自由民主党", district: "北海道7区", prefecture: "北海道" },
@@ -108,7 +118,7 @@ const LDP_MEMBERS: RepresentativeData[] = [
   { name: "草間剛", nameKana: "クサマ ツヨシ", party: "自由民主党", district: "神奈川19区", prefecture: "神奈川県" },
   // ---- 富山県 ----
   { name: "田畑裕明", nameKana: "タバタ ヒロアキ", party: "自由民主党", district: "富山1区", prefecture: "富山県" },
-  { name: "上田英俊", nameKana: "ウエダ エイシュン", party: "自由民主党", district: "富山2区", prefecture: "富山県" },
+  { name: "上田英俊", nameKana: "ウエダ ヒデトシ", party: "自由民主党", district: "富山2区", prefecture: "富山県" },
   { name: "橘慶一郎", nameKana: "タチバナ ケイイチロウ", party: "自由民主党", district: "富山3区", prefecture: "富山県" },
   // ---- 石川県 ----
   { name: "小森卓郎", nameKana: "コモリ タクロウ", party: "自由民主党", district: "石川1区", prefecture: "石川県" },
@@ -174,7 +184,7 @@ const LDP_MEMBERS: RepresentativeData[] = [
   { name: "岸信千世", nameKana: "キシ ノブチヨ", party: "自由民主党", district: "山口2区", prefecture: "山口県" },
   { name: "林芳正", nameKana: "ハヤシ ヨシマサ", party: "自由民主党", district: "山口3区", prefecture: "山口県" },
   // ---- 徳島県 ----
-  { name: "仁木博文", nameKana: "ニキ ヒロブミ", party: "自由民主党", district: "徳島1区", prefecture: "徳島県" },
+  { name: "仁木博文", nameKana: "ニキ ヒロフミ", party: "自由民主党", district: "徳島1区", prefecture: "徳島県" },
   { name: "山口俊一", nameKana: "ヤマグチ シュンイチ", party: "自由民主党", district: "徳島2区", prefecture: "徳島県" },
   // ---- 香川県 ----
   { name: "大野敬太郎", nameKana: "オオノ ケイタロウ", party: "自由民主党", district: "香川3区", prefecture: "香川県" },
@@ -209,83 +219,94 @@ const LDP_MEMBERS: RepresentativeData[] = [
   { name: "森山裕", nameKana: "モリヤマ ヒロシ", party: "自由民主党", district: "鹿児島4区", prefecture: "鹿児島県" },
   // ---- 沖縄県 ----
   { name: "島尻安伊子", nameKana: "シマジリ アイコ", party: "自由民主党", district: "沖縄3区", prefecture: "沖縄県" },
-  { name: "西銘恒三郎", nameKana: "ニシメ コウザブロウ", party: "自由民主党", district: "沖縄4区", prefecture: "沖縄県" },
+  { name: "西銘恒三郎", nameKana: "ニシメ コウサブロウ", party: "自由民主党", district: "沖縄4区", prefecture: "沖縄県" },
 
-  // ---- 比例代表 ----
-  // 比例北海道
-  { name: "渡辺孝一", nameKana: "ワタナベ コウイチ", party: "自由民主党", district: "比例北海道", prefecture: "北海道" },
-  { name: "中村裕之", nameKana: "ナカムラ ヒロユキ", party: "自由民主党", district: "比例北海道", prefecture: "北海道" },
-  { name: "堀井学", nameKana: "ホリイ マナブ", party: "自由民主党", district: "比例北海道", prefecture: "北海道" },
-  // 比例東北
-  { name: "亀岡偉民", nameKana: "カメオカ ヨシタミ", party: "自由民主党", district: "比例東北", prefecture: null },
-  { name: "金田勝年", nameKana: "カネダ カツトシ", party: "自由民主党", district: "比例東北", prefecture: null },
-  { name: "西村明宏", nameKana: "ニシムラ アキヒロ", party: "自由民主党", district: "比例東北", prefecture: null },
-  { name: "土井亨", nameKana: "ドイ トオル", party: "自由民主党", district: "比例東北", prefecture: null },
-  // 比例北関東
-  { name: "牧原秀樹", nameKana: "マキハラ ヒデキ", party: "自由民主党", district: "比例北関東", prefecture: null },
-  { name: "中根一幸", nameKana: "ナカネ カズユキ", party: "自由民主党", district: "比例北関東", prefecture: null },
-  { name: "三ツ林裕巳", nameKana: "ミツバヤシ ヒロミ", party: "自由民主党", district: "比例北関東", prefecture: null },
+  // ======== 比例代表当選（59名） ========
+
+  // 比例北海道（3名）
+  { name: "伊東良孝", nameKana: "イトウ ヨシタカ", party: "自由民主党", district: "比例北海道", prefecture: null },
+  { name: "中村裕之", nameKana: "ナカムラ ヒロユキ", party: "自由民主党", district: "比例北海道", prefecture: null },
+  { name: "向山淳", nameKana: "ムカイヤマ ジュン", party: "自由民主党", district: "比例北海道", prefecture: null },
+  // 比例東北（5名）
+  { name: "江渡聡徳", nameKana: "エト アキノリ", party: "自由民主党", district: "比例東北", prefecture: null },
+  { name: "森下千里", nameKana: "モリシタ チサト", party: "自由民主党", district: "比例東北", prefecture: null },
+  { name: "福原淳嗣", nameKana: "フクハラ アツシ", party: "自由民主党", district: "比例東北", prefecture: null },
+  { name: "御法川信英", nameKana: "ミノリカワ ノブヒデ", party: "自由民主党", district: "比例東北", prefecture: null },
+  { name: "根本拓", nameKana: "ネモト タク", party: "自由民主党", district: "比例東北", prefecture: null },
+  // 比例北関東（7名）
+  { name: "中野英幸", nameKana: "ナカノ ヒデユキ", party: "自由民主党", district: "比例北関東", prefecture: null },
+  { name: "国光文乃", nameKana: "クニミツ アヤノ", party: "自由民主党", district: "比例北関東", prefecture: null },
+  { name: "永岡桂子", nameKana: "ナガオカ ケイコ", party: "自由民主党", district: "比例北関東", prefecture: null },
+  { name: "田所嘉徳", nameKana: "タドコロ ヨシノリ", party: "自由民主党", district: "比例北関東", prefecture: null },
+  { name: "佐藤勉", nameKana: "サトウ ツトム", party: "自由民主党", district: "比例北関東", prefecture: null },
+  { name: "五十嵐清", nameKana: "イガラシ キヨシ", party: "自由民主党", district: "比例北関東", prefecture: null },
   { name: "野中厚", nameKana: "ノナカ アツシ", party: "自由民主党", district: "比例北関東", prefecture: null },
-  // 比例南関東
-  { name: "義家弘介", nameKana: "ヨシイエ ヒロユキ", party: "自由民主党", district: "比例南関東", prefecture: null },
-  { name: "門山宏哲", nameKana: "カドヤマ ヒロアキ", party: "自由民主党", district: "比例南関東", prefecture: null },
-  { name: "佐藤ゆかり", nameKana: "サトウ ユカリ", party: "自由民主党", district: "比例南関東", prefecture: null },
-  { name: "古川直季", nameKana: "フルカワ ナオキ", party: "自由民主党", district: "比例南関東", prefecture: "神奈川県" },
-  { name: "鈴木馨祐", nameKana: "スズキ ケイスケ", party: "自由民主党", district: "比例南関東", prefecture: "神奈川県" },
-  { name: "三谷英弘", nameKana: "ミタニ ヒデヒロ", party: "自由民主党", district: "比例南関東", prefecture: "神奈川県" },
-  { name: "星野剛士", nameKana: "ホシノ タケシ", party: "自由民主党", district: "比例南関東", prefecture: "神奈川県" },
-  { name: "山際大志郎", nameKana: "ヤマギワ ダイシロウ", party: "自由民主党", district: "比例南関東", prefecture: "神奈川県" },
-  // 比例東京
-  { name: "若宮健嗣", nameKana: "ワカミヤ ケンジ", party: "自由民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "越智隆雄", nameKana: "オチ タカオ", party: "自由民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "小倉將信", nameKana: "オグラ マサノブ", party: "自由民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "下村博文", nameKana: "シモムラ ハクブン", party: "自由民主党", district: "比例東京", prefecture: "東京都" },
-  // 比例北陸信越
-  { name: "務台俊介", nameKana: "ムタイ シュンスケ", party: "自由民主党", district: "比例北陸信越", prefecture: null },
-  { name: "高鳥修一", nameKana: "タカトリ シュウイチ", party: "自由民主党", district: "比例北陸信越", prefecture: null },
+  // 比例南関東（7名）
+  { name: "古川直季", nameKana: "フルカワ ナオキ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  { name: "中谷真一", nameKana: "ナカタニ シンイチ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  { name: "英利アルフィヤ", nameKana: "エリ アルフィヤ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  { name: "鈴木馨祐", nameKana: "スズキ ケイスケ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  { name: "三谷英弘", nameKana: "ミタニ ヒデヒロ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  { name: "星野剛士", nameKana: "ホシノ ツヨシ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  { name: "山際大志郎", nameKana: "ヤマギワ ダイシロウ", party: "自由民主党", district: "比例南関東", prefecture: null },
+  // 比例東京（5名）
+  { name: "安藤高夫", nameKana: "アンドウ タカオ", party: "自由民主党", district: "比例東京", prefecture: null },
+  { name: "伊藤達也", nameKana: "イトウ タツヤ", party: "自由民主党", district: "比例東京", prefecture: null },
+  { name: "松本洋平", nameKana: "マツモト ヨウヘイ", party: "自由民主党", district: "比例東京", prefecture: null },
+  { name: "大空幸星", nameKana: "オオゾラ コウキ", party: "自由民主党", district: "比例東京", prefecture: null },
+  { name: "長島昭久", nameKana: "ナガシマ アキヒサ", party: "自由民主党", district: "比例東京", prefecture: null },
+  // 比例北陸信越（4名）
+  { name: "国定勇人", nameKana: "クニサダ ハヤト", party: "自由民主党", district: "比例北陸信越", prefecture: null },
   { name: "斎藤洋明", nameKana: "サイトウ ヒロアキ", party: "自由民主党", district: "比例北陸信越", prefecture: null },
-  // 比例東海
-  { name: "塩谷立", nameKana: "シオノヤ リュウ", party: "自由民主党", district: "比例東海", prefecture: null },
-  { name: "山本左近", nameKana: "ヤマモト サコン", party: "自由民主党", district: "比例東海", prefecture: null },
-  { name: "八木哲也", nameKana: "ヤギ テツヤ", party: "自由民主党", district: "比例東海", prefecture: null },
-  { name: "神田憲次", nameKana: "カンダ ケンジ", party: "自由民主党", district: "比例東海", prefecture: null },
-  { name: "川崎秀人", nameKana: "カワサキ ヒデト", party: "自由民主党", district: "比例東海", prefecture: null },
+  { name: "井出庸生", nameKana: "イデ ヨウセイ", party: "自由民主党", district: "比例北陸信越", prefecture: null },
+  { name: "西田昭二", nameKana: "ニシダ ショウジ", party: "自由民主党", district: "比例北陸信越", prefecture: null },
+  // 比例東海（7名）
+  { name: "若山慎司", nameKana: "ワカヤマ シンジ", party: "自由民主党", district: "比例東海", prefecture: null },
+  { name: "深沢陽一", nameKana: "フカサワ ヨウイチ", party: "自由民主党", district: "比例東海", prefecture: null },
   { name: "勝俣孝明", nameKana: "カツマタ タカアキ", party: "自由民主党", district: "比例東海", prefecture: null },
-  // 比例近畿
-  { name: "左藤章", nameKana: "サトウ アキラ", party: "自由民主党", district: "比例近畿", prefecture: null },
-  { name: "奥野信亮", nameKana: "オクノ シンスケ", party: "自由民主党", district: "比例近畿", prefecture: null },
-  { name: "大塚拓", nameKana: "オオツカ タク", party: "自由民主党", district: "比例近畿", prefecture: null },
-  { name: "繁本護", nameKana: "シゲモト マモル", party: "自由民主党", district: "比例近畿", prefecture: null },
-  { name: "柳本顕", nameKana: "ヤナギモト アキラ", party: "自由民主党", district: "比例近畿", prefecture: null },
-  { name: "谷川とむ", nameKana: "タニガワ トム", party: "自由民主党", district: "比例近畿", prefecture: null },
-  // 比例中国
+  { name: "川崎秀人", nameKana: "カワサキ ヒデト", party: "自由民主党", district: "比例東海", prefecture: null },
+  { name: "長坂康正", nameKana: "ナガサカ ヤスマサ", party: "自由民主党", district: "比例東海", prefecture: null },
+  { name: "工藤彰三", nameKana: "クドウ ショウゾウ", party: "自由民主党", district: "比例東海", prefecture: null },
+  { name: "伊藤忠彦", nameKana: "イトウ タダヒコ", party: "自由民主党", district: "比例東海", prefecture: null },
+  // 比例近畿（6名）
+  { name: "小寺裕雄", nameKana: "コテラ ヒロオ", party: "自由民主党", district: "比例近畿", prefecture: null },
+  { name: "石田真敏", nameKana: "イシダ マサトシ", party: "自由民主党", district: "比例近畿", prefecture: null },
+  { name: "大岡敏孝", nameKana: "オオオカ トシタカ", party: "自由民主党", district: "比例近畿", prefecture: null },
+  { name: "大串正樹", nameKana: "オオグシ マサキ", party: "自由民主党", district: "比例近畿", prefecture: null },
+  { name: "小林茂樹", nameKana: "コバヤシ シゲキ", party: "自由民主党", district: "比例近畿", prefecture: null },
+  { name: "島田智明", nameKana: "シマダ トモアキ", party: "自由民主党", district: "比例近畿", prefecture: null },
+  // 比例中国（5名）
   { name: "新谷正義", nameKana: "シンタニ マサヨシ", party: "自由民主党", district: "比例中国", prefecture: null },
-  { name: "杉田水脈", nameKana: "スギタ ミオ", party: "自由民主党", district: "比例中国", prefecture: null },
-  { name: "畦元将吾", nameKana: "アゼモト ショウゴ", party: "自由民主党", district: "比例中国", prefecture: null },
+  { name: "平沼正二郎", nameKana: "ヒラヌマ ショウジロウ", party: "自由民主党", district: "比例中国", prefecture: null },
   { name: "石橋林太郎", nameKana: "イシバシ リンタロウ", party: "自由民主党", district: "比例中国", prefecture: null },
-  // 比例四国
+  { name: "吉田真次", nameKana: "ヨシダ シンジ", party: "自由民主党", district: "比例中国", prefecture: null },
+  { name: "寺田稔", nameKana: "テラダ ミノル", party: "自由民主党", district: "比例中国", prefecture: null },
+  // 比例四国（3名）
   { name: "村上誠一郎", nameKana: "ムラカミ セイイチロウ", party: "自由民主党", district: "比例四国", prefecture: null },
-  { name: "福井照", nameKana: "フクイ テル", party: "自由民主党", district: "比例四国", prefecture: null },
-  // 比例九州
-  { name: "今村雅弘", nameKana: "イマムラ マサヒロ", party: "自由民主党", district: "比例九州", prefecture: null },
-  { name: "保岡宏武", nameKana: "ヤスオカ ヒロタケ", party: "自由民主党", district: "比例九州", prefecture: null },
-  { name: "國場幸之助", nameKana: "コクバ コウノスケ", party: "自由民主党", district: "比例九州", prefecture: null },
-  { name: "武田良太", nameKana: "タケダ リョウタ", party: "自由民主党", district: "比例九州", prefecture: null },
+  { name: "平井卓也", nameKana: "ヒライ タクヤ", party: "自由民主党", district: "比例四国", prefecture: null },
+  { name: "瀬戸隆一", nameKana: "セト リュウイチ", party: "自由民主党", district: "比例四国", prefecture: null },
+  // 比例九州（7名）
+  { name: "阿部俊子", nameKana: "アベ トシコ", party: "自由民主党", district: "比例九州", prefecture: null },
+  { name: "鬼木誠", nameKana: "オニキ マコト", party: "自由民主党", district: "比例九州", prefecture: null },
   { name: "宮路拓馬", nameKana: "ミヤジ タクマ", party: "自由民主党", district: "比例九州", prefecture: null },
+  { name: "国場幸之助", nameKana: "コクバ コウノスケ", party: "自由民主党", district: "比例九州", prefecture: null },
   { name: "岩田和親", nameKana: "イワタ カズチカ", party: "自由民主党", district: "比例九州", prefecture: null },
-  { name: "末次精一", nameKana: "スエツグ セイイチ", party: "自由民主党", district: "比例九州", prefecture: null },
+  { name: "古川康", nameKana: "フルカワ ヤスシ", party: "自由民主党", district: "比例九州", prefecture: null },
+  { name: "宮崎政久", nameKana: "ミヤザキ マサヒサ", party: "自由民主党", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 立憲民主党（148議席: 小選挙区104 + 比例44）
+// 立憲民主党（148名 = 小選挙区104 + 比例44）
 // ============================================
 
 const CDP_MEMBERS: RepresentativeData[] = [
+  // ======== 小選挙区当選（104名） ========
+
   // ---- 北海道 ----
   { name: "道下大樹", nameKana: "ミチシタ ダイキ", party: "立憲民主党", district: "北海道1区", prefecture: "北海道" },
   { name: "松木謙公", nameKana: "マツキ ケンコウ", party: "立憲民主党", district: "北海道2区", prefecture: "北海道" },
   { name: "荒井優", nameKana: "アライ ユウ", party: "立憲民主党", district: "北海道3区", prefecture: "北海道" },
-  { name: "大築紅葉", nameKana: "オオツキ クレハ", party: "立憲民主党", district: "北海道4区", prefecture: "北海道" },
+  { name: "大築紅葉", nameKana: "オオツキ モミジ", party: "立憲民主党", district: "北海道4区", prefecture: "北海道" },
   { name: "池田真紀", nameKana: "イケダ マキ", party: "立憲民主党", district: "北海道5区", prefecture: "北海道" },
   { name: "逢坂誠二", nameKana: "オオサカ セイジ", party: "立憲民主党", district: "北海道8区", prefecture: "北海道" },
   { name: "山岡達丸", nameKana: "ヤマオカ タツマル", party: "立憲民主党", district: "北海道9区", prefecture: "北海道" },
@@ -345,7 +366,7 @@ const CDP_MEMBERS: RepresentativeData[] = [
   { name: "五十嵐衣里", nameKana: "イガラシ エリ", party: "立憲民主党", district: "東京30区", prefecture: "東京都" },
   // ---- 神奈川県 ----
   { name: "篠原豪", nameKana: "シノハラ ゴウ", party: "立憲民主党", district: "神奈川1区", prefecture: "神奈川県" },
-  { name: "早稲田夕季", nameKana: "ワセダ ユキ", party: "立憲民主党", district: "神奈川4区", prefecture: "神奈川県" },
+  { name: "早稲田夕季", nameKana: "ワセダ ユウキ", party: "立憲民主党", district: "神奈川4区", prefecture: "神奈川県" },
   { name: "青柳陽一郎", nameKana: "アオヤギ ヨウイチロウ", party: "立憲民主党", district: "神奈川6区", prefecture: "神奈川県" },
   { name: "中谷一馬", nameKana: "ナカタニ カズマ", party: "立憲民主党", district: "神奈川7区", prefecture: "神奈川県" },
   { name: "江田憲司", nameKana: "エダ ケンジ", party: "立憲民主党", district: "神奈川8区", prefecture: "神奈川県" },
@@ -370,7 +391,7 @@ const CDP_MEMBERS: RepresentativeData[] = [
   // ---- 長野県 ----
   { name: "篠原孝", nameKana: "シノハラ タカシ", party: "立憲民主党", district: "長野1区", prefecture: "長野県" },
   { name: "下条みつ", nameKana: "シモジョウ ミツ", party: "立憲民主党", district: "長野2区", prefecture: "長野県" },
-  { name: "神津健", nameKana: "コウヅ ケン", party: "立憲民主党", district: "長野3区", prefecture: "長野県" },
+  { name: "神津健", nameKana: "コウヅ タケシ", party: "立憲民主党", district: "長野3区", prefecture: "長野県" },
   // ---- 岐阜県 ----
   { name: "今井雅人", nameKana: "イマイ マサト", party: "立憲民主党", district: "岐阜4区", prefecture: "岐阜県" },
   // ---- 静岡県 ----
@@ -381,7 +402,7 @@ const CDP_MEMBERS: RepresentativeData[] = [
   { name: "近藤昭一", nameKana: "コンドウ ショウイチ", party: "立憲民主党", district: "愛知3区", prefecture: "愛知県" },
   { name: "牧義夫", nameKana: "マキ ヨシオ", party: "立憲民主党", district: "愛知4区", prefecture: "愛知県" },
   { name: "西川厚志", nameKana: "ニシカワ アツシ", party: "立憲民主党", district: "愛知5区", prefecture: "愛知県" },
-  { name: "伴野豊", nameKana: "トモノ ユタカ", party: "立憲民主党", district: "愛知8区", prefecture: "愛知県" },
+  { name: "伴野豊", nameKana: "バンノ ユタカ", party: "立憲民主党", district: "愛知8区", prefecture: "愛知県" },
   { name: "岡本充功", nameKana: "オカモト ミツノリ", party: "立憲民主党", district: "愛知9区", prefecture: "愛知県" },
   { name: "藤原規真", nameKana: "フジワラ ノリマサ", party: "立憲民主党", district: "愛知10区", prefecture: "愛知県" },
   { name: "重徳和彦", nameKana: "シゲトク カズヒコ", party: "立憲民主党", district: "愛知12区", prefecture: "愛知県" },
@@ -412,62 +433,80 @@ const CDP_MEMBERS: RepresentativeData[] = [
   { name: "城井崇", nameKana: "キイ タカシ", party: "立憲民主党", district: "福岡10区", prefecture: "福岡県" },
   // ---- 佐賀県 ----
   { name: "原口一博", nameKana: "ハラグチ カズヒロ", party: "立憲民主党", district: "佐賀1区", prefecture: "佐賀県" },
-  { name: "大串博志", nameKana: "オグシ ヒロシ", party: "立憲民主党", district: "佐賀2区", prefecture: "佐賀県" },
+  { name: "大串博志", nameKana: "オオグシ ヒロシ", party: "立憲民主党", district: "佐賀2区", prefecture: "佐賀県" },
   // ---- 宮崎県 ----
   { name: "渡辺創", nameKana: "ワタナベ ソウ", party: "立憲民主党", district: "宮崎1区", prefecture: "宮崎県" },
   // ---- 鹿児島県 ----
   { name: "川内博史", nameKana: "カワウチ ヒロシ", party: "立憲民主党", district: "鹿児島1区", prefecture: "鹿児島県" },
   { name: "野間健", nameKana: "ノマ タケシ", party: "立憲民主党", district: "鹿児島3区", prefecture: "鹿児島県" },
 
-  // ---- 比例代表 ----
-  // 比例北海道
-  { name: "徳永エリ", nameKana: "トクナガ エリ", party: "立憲民主党", district: "比例北海道", prefecture: "北海道" },
-  // 比例東北
+  // ======== 比例代表当選（44名） ========
+
+  // 比例北海道（3名）
+  { name: "篠田奈保子", nameKana: "シノダ ナホコ", party: "立憲民主党", district: "比例北海道", prefecture: null },
+  { name: "西川将人", nameKana: "ニシカワ マサト", party: "立憲民主党", district: "比例北海道", prefecture: null },
+  { name: "川原田英世", nameKana: "カワラダ エイセイ", party: "立憲民主党", district: "比例北海道", prefecture: null },
+  // 比例東北（4名）
+  { name: "馬場雄基", nameKana: "ババ ユウキ", party: "立憲民主党", district: "比例東北", prefecture: null },
   { name: "寺田学", nameKana: "テラダ マナブ", party: "立憲民主党", district: "比例東北", prefecture: null },
-  { name: "山崎摩耶", nameKana: "ヤマザキ マヤ", party: "立憲民主党", district: "比例東北", prefecture: null },
-  { name: "小野寺晃彦", nameKana: "オノデラ アキヒコ", party: "立憲民主党", district: "比例東北", prefecture: null },
-  // 比例北関東
-  { name: "山川百合子", nameKana: "ヤマカワ ユリコ", party: "立憲民主党", district: "比例北関東", prefecture: null },
-  { name: "堀越啓仁", nameKana: "ホリコシ ケイニン", party: "立憲民主党", district: "比例北関東", prefecture: null },
-  { name: "石川大我", nameKana: "イシカワ タイガ", party: "立憲民主党", district: "比例北関東", prefecture: null },
-  // 比例南関東
-  { name: "中沢健", nameKana: "ナカザワ ケン", party: "立憲民主党", district: "比例南関東", prefecture: null },
-  { name: "樋口博康", nameKana: "ヒグチ ヒロヤス", party: "立憲民主党", district: "比例南関東", prefecture: null },
+  { name: "升田世喜男", nameKana: "マスダ セキオ", party: "立憲民主党", district: "比例東北", prefecture: null },
+  { name: "斎藤裕喜", nameKana: "サイトウ ヒロキ", party: "立憲民主党", district: "比例東北", prefecture: null },
+  // 比例北関東（5名）
+  { name: "長谷川嘉一", nameKana: "ハセガワ カイチ", party: "立憲民主党", district: "比例北関東", prefecture: null },
+  { name: "武正公一", nameKana: "タケマサ コウイチ", party: "立憲民主党", district: "比例北関東", prefecture: null },
+  { name: "三角創太", nameKana: "ミスミ ソウタ", party: "立憲民主党", district: "比例北関東", prefecture: null },
+  { name: "竹内千春", nameKana: "タケウチ チハル", party: "立憲民主党", district: "比例北関東", prefecture: null },
+  { name: "市来伴子", nameKana: "イチキ トモコ", party: "立憲民主党", district: "比例北関東", prefecture: null },
+  // 比例南関東（6名）
+  { name: "谷田川元", nameKana: "ヤタガワ ハジメ", party: "立憲民主党", district: "比例南関東", prefecture: null },
+  { name: "佐々木奈保美", nameKana: "ササキ ナオミ", party: "立憲民主党", district: "比例南関東", prefecture: null },
+  { name: "宮川伸", nameKana: "ミヤカワ シン", party: "立憲民主党", district: "比例南関東", prefecture: null },
+  { name: "岡島一正", nameKana: "オカジマ カズマサ", party: "立憲民主党", district: "比例南関東", prefecture: null },
+  { name: "長友克洋", nameKana: "ナガトモ カツヒロ", party: "立憲民主党", district: "比例南関東", prefecture: null },
   { name: "山崎誠", nameKana: "ヤマザキ マコト", party: "立憲民主党", district: "比例南関東", prefecture: null },
-  { name: "太ひでし", nameKana: "フトリ ヒデシ", party: "立憲民主党", district: "比例南関東", prefecture: null },
-  // 比例東京
-  { name: "鈴木庸介", nameKana: "スズキ ヨウスケ", party: "立憲民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "岡本あき子", nameKana: "オカモト アキコ", party: "立憲民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "柴田勝之", nameKana: "シバタ カツユキ", party: "立憲民主党", district: "比例東京", prefecture: "東京都" },
-  // 比例北陸信越
-  { name: "小山大作", nameKana: "コヤマ ダイサク", party: "立憲民主党", district: "比例北陸信越", prefecture: null },
-  // 比例東海
-  { name: "吉田統彦", nameKana: "ヨシダ ツネヒコ", party: "立憲民主党", district: "比例東海", prefecture: null },
+  // 比例東京（5名）
+  { name: "鈴木庸介", nameKana: "スズキ ヨウスケ", party: "立憲民主党", district: "比例東京", prefecture: null },
+  { name: "松下玲子", nameKana: "マツシタ レイコ", party: "立憲民主党", district: "比例東京", prefecture: null },
+  { name: "有田芳生", nameKana: "アリタ ヨシフ", party: "立憲民主党", district: "比例東京", prefecture: null },
+  { name: "阿部祐美子", nameKana: "アベ ユミコ", party: "立憲民主党", district: "比例東京", prefecture: null },
+  { name: "柴田勝之", nameKana: "シバタ カツユキ", party: "立憲民主党", district: "比例東京", prefecture: null },
+  // 比例北陸信越（3名）
+  { name: "山登志浩", nameKana: "ヤマト シコウ", party: "立憲民主党", district: "比例北陸信越", prefecture: null },
+  { name: "福田淳太", nameKana: "フクダ ジュンタ", party: "立憲民主党", district: "比例北陸信越", prefecture: null },
+  { name: "波多野翼", nameKana: "ハタノ ツバサ", party: "立憲民主党", district: "比例北陸信越", prefecture: null },
+  // 比例東海（6名）
   { name: "松田功", nameKana: "マツダ イサオ", party: "立憲民主党", district: "比例東海", prefecture: null },
-  { name: "関健一郎", nameKana: "セキ ケンイチロウ", party: "立憲民主党", district: "比例東海", prefecture: null },
-  // 比例近畿
-  { name: "辻元清美", nameKana: "ツジモト キヨミ", party: "立憲民主党", district: "比例近畿", prefecture: null },
+  { name: "真野哲", nameKana: "マノ サトシ", party: "立憲民主党", district: "比例東海", prefecture: null },
+  { name: "大嶽理恵", nameKana: "オオタケ リエ", party: "立憲民主党", district: "比例東海", prefecture: null },
+  { name: "鈴木岳幸", nameKana: "スズキ タケユキ", party: "立憲民主党", district: "比例東海", prefecture: null },
+  { name: "小山千帆", nameKana: "コヤマ チホ", party: "立憲民主党", district: "比例東海", prefecture: null },
+  { name: "福森和歌子", nameKana: "フクモリ ワカコ", party: "立憲民主党", district: "比例東海", prefecture: null },
+  // 比例近畿（4名）
   { name: "森山浩行", nameKana: "モリヤマ ヒロユキ", party: "立憲民主党", district: "比例近畿", prefecture: null },
+  { name: "橋本慧悟", nameKana: "ハシモト ケイゴ", party: "立憲民主党", district: "比例近畿", prefecture: null },
+  { name: "岡田悟", nameKana: "オカダ サトル", party: "立憲民主党", district: "比例近畿", prefecture: null },
   { name: "尾辻かな子", nameKana: "オツジ カナコ", party: "立憲民主党", district: "比例近畿", prefecture: null },
-  { name: "徳永久志", nameKana: "トクナガ ヒサシ", party: "立憲民主党", district: "比例近畿", prefecture: null },
-  { name: "松岡完", nameKana: "マツオカ タモツ", party: "立憲民主党", district: "比例近畿", prefecture: null },
-  // 比例中国
+  // 比例中国（3名）
+  { name: "平岡秀夫", nameKana: "ヒラオカ ヒデオ", party: "立憲民主党", district: "比例中国", prefecture: null },
   { name: "津村啓介", nameKana: "ツムラ ケイスケ", party: "立憲民主党", district: "比例中国", prefecture: null },
-  { name: "湯原俊二", nameKana: "ユハラ シュンジ", party: "立憲民主党", district: "比例中国", prefecture: null },
-  // 比例四国
-  { name: "広田一", nameKana: "ヒロタ ハジメ", party: "立憲民主党", district: "比例四国", prefecture: null },
-  // 比例九州
-  { name: "田辺徳雄", nameKana: "タナベ トクオ", party: "立憲民主党", district: "比例九州", prefecture: null },
-  { name: "仲村整", nameKana: "ナカムラ ヒトシ", party: "立憲民主党", district: "比例九州", prefecture: null },
+  { name: "東克哉", nameKana: "ヒガシ カツヤ", party: "立憲民主党", district: "比例中国", prefecture: null },
+  // 比例四国（1名）
+  { name: "高橋永", nameKana: "タカハシ ヒサシ", party: "立憲民主党", district: "比例四国", prefecture: null },
+  // 比例九州（4名）※奥田ふみよはれいわ
   { name: "屋良朝博", nameKana: "ヤラ トモヒロ", party: "立憲民主党", district: "比例九州", prefecture: null },
+  { name: "吉川元", nameKana: "ヨシカワ ハジメ", party: "立憲民主党", district: "比例九州", prefecture: null },
+  { name: "山田勝彦", nameKana: "ヤマダ カツヒコ", party: "立憲民主党", district: "比例九州", prefecture: null },
+  { name: "堤かなめ", nameKana: "ツツミ カナメ", party: "立憲民主党", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 日本維新の会（38議席: 小選挙区18 + 比例20）
+// 日本維新の会（38名 = 小選挙区23 + 比例15）
 // ============================================
 
 const ISHIN_MEMBERS: RepresentativeData[] = [
-  // ---- 大阪府（全19選挙区制覇） ----
+  // ======== 小選挙区当選 ========
+  { name: "斎藤アレックス", nameKana: "サイトウ アレックス", party: "日本維新の会", district: "滋賀1区", prefecture: "滋賀県" },
+  { name: "前原誠司", nameKana: "マエハラ セイジ", party: "日本維新の会", district: "京都2区", prefecture: "京都府" },
   { name: "井上英孝", nameKana: "イノウエ ヒデタカ", party: "日本維新の会", district: "大阪1区", prefecture: "大阪府" },
   { name: "守島正", nameKana: "モリシマ タダシ", party: "日本維新の会", district: "大阪2区", prefecture: "大阪府" },
   { name: "東徹", nameKana: "アズマ トオル", party: "日本維新の会", district: "大阪3区", prefecture: "大阪府" },
@@ -478,7 +517,7 @@ const ISHIN_MEMBERS: RepresentativeData[] = [
   { name: "漆間譲司", nameKana: "ウルマ ジョウジ", party: "日本維新の会", district: "大阪8区", prefecture: "大阪府" },
   { name: "萩原佳", nameKana: "ハギワラ ケイ", party: "日本維新の会", district: "大阪9区", prefecture: "大阪府" },
   { name: "池下卓", nameKana: "イケシタ タク", party: "日本維新の会", district: "大阪10区", prefecture: "大阪府" },
-  { name: "中司宏", nameKana: "ナカツカ ヒロシ", party: "日本維新の会", district: "大阪11区", prefecture: "大阪府" },
+  { name: "中司宏", nameKana: "ナカツカサ ヒロシ", party: "日本維新の会", district: "大阪11区", prefecture: "大阪府" },
   { name: "藤田文武", nameKana: "フジタ フミタケ", party: "日本維新の会", district: "大阪12区", prefecture: "大阪府" },
   { name: "岩谷良平", nameKana: "イワタニ リョウヘイ", party: "日本維新の会", district: "大阪13区", prefecture: "大阪府" },
   { name: "青柳仁士", nameKana: "アオヤギ ヒトシ", party: "日本維新の会", district: "大阪14区", prefecture: "大阪府" },
@@ -487,106 +526,86 @@ const ISHIN_MEMBERS: RepresentativeData[] = [
   { name: "馬場伸幸", nameKana: "ババ ノブユキ", party: "日本維新の会", district: "大阪17区", prefecture: "大阪府" },
   { name: "遠藤敬", nameKana: "エンドウ タカシ", party: "日本維新の会", district: "大阪18区", prefecture: "大阪府" },
   { name: "伊東信久", nameKana: "イトウ ノブヒサ", party: "日本維新の会", district: "大阪19区", prefecture: "大阪府" },
+  { name: "空本誠喜", nameKana: "ソラモト セイキ", party: "日本維新の会", district: "広島4区", prefecture: "広島県" },
+  { name: "村上智信", nameKana: "ムラカミ トモノブ", party: "日本維新の会", district: "福岡11区", prefecture: "福岡県" },
 
-  // ---- 比例代表 ----
-  // 比例北関東
-  { name: "柏倉祐司", nameKana: "カシワクラ ユウジ", party: "日本維新の会", district: "比例北関東", prefecture: null },
-  // 比例東京
-  { name: "阿部司", nameKana: "アベ ツカサ", party: "日本維新の会", district: "比例東京", prefecture: "東京都" },
-  // 比例南関東
+  // ======== 比例代表当選（15名） ========
+  { name: "高橋英明", nameKana: "タカハシ ヒデアキ", party: "日本維新の会", district: "比例北関東", prefecture: null },
   { name: "金村龍那", nameKana: "カネムラ リュウナ", party: "日本維新の会", district: "比例南関東", prefecture: null },
-  // 比例北陸信越
-  { name: "若狭清史", nameKana: "ワカサ キヨシ", party: "日本維新の会", district: "比例北陸信越", prefecture: null },
-  // 比例東海
-  { name: "関健一郎", nameKana: "セキ ケンイチロウ", party: "日本維新の会", district: "比例東海", prefecture: null },
-  // 比例近畿
-  { name: "前原誠司", nameKana: "マエハラ セイジ", party: "日本維新の会", district: "比例近畿", prefecture: "京都府" },
-  { name: "斎藤アレックス", nameKana: "サイトウ アレックス", party: "日本維新の会", district: "比例近畿", prefecture: "滋賀県" },
-  { name: "一谷勇一郎", nameKana: "イチタニ ユウイチロウ", party: "日本維新の会", district: "比例近畿", prefecture: "兵庫県" },
-  { name: "阿部圭史", nameKana: "アベ ケイシ", party: "日本維新の会", district: "比例近畿", prefecture: "兵庫県" },
-  { name: "市村浩一郎", nameKana: "イチムラ コウイチロウ", party: "日本維新の会", district: "比例近畿", prefecture: "兵庫県" },
-  { name: "三木圭恵", nameKana: "ミキ ケエ", party: "日本維新の会", district: "比例近畿", prefecture: "兵庫県" },
-  { name: "住吉寛紀", nameKana: "スミヨシ ヒロキ", party: "日本維新の会", district: "比例近畿", prefecture: "兵庫県" },
-  { name: "池畑浩太朗", nameKana: "イケハタ コウタロウ", party: "日本維新の会", district: "比例近畿", prefecture: "兵庫県" },
-  { name: "原山大輔", nameKana: "ハラヤマ ダイスケ", party: "日本維新の会", district: "比例近畿", prefecture: "奈良県" },
-  // 比例中国
-  { name: "空本誠喜", nameKana: "ソラモト セイキ", party: "日本維新の会", district: "比例中国", prefecture: "広島県" },
-  // 比例九州
-  { name: "村上智信", nameKana: "ムラカミ トモノブ", party: "日本維新の会", district: "比例九州", prefecture: "福岡県" },
-  // 横田
-  { name: "横田光弘", nameKana: "ヨコタ ミツヒロ", party: "日本維新の会", district: "比例南関東", prefecture: "神奈川県" },
-  // 喜多
-  { name: "喜多義典", nameKana: "キタ ヨシノリ", party: "日本維新の会", district: "比例九州", prefecture: null },
+  { name: "藤巻健太", nameKana: "フジマキ ケンタ", party: "日本維新の会", district: "比例南関東", prefecture: null },
+  { name: "阿部司", nameKana: "アベ ツカサ", party: "日本維新の会", district: "比例東京", prefecture: null },
+  { name: "猪口幸子", nameKana: "イノグチ サチコ", party: "日本維新の会", district: "比例東京", prefecture: null },
+  { name: "杉本和巳", nameKana: "スギモト カズミ", party: "日本維新の会", district: "比例東海", prefecture: null },
+  { name: "斉木武志", nameKana: "サイキ タケシ", party: "日本維新の会", district: "比例北陸信越", prefecture: null },
+  { name: "林佑美", nameKana: "ハヤシ ユミ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "三木圭恵", nameKana: "ミキ ケエ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "徳安淳子", nameKana: "トクヤス ジュンコ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "池畑浩太朗", nameKana: "イケハタ コウタロウ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "市村浩一郎", nameKana: "イチムラ コウイチロウ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "和田有一朗", nameKana: "ワダ ユウイチロウ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "阿部圭史", nameKana: "アベ ケイシ", party: "日本維新の会", district: "比例近畿", prefecture: null },
+  { name: "阿部弘樹", nameKana: "アベ ヒロキ", party: "日本維新の会", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 国民民主党（28議席: 小選挙区11 + 比例17）
+// 国民民主党（28名 = 小選挙区11 + 比例17）
 // ============================================
 
 const DPP_MEMBERS: RepresentativeData[] = [
-  // ---- 小選挙区 ----
+  // ======== 小選挙区当選 ========
   { name: "村岡敏英", nameKana: "ムラオカ トシヒデ", party: "国民民主党", district: "秋田3区", prefecture: "秋田県" },
-  { name: "浅野哲", nameKana: "アサノ サトシ", party: "国民民主党", district: "茨城5区", prefecture: "茨城県" },
+  { name: "浅野哲", nameKana: "アサノ テツ", party: "国民民主党", district: "茨城5区", prefecture: "茨城県" },
   { name: "橋本幹彦", nameKana: "ハシモト ミキヒコ", party: "国民民主党", district: "埼玉13区", prefecture: "埼玉県" },
   { name: "鈴木義弘", nameKana: "スズキ ヨシヒロ", party: "国民民主党", district: "埼玉14区", prefecture: "埼玉県" },
-  { name: "古川元久", nameKana: "フルカワ モトヒサ", party: "国民民主党", district: "愛知2区", prefecture: "愛知県" },
   { name: "田中健", nameKana: "タナカ ケン", party: "国民民主党", district: "静岡4区", prefecture: "静岡県" },
+  { name: "古川元久", nameKana: "フルカワ モトヒサ", party: "国民民主党", district: "愛知2区", prefecture: "愛知県" },
+  { name: "日野紗里亜", nameKana: "ヒノ サリア", party: "国民民主党", district: "愛知7区", prefecture: "愛知県" },
+  { name: "丹野みどり", nameKana: "タンノ ミドリ", party: "国民民主党", district: "愛知11区", prefecture: "愛知県" },
+  { name: "福田徹", nameKana: "フクダ トオル", party: "国民民主党", district: "愛知16区", prefecture: "愛知県" },
   { name: "玉木雄一郎", nameKana: "タマキ ユウイチロウ", party: "国民民主党", district: "香川2区", prefecture: "香川県" },
   { name: "西岡秀子", nameKana: "ニシオカ ヒデコ", party: "国民民主党", district: "長崎1区", prefecture: "長崎県" },
 
-  // ---- 比例代表 ----
-  // 比例北海道
-  { name: "臼木秀剛", nameKana: "ウスキ ヒデタケ", party: "国民民主党", district: "比例北海道", prefecture: "北海道" },
-  // 比例東北
-  { name: "佐々木真琴", nameKana: "ササキ マコト", party: "国民民主党", district: "比例東北", prefecture: null },
-  // 比例東京
-  { name: "井戸正枝", nameKana: "イド マサエ", party: "国民民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "高沢一基", nameKana: "タカザワ カズモト", party: "国民民主党", district: "比例東京", prefecture: "東京都" },
-  { name: "森洋介", nameKana: "モリ ヨウスケ", party: "国民民主党", district: "比例東京", prefecture: "東京都" },
-  // 比例南関東
+  // ======== 比例代表当選（17名） ========
+  { name: "臼木秀剛", nameKana: "ウスキ ヒデタケ", party: "国民民主党", district: "比例北海道", prefecture: null },
+  { name: "菊池大二郎", nameKana: "キクチ ダイジロウ", party: "国民民主党", district: "比例東北", prefecture: null },
+  { name: "岸田光広", nameKana: "キシダ ミツヒロ", party: "国民民主党", district: "比例北関東", prefecture: null },
+  { name: "深作ヘスス", nameKana: "フカサク ヘスス", party: "国民民主党", district: "比例南関東", prefecture: null },
   { name: "岡野純子", nameKana: "オカノ ジュンコ", party: "国民民主党", district: "比例南関東", prefecture: null },
   { name: "西岡義高", nameKana: "ニシオカ ヨシタカ", party: "国民民主党", district: "比例南関東", prefecture: null },
-  { name: "深作ヘスス", nameKana: "フカサク ヘスス", party: "国民民主党", district: "比例南関東", prefecture: null },
-  // 比例北陸信越
-  { name: "小竹凱", nameKana: "オダケ カイ", party: "国民民主党", district: "比例北陸信越", prefecture: null },
-  // 比例東海
-  { name: "日野紗里亜", nameKana: "ヒノ サリア", party: "国民民主党", district: "比例東海", prefecture: "愛知県" },
-  { name: "丹野みどり", nameKana: "タンノ ミドリ", party: "国民民主党", district: "比例東海", prefecture: "愛知県" },
-  { name: "福田徹", nameKana: "フクダ トオル", party: "国民民主党", district: "比例東海", prefecture: "愛知県" },
-  { name: "野村美穂", nameKana: "ノムラ ミホ", party: "国民民主党", district: "比例東海", prefecture: null },
-  { name: "河井昭成", nameKana: "カワイ アキナリ", party: "国民民主党", district: "比例東海", prefecture: "滋賀県" },
-  // 比例近畿
-  { name: "向山好一", nameKana: "ムコウヤマ コウイチ", party: "国民民主党", district: "比例近畿", prefecture: "兵庫県" },
-  // 比例中国
-  { name: "鍋島勢理", nameKana: "ナベシマ セリ", party: "国民民主党", district: "比例中国", prefecture: null },
-  // 比例四国
-  { name: "飯泉嘉門", nameKana: "イイズミ カモン", party: "国民民主党", district: "比例四国", prefecture: "徳島県" },
-  // 比例九州
-  { name: "許斐亮太郎", nameKana: "コノミ リョウタロウ", party: "国民民主党", district: "比例九州", prefecture: "福岡県" },
-  { name: "近藤雅彦", nameKana: "コンドウ マサヒコ", party: "国民民主党", district: "比例九州", prefecture: "福岡県" },
-  { name: "長友慎治", nameKana: "ナガトモ シンジ", party: "国民民主党", district: "比例九州", prefecture: "宮崎県" },
+  { name: "円より子", nameKana: "マドカ ヨリコ", party: "国民民主党", district: "比例東京", prefecture: null },
+  { name: "森洋介", nameKana: "モリ ヨウスケ", party: "国民民主党", district: "比例東京", prefecture: null },
+  { name: "鳩山紀一郎", nameKana: "ハトヤマ キイチロウ", party: "国民民主党", district: "比例東京", prefecture: null },
+  { name: "小竹凱", nameKana: "コタケ カイ", party: "国民民主党", district: "比例北陸信越", prefecture: null },
+  { name: "仙田晃宏", nameKana: "センダ アキヒロ", party: "国民民主党", district: "比例東海", prefecture: null },
+  { name: "向山好一", nameKana: "ムカイヤマ コウイチ", party: "国民民主党", district: "比例近畿", prefecture: null },
+  { name: "平岩征樹", nameKana: "ヒライワ マサキ", party: "国民民主党", district: "比例近畿", prefecture: null },
+  { name: "福田玄", nameKana: "フクダ ゲン", party: "国民民主党", district: "比例中国", prefecture: null },
+  { name: "石井智恵", nameKana: "イシイ チエ", party: "国民民主党", district: "比例四国", prefecture: null },
+  { name: "長友慎治", nameKana: "ナガトモ シンジ", party: "国民民主党", district: "比例九州", prefecture: null },
+  { name: "許斐亮太郎", nameKana: "コノミ リョウタロウ", party: "国民民主党", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 公明党（24議席: 小選挙区4 + 比例20）
+// 公明党（24名 = 小選挙区4 + 比例20）
 // ============================================
 
-const KOMEI_MEMBERS: RepresentativeData[] = [
-  // ---- 小選挙区 ----
+const KOMEITO_MEMBERS: RepresentativeData[] = [
+  // ======== 小選挙区当選 ========
   { name: "岡本三成", nameKana: "オカモト ミツナリ", party: "公明党", district: "東京29区", prefecture: "東京都" },
   { name: "赤羽一嘉", nameKana: "アカバ カズヨシ", party: "公明党", district: "兵庫2区", prefecture: "兵庫県" },
   { name: "中野洋昌", nameKana: "ナカノ ヒロマサ", party: "公明党", district: "兵庫8区", prefecture: "兵庫県" },
   { name: "斉藤鉄夫", nameKana: "サイトウ テツオ", party: "公明党", district: "広島3区", prefecture: "広島県" },
-  // ---- 比例代表 ----
-  { name: "佐藤英道", nameKana: "サトウ ヒデミチ", party: "公明党", district: "比例北海道", prefecture: "北海道" },
+
+  // ======== 比例代表当選（20名） ========
+  { name: "佐藤英道", nameKana: "サトウ ヒデミチ", party: "公明党", district: "比例北海道", prefecture: null },
   { name: "庄子賢一", nameKana: "ショウジ ケンイチ", party: "公明党", district: "比例東北", prefecture: null },
   { name: "輿水恵一", nameKana: "コシミズ ケイイチ", party: "公明党", district: "比例北関東", prefecture: null },
   { name: "福重隆浩", nameKana: "フクシゲ タカヒロ", party: "公明党", district: "比例北関東", prefecture: null },
   { name: "山口良治", nameKana: "ヤマグチ リョウジ", party: "公明党", district: "比例北関東", prefecture: null },
-  { name: "角田秀穂", nameKana: "ツノダ ヒデオ", party: "公明党", district: "比例南関東", prefecture: null },
-  { name: "沼﨑満子", nameKana: "ヌマザキ ミツコ", party: "公明党", district: "比例南関東", prefecture: null },
-  { name: "河西宏一", nameKana: "カサイ コウイチ", party: "公明党", district: "比例東京", prefecture: "東京都" },
-  { name: "大森江里子", nameKana: "オオモリ エリコ", party: "公明党", district: "比例東京", prefecture: "東京都" },
+  { name: "角田秀穂", nameKana: "カクタ ヒデオ", party: "公明党", district: "比例南関東", prefecture: null },
+  { name: "沼崎満子", nameKana: "ヌマザキ ミツコ", party: "公明党", district: "比例南関東", prefecture: null },
+  { name: "河西宏一", nameKana: "カサイ コウイチ", party: "公明党", district: "比例東京", prefecture: null },
+  { name: "大森江里子", nameKana: "オオモリ エリコ", party: "公明党", district: "比例東京", prefecture: null },
   { name: "中川宏昌", nameKana: "ナカガワ ヒロマサ", party: "公明党", district: "比例北陸信越", prefecture: null },
   { name: "中川康洋", nameKana: "ナカガワ ヤスヒロ", party: "公明党", district: "比例東海", prefecture: null },
   { name: "西園勝秀", nameKana: "ニシゾノ カツヒデ", party: "公明党", district: "比例東海", prefecture: null },
@@ -601,50 +620,48 @@ const KOMEI_MEMBERS: RepresentativeData[] = [
 ];
 
 // ============================================
-// れいわ新選組（9議席: 全て比例代表）
+// れいわ新選組（9名 = 比例9）
 // ============================================
 
 const REIWA_MEMBERS: RepresentativeData[] = [
-  { name: "高井崇志", nameKana: "タカイ タカシ", party: "れいわ新選組", district: "比例北関東", prefecture: null },
   { name: "佐原若子", nameKana: "サハラ ワカコ", party: "れいわ新選組", district: "比例東北", prefecture: null },
+  { name: "高井崇志", nameKana: "タカイ タカシ", party: "れいわ新選組", district: "比例北関東", prefecture: null },
   { name: "多ケ谷亮", nameKana: "タガヤ リョウ", party: "れいわ新選組", district: "比例南関東", prefecture: null },
-  { name: "櫛渕万里", nameKana: "クシブチ マリ", party: "れいわ新選組", district: "比例東京", prefecture: "東京都" },
-  { name: "さかぐち直人", nameKana: "サカグチ ナオト", party: "れいわ新選組", district: "比例東海", prefecture: null },
-  { name: "上村英明", nameKana: "カミムラ ヒデアキ", party: "れいわ新選組", district: "比例東海", prefecture: null },
+  { name: "櫛渕万里", nameKana: "クシブチ マリ", party: "れいわ新選組", district: "比例東京", prefecture: null },
+  { name: "阪口直人", nameKana: "サカグチ ナオト", party: "れいわ新選組", district: "比例東海", prefecture: null },
+  { name: "辻恵", nameKana: "ツジ メグム", party: "れいわ新選組", district: "比例東海", prefecture: null },
   { name: "大石晃子", nameKana: "オオイシ アキコ", party: "れいわ新選組", district: "比例近畿", prefecture: null },
-  { name: "やはた愛", nameKana: "ヤハタ アイ", party: "れいわ新選組", district: "比例近畿", prefecture: null },
+  { name: "八幡愛", nameKana: "ヤハタ アイ", party: "れいわ新選組", district: "比例近畿", prefecture: null },
   { name: "山川仁", nameKana: "ヤマカワ ヒトシ", party: "れいわ新選組", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 日本共産党（8議席: 小選挙区1 + 比例7）
+// 日本共産党（8名 = 小選挙区1 + 比例7）
 // ============================================
 
 const JCP_MEMBERS: RepresentativeData[] = [
-  // ---- 小選挙区 ----
   { name: "赤嶺政賢", nameKana: "アカミネ セイケン", party: "日本共産党", district: "沖縄1区", prefecture: "沖縄県" },
-  // ---- 比例代表 ----
-  { name: "田村智子", nameKana: "タムラ トモコ", party: "日本共産党", district: "比例東京", prefecture: "東京都" },
   { name: "塩川鉄也", nameKana: "シオカワ テツヤ", party: "日本共産党", district: "比例北関東", prefecture: null },
+  { name: "志位和夫", nameKana: "シイ カズオ", party: "日本共産党", district: "比例南関東", prefecture: null },
+  { name: "田村智子", nameKana: "タムラ トモコ", party: "日本共産党", district: "比例東京", prefecture: null },
   { name: "本村伸子", nameKana: "モトムラ ノブコ", party: "日本共産党", district: "比例東海", prefecture: null },
-  { name: "穀田恵二", nameKana: "コクタ ケイジ", party: "日本共産党", district: "比例近畿", prefecture: null },
+  { name: "堀川あきこ", nameKana: "ホリカワ アキコ", party: "日本共産党", district: "比例近畿", prefecture: null },
   { name: "辰巳孝太郎", nameKana: "タツミ コウタロウ", party: "日本共産党", district: "比例近畿", prefecture: null },
-  { name: "畑野君枝", nameKana: "ハタノ キミエ", party: "日本共産党", district: "比例南関東", prefecture: null },
   { name: "田村貴昭", nameKana: "タムラ タカアキ", party: "日本共産党", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 参政党（3議席: 全て比例代表）
+// 参政党（3名 = 比例3）
 // ============================================
 
-const SANSEI_MEMBERS: RepresentativeData[] = [
+const SANSEITO_MEMBERS: RepresentativeData[] = [
   { name: "鈴木敦", nameKana: "スズキ アツシ", party: "参政党", district: "比例南関東", prefecture: null },
   { name: "北野裕子", nameKana: "キタノ ユウコ", party: "参政党", district: "比例近畿", prefecture: null },
   { name: "吉川里奈", nameKana: "ヨシカワ リナ", party: "参政党", district: "比例九州", prefecture: null },
 ];
 
 // ============================================
-// 日本保守党（3議席: 小選挙区1 + 比例2）
+// 日本保守党（3名 = 小選挙区1 + 比例2）
 // ============================================
 
 const HOSHU_MEMBERS: RepresentativeData[] = [
@@ -654,7 +671,7 @@ const HOSHU_MEMBERS: RepresentativeData[] = [
 ];
 
 // ============================================
-// 社会民主党（1議席: 小選挙区1）
+// 社会民主党（1名 = 小選挙区1）
 // ============================================
 
 const SDP_MEMBERS: RepresentativeData[] = [
@@ -662,7 +679,7 @@ const SDP_MEMBERS: RepresentativeData[] = [
 ];
 
 // ============================================
-// 無所属（12議席）
+// 無所属（12名）
 // ============================================
 
 const INDEPENDENT_MEMBERS: RepresentativeData[] = [
@@ -671,9 +688,9 @@ const INDEPENDENT_MEMBERS: RepresentativeData[] = [
   { name: "平沢勝栄", nameKana: "ヒラサワ カツエイ", party: "無所属", district: "東京17区", prefecture: "東京都" },
   { name: "萩生田光一", nameKana: "ハギウダ コウイチ", party: "無所属", district: "東京24区", prefecture: "東京都" },
   { name: "松原仁", nameKana: "マツバラ ジン", party: "無所属", district: "東京26区", prefecture: "東京都" },
-  { name: "世耕弘成", nameKana: "セコウ ヒロシゲ", party: "無所属", district: "和歌山2区", prefecture: "和歌山県" },
   { name: "北神圭朗", nameKana: "キタガミ ケイロウ", party: "無所属", district: "京都4区", prefecture: "京都府" },
   { name: "西村康稔", nameKana: "ニシムラ ヤストシ", party: "無所属", district: "兵庫9区", prefecture: "兵庫県" },
+  { name: "世耕弘成", nameKana: "セコウ ヒロシゲ", party: "無所属", district: "和歌山2区", prefecture: "和歌山県" },
   { name: "緒方林太郎", nameKana: "オガタ リンタロウ", party: "無所属", district: "福岡9区", prefecture: "福岡県" },
   { name: "吉良州司", nameKana: "キラ シュウジ", party: "無所属", district: "大分1区", prefecture: "大分県" },
   { name: "広瀬建", nameKana: "ヒロセ ケン", party: "無所属", district: "大分2区", prefecture: "大分県" },
@@ -681,7 +698,7 @@ const INDEPENDENT_MEMBERS: RepresentativeData[] = [
 ];
 
 // ============================================
-// 全メンバーを結合
+// 全議員を結合
 // ============================================
 
 const ALL_REPRESENTATIVES: RepresentativeData[] = [
@@ -689,10 +706,10 @@ const ALL_REPRESENTATIVES: RepresentativeData[] = [
   ...CDP_MEMBERS,
   ...ISHIN_MEMBERS,
   ...DPP_MEMBERS,
-  ...KOMEI_MEMBERS,
+  ...KOMEITO_MEMBERS,
   ...REIWA_MEMBERS,
   ...JCP_MEMBERS,
-  ...SANSEI_MEMBERS,
+  ...SANSEITO_MEMBERS,
   ...HOSHU_MEMBERS,
   ...SDP_MEMBERS,
   ...INDEPENDENT_MEMBERS,
@@ -702,100 +719,139 @@ const ALL_REPRESENTATIVES: RepresentativeData[] = [
 // メイン処理
 // ============================================
 
-async function main(): Promise<void> {
-  console.log("[representatives] 衆議院議員データの投入を開始...");
-  console.log(`[representatives] 対象: ${ALL_REPRESENTATIVES.length}名`);
+/**
+ * 安定的な ID を生成する。
+ * "rep-" プレフィックス + 氏名を使う。
+ */
+function makeRepresentativeId(name: string): string {
+  return `rep-${name}`;
+}
 
-  const partyCache = new Map<string, string | null>();
-  const prefectureCache = new Map<string, string | null>();
+export async function seedRepresentatives(): Promise<void> {
+  console.log("[representatives] 衆議院議員データのシードを開始...");
+  console.log(`[representatives] 対象議員数: ${ALL_REPRESENTATIVES.length}名`);
+
+  // キャッシュ
+  const partyCache = new Map<string, string>();
+  const prefectureCache = new Map<string, string>();
 
   let upsertCount = 0;
-  let skippedCount = 0;
+  let skipCount = 0;
 
-  for (const member of ALL_REPRESENTATIVES) {
-    // ----- 政党を解決 -----
+  for (const rep of ALL_REPRESENTATIVES) {
+    // --- 政党の解決 ---
     let partyId: string | null = null;
-    if (member.party !== "無所属") {
-      if (partyCache.has(member.party)) {
-        partyId = partyCache.get(member.party) ?? null;
+
+    if (partyCache.has(rep.party)) {
+      partyId = partyCache.get(rep.party)!;
+    } else {
+      const party = await prisma.party.findFirst({
+        where: { name: rep.party },
+      });
+      if (party) {
+        partyCache.set(rep.party, party.id);
+        partyId = party.id;
       } else {
-        const party = await prisma.party.findFirst({
-          where: { name: member.party },
-        });
-        if (!party) {
-          // 社会民主党は "社民党" として登録されている場合がある
-          if (member.party === "社会民主党") {
-            const sdp = await prisma.party.findFirst({
-              where: { OR: [{ name: "社民党" }, { shortName: "社民" }] },
-            });
-            partyId = sdp?.id ?? null;
-          } else {
-            console.warn(`[representatives] 政党未登録: ${member.party}`);
+        // "社民党" → "社会民主党" のフォールバック
+        if (rep.party === "社民党") {
+          const sdp = await prisma.party.findFirst({
+            where: { name: "社会民主党" },
+          });
+          if (sdp) {
+            partyCache.set(rep.party, sdp.id);
+            partyId = sdp.id;
           }
-        } else {
-          partyId = party.id;
         }
-        partyCache.set(member.party, partyId);
+        if (!partyId) {
+          console.warn(
+            `[representatives]   政党が見つかりません: ${rep.party} (${rep.name})`,
+          );
+        }
       }
     }
 
-    // ----- 都道府県を解決 -----
+    // --- 都道府県の解決 ---
     let prefectureId: string | null = null;
-    if (member.prefecture) {
-      if (prefectureCache.has(member.prefecture)) {
-        prefectureId = prefectureCache.get(member.prefecture) ?? null;
+
+    if (rep.prefecture) {
+      if (prefectureCache.has(rep.prefecture)) {
+        prefectureId = prefectureCache.get(rep.prefecture)!;
       } else {
         const pref = await prisma.prefecture.findFirst({
-          where: { name: member.prefecture },
+          where: { name: rep.prefecture },
         });
         if (pref) {
+          prefectureCache.set(rep.prefecture, pref.id);
           prefectureId = pref.id;
+        } else {
+          console.warn(
+            `[representatives]   都道府県が見つかりません: ${rep.prefecture} (${rep.name})`,
+          );
         }
-        prefectureCache.set(member.prefecture, prefectureId);
       }
     }
 
-    // ----- 安定的なIDを生成 -----
-    const stableId = `rep-${member.name}`;
+    // --- 議員を upsert ---
+    const id = makeRepresentativeId(rep.name);
 
     try {
       await prisma.politician.upsert({
-        where: { id: stableId },
+        where: { id },
         update: {
-          name: member.name,
-          nameKana: member.nameKana,
+          name: rep.name,
+          nameKana: rep.nameKana,
           partyId,
           chamber: "HOUSE_OF_REPRESENTATIVES",
-          district: member.district,
+          district: rep.district,
           prefectureId,
           isActive: true,
         },
         create: {
-          id: stableId,
-          name: member.name,
-          nameKana: member.nameKana,
+          id,
+          name: rep.name,
+          nameKana: rep.nameKana,
           partyId,
           chamber: "HOUSE_OF_REPRESENTATIVES",
-          district: member.district,
+          district: rep.district,
           prefectureId,
           isActive: true,
         },
       });
+
       upsertCount++;
-    } catch (err) {
-      console.error(`[representatives] エラー: ${member.name} — ${err}`);
-      skippedCount++;
+
+      if (upsertCount % 50 === 0) {
+        console.log(`[representatives]   ${upsertCount}名処理済み...`);
+      }
+    } catch (error) {
+      skipCount++;
+      console.error(
+        `[representatives]   エラー: ${rep.name} — ${error instanceof Error ? error.message : error}`,
+      );
     }
   }
 
+  // --- サマリー ---
+  const partyCounts = new Map<string, number>();
+  for (const r of ALL_REPRESENTATIVES) {
+    partyCounts.set(r.party, (partyCounts.get(r.party) ?? 0) + 1);
+  }
+
+  console.log("[representatives] --- 政党別議員数 ---");
+  for (const [party, count] of [...partyCounts.entries()].sort(
+    (a, b) => b[1] - a[1],
+  )) {
+    console.log(`[representatives]   ${party}: ${count}名`);
+  }
+
   console.log(
-    `[representatives] 完了 — ${upsertCount}名を登録/更新, ${skippedCount}名スキップ`,
+    `[representatives] 完了 — ${upsertCount}名登録, ${skipCount}名スキップ`,
   );
 }
 
 // CLI実行
 if (process.argv[1]?.includes("politicians/seed-representatives")) {
-  main()
+  seedRepresentatives()
     .then(async () => {
       await prisma.$disconnect();
       process.exit(0);
@@ -806,5 +862,3 @@ if (process.argv[1]?.includes("politicians/seed-representatives")) {
       process.exit(1);
     });
 }
-
-export { main as seedRepresentatives };
