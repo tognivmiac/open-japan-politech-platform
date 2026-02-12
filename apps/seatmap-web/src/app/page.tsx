@@ -281,10 +281,13 @@ function TimelineElectionCard({ election }: { election: ElectionData }) {
 
 export default async function Home() {
   let elections: ElectionData[] = [];
+  let fetchError: string | null = null;
   try {
     elections = await getElections();
-  } catch {
-    // Fallback to empty state
+  } catch (error) {
+    const msg = error instanceof Error ? error.message : String(error);
+    console.error("[SeatMap] Failed to fetch elections:", msg);
+    fetchError = msg;
   }
 
   /* --- Empty state --- */
@@ -299,14 +302,26 @@ export default async function Home() {
         />
         <div className="mx-auto max-w-7xl px-6 py-12">
           <Card>
-            <p className="text-center text-gray-500">
-              データを読み込み中です。
-              <br />
-              <code className="mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs font-mono">
-                pnpm ingest:elections
-              </code>{" "}
-              を実行して選挙データを投入してください。
-            </p>
+            {fetchError ? (
+              <div className="text-center">
+                <p className="text-red-600 font-medium">データベース接続エラー</p>
+                <p className="mt-2 text-sm text-gray-500">
+                  PostgreSQLに接続できませんでした。Supabaseコンテナが起動しているか確認してください。
+                </p>
+                <code className="mt-2 inline-block rounded bg-red-50 px-3 py-1 text-xs font-mono text-red-700">
+                  {fetchError}
+                </code>
+              </div>
+            ) : (
+              <p className="text-center text-gray-500">
+                選挙データがまだ投入されていません。
+                <br />
+                <code className="mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs font-mono">
+                  pnpm ingest:elections
+                </code>{" "}
+                を実行して選挙データを投入してください。
+              </p>
+            )}
           </Card>
         </div>
       </div>

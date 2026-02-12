@@ -51,7 +51,7 @@ SKIP_DOCKER=false
 COMPOSE=""
 TOTAL_START=$SECONDS
 STEP=0
-TOTAL_STEPS=12
+TOTAL_STEPS=13
 APP_PIDS=()
 
 # Ensure cursor is visible on exit
@@ -609,6 +609,34 @@ else wrn "スキップ（もうデータ入ってるみたい）"; fi
 
 if run_spin "📊 政治データをごっそり取り込み (資金・議会・政策)" pnpm ingest:all; then :
 else wrn "スキップ（もうデータ入ってるみたい）"; fi
+step_pct
+
+# =============================================================================
+#  7.5. DB connection verification  ～接続チェック～
+# =============================================================================
+section "🔍 データベース接続を最終チェック"
+
+# Verify Prisma can actually connect and query data
+DB_CHECK_SCRIPT='
+const { PrismaClient } = require("@prisma/client");
+const p = new PrismaClient();
+p.election.count().then(c => { console.log("elections:" + c); p.$disconnect(); }).catch(e => { console.error(e.message); process.exit(1); });
+'
+if node -e "$DB_CHECK_SCRIPT" >> "$LOG" 2>&1; then
+  ok "🔗 Prisma → PostgreSQL 接続OK！データも確認済み"
+else
+  wrn "Prisma 接続に問題あり — 念のため接続をリセットするね"
+  # Kill idle connections to free slots
+  docker exec supabase_db_open-japan-politech-platform psql -U postgres -d postgres \
+    -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE state = 'idle' AND pid <> pg_backend_pid();" \
+    >> "$LOG" 2>&1 || true
+  sleep 1
+  if node -e "$DB_CHECK_SCRIPT" >> "$LOG" 2>&1; then
+    ok "🔗 リセット後の接続OK！"
+  else
+    wrn "DB接続の問題が続いています — アプリ起動後にリトライします"
+  fi
+fi
 step_pct
 
 # =============================================================================
