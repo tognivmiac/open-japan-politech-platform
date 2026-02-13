@@ -31,6 +31,8 @@ model Party {
   organizations PoliticalOrganization[]
   policies        Policy[]
   electionResults ElectionResult[]
+  culturalStances CulturalStance[]
+  socialSecurityStances SocialSecurityStance[]
 
   @@map("parties")
 }
@@ -72,7 +74,8 @@ model Prefecture {
   name        String   @unique
   nameEn      String?  // English name
   region      String?  // 地方区分（北海道, 東北, 関東, 中部, 近畿, 中国, 四国, 九州・沖縄）
-  politicians Politician[]
+  politicians  Politician[]
+  welfareStats WelfareStat[]
 
   @@map("prefectures")
 }
@@ -394,4 +397,153 @@ model ElectionResult {
 
   @@unique([electionId, partyId])
   @@map("election_results")
+}
+
+// ============================================
+// 文化政策（CultureScope）
+// ============================================
+
+/// 文化庁予算（年度別・分野別）
+model CulturalBudget {
+  id          String   @id @default(cuid())
+  fiscalYear  Int
+  category    CulturalCategory
+  amount      BigInt   // 百万円単位
+  description String?
+  sourceUrl   String?
+  createdAt   DateTime @default(now())
+
+  @@unique([fiscalYear, category])
+  @@map("cultural_budgets")
+}
+
+enum CulturalCategory {
+  ARTS_PROMOTION       // 芸術文化振興
+  CULTURAL_PROPERTY    // 文化財保護
+  MEDIA_ARTS           // メディア芸術
+  INTERNATIONAL        // 国際文化交流
+  COPYRIGHT            // 著作権
+  JAPANESE_LANGUAGE    // 国語・日本語教育
+  RELIGIOUS_AFFAIRS     // 宗務
+  CREATIVE_INDUSTRY    // 文化産業（クールジャパン）
+  CULTURAL_FACILITY    // 文化施設整備
+  DIGITAL_ARCHIVE      // デジタルアーカイブ
+  LOCAL_CULTURE        // 地域文化振興
+  TOTAL                // 文化庁予算合計
+}
+
+/// 文化プログラム・補助金制度
+model CulturalProgram {
+  id          String   @id @default(cuid())
+  name        String
+  category    CulturalCategory
+  description String
+  budget      BigInt?  // 予算額（百万円）
+  startYear   Int
+  endYear     Int?
+  targetGroup String?  // 対象者
+  ministry    String   @default("文化庁")
+  sourceUrl   String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("cultural_programs")
+}
+
+/// 政党別文化政策スタンス
+model CulturalStance {
+  id          String   @id @default(cuid())
+  partyId     String
+  party       Party    @relation(fields: [partyId], references: [id])
+  topic       String   // "芸術支援", "著作権改革", "文化財保護" etc.
+  stance      String   // 賛成/反対/条件付き etc.
+  summary     String   // 要約テキスト
+  manifesto   String?  // マニフェスト引用
+  year        Int
+  createdAt   DateTime @default(now())
+
+  @@unique([partyId, topic, year])
+  @@map("cultural_stances")
+}
+
+// ============================================
+// 社会保障（SocialGuard）
+// ============================================
+
+/// 社会保障関係費（年度別・分野別）
+model SocialSecurityBudget {
+  id          String   @id @default(cuid())
+  fiscalYear  Int
+  category    SocialSecurityCategory
+  amount      BigInt   // 億円単位
+  description String?
+  sourceUrl   String?
+  createdAt   DateTime @default(now())
+
+  @@unique([fiscalYear, category])
+  @@map("social_security_budgets")
+}
+
+enum SocialSecurityCategory {
+  PENSION           // 年金
+  HEALTHCARE        // 医療
+  LONG_TERM_CARE    // 介護
+  WELFARE           // 福祉（生活保護等）
+  CHILD_SUPPORT     // 子育て支援
+  EMPLOYMENT        // 雇用・労働
+  DISABILITY        // 障害福祉
+  TOTAL             // 社会保障関係費合計
+}
+
+/// 都道府県別社会保障データ
+model WelfareStat {
+  id            String   @id @default(cuid())
+  prefectureId  String
+  prefecture    Prefecture @relation(fields: [prefectureId], references: [id])
+  fiscalYear    Int
+  category      SocialSecurityCategory
+  value         Float    // 指標値（受給率、一人あたり費用等）
+  unit          String   // "%", "万円/人", "人" etc.
+  indicator     String   // "受給率", "一人あたり医療費" etc.
+  createdAt     DateTime @default(now())
+
+  @@unique([prefectureId, fiscalYear, category, indicator])
+  @@map("welfare_stats")
+}
+
+/// 社会保障制度
+model SocialSecurityProgram {
+  id            String   @id @default(cuid())
+  name          String
+  category      SocialSecurityCategory
+  description   String
+  eligibility   String?  // 対象者
+  benefit       String?  // 給付内容
+  budget        BigInt?  // 予算額（億円）
+  recipients    Int?     // 受給者数（万人）
+  startYear     Int?
+  lastReformed  Int?     // 最終改正年
+  sourceUrl     String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("social_security_programs")
+}
+
+/// 政党別社会保障スタンス
+model SocialSecurityStance {
+  id          String   @id @default(cuid())
+  partyId     String
+  party       Party    @relation(fields: [partyId], references: [id])
+  topic       String   // "年金改革", "医療費負担", "子育て支援" etc.
+  stance      String   // 賛成/反対/条件付き etc.
+  summary     String
+  manifesto   String?
+  year        Int
+  createdAt   DateTime @default(now())
+
+  @@unique([partyId, topic, year])
+  @@map("social_security_stances")
 }

@@ -69,7 +69,7 @@
 
 | ダッシュボード | 政党別資金集計 |
 |---|---|
-| ![MoneyGlass Dashboard](docs/screenshots/moneyglass-dashboard.png) | ![MoneyGlass Parties](docs/screenshots/moneyglass-parties.png) |
+| ![MoneyGlass Dashboard](docs/screenshots/moneyglass-dashboard.gif) | ![MoneyGlass Parties](docs/screenshots/moneyglass-parties.gif) |
 
 | アプリ | ポート | 用途 |
 |---|---|---|
@@ -82,7 +82,7 @@
 
 | ホーム | 政党比較 |
 |---|---|
-| ![PolicyDiff Home](docs/screenshots/policydiff-home.png) | ![PolicyDiff Compare](docs/screenshots/policydiff-compare.png) |
+| ![PolicyDiff Home](docs/screenshots/policydiff-home.gif) | ![PolicyDiff Compare](docs/screenshots/policydiff-compare.gif) |
 
 | アプリ | ポート | 用途 |
 |---|---|---|
@@ -94,7 +94,7 @@
 
 | ダッシュボード | 議員名簿 |
 |---|---|
-| ![ParliScope Home](docs/screenshots/parliscope-home.png) | ![ParliScope Politicians](docs/screenshots/parliscope-politicians.png) |
+| ![ParliScope Home](docs/screenshots/parliscope-home.gif) | ![ParliScope Politicians](docs/screenshots/parliscope-politicians.gif) |
 
 | アプリ | ポート | 用途 |
 |---|---|---|
@@ -103,31 +103,105 @@
 
 ### SeatMap — 議会の勢力図を、ひと目で把握する
 
-国会の議席構成・政党別勢力を視覚的に表示。議席数の変動や与野党の勢力バランスを直感的に理解できる。
+国会の議席構成・政党別勢力を視覚的に表示。スプリング物理に基づくアニメーテッドバーで議席数の変動や与野党の勢力バランスを直感的に理解できる。過半数ラインのdraw-inアニメーション付き。
+
+| 勢力図 |
+|---|
+| ![SeatMap](docs/screenshots/seatmap-home.gif) |
 
 | アプリ | ポート | 用途 |
 |---|---|---|
 | `seatmap-web` | 3005 | SeatMap 議席勢力図 |
+
+### CultureScope — 文化政策を、データで可視化する
+
+文化庁予算の推移、芸術振興・文化財保護・メディア芸術等の分野別予算配分、各政党の文化政策スタンスを一覧比較。文化プログラム・補助金制度のデータベースを備え、文化政策の全体像を俯瞰できる。
+
+| アプリ | ポート | 用途 |
+|---|---|---|
+| `culturescope-web` | 3006 | 文化庁予算推移、文化施策一覧、政党比較 |
+
+### SocialGuard — 社会保障を、誰もが理解できる形に
+
+年金・医療・介護・子育て支援・生活保護——37兆円規模の社会保障関係費を分野別に可視化。都道府県別の福祉指標比較、各政党の社会保障政策スタンス比較を提供し、社会保障制度の全体像を把握できる。
+
+| アプリ | ポート | 用途 |
+|---|---|---|
+| `socialguard-web` | 3007 | 社会保障予算推移、制度一覧、都道府県比較、政党比較 |
+
+---
+
+## UX / アニメーション
+
+> **「ぬるぬるカッコいい」** — 政治データを、触って気持ちいいUIで届ける
+
+全アプリに [Motion](https://motion.dev/)（framer-motion v11+）と [Lenis](https://lenis.darkroom.engineering/) による滑らかなアニメーションを実装。スクロールするだけで「動く政治データ」を体感できます。
+
+| 機能 | 技術 | 体験 |
+|---|---|---|
+| **スムーススクロール** | Lenis (慣性スクロール) | 全ページが60fpsでぬるぬるスクロール |
+| **ページ遷移** | Motion `PageTransition` | ルート切替時にフェード＋スライドアップ |
+| **スクロールリビール** | `useInView` + `ScrollReveal` | セクションがスクロールで現れる |
+| **カードスタッガー** | `StaggerGrid` + `StaggerItem` | カードが順番に時差表示 |
+| **データバーアニメーション** | Spring物理 (stiffness:60) | 議席バー・投票バーがバネで伸びる |
+| **過半数ライン** | `scaleY` draw-in | 議席バーの過半数ラインがドローイン |
+| **グラスモーフィズム** | Scroll-dependent backdrop-blur | ナビゲーションバーが半透明ガラス化 |
+| **ホバーリフト** | `whileHover` + boxShadow | カードがホバーで浮き上がる |
+| **タップフィードバック** | `whileTap` scale(0.97) | ボタンを押すとバネで縮む |
+| **パララックス** | `useScroll` + `useTransform` | HeroSectionの背景がパララックス移動 |
+| **シマースケルトン** | CSS gradient animation | ローディング状態がキラキラ光る |
+
+<details>
+<summary>GIFスクリーンショットの録画方法</summary>
+
+開発サーバーを起動し、以下の手順でGIFを録画してください:
+
+```bash
+# 1. 開発サーバー起動
+bash setup.sh
+
+# 2. 各アプリのURLにアクセスし、以下をキャプチャ
+#    - ページ読み込み時のアニメーション
+#    - スクロールによるカード表示
+#    - データバーの成長アニメーション
+#    - ホバー・クリックのインタラクション
+
+# 3. 推奨ツール
+#    macOS: Gifski, LICEcap, CleanShot X
+#    Chrome拡張: Screencastify
+#    CLI: ffmpeg + gifsicle
+```
+
+録画したGIFを `docs/screenshots/` に配置してください:
+- `moneyglass-dashboard.gif` — ダッシュボードのチャートアニメーション
+- `moneyglass-parties.gif` — 政党カードのスタッガー表示
+- `policydiff-home.gif` — HeroSection + スクロールリビール
+- `policydiff-compare.gif` — 政策カードの時差表示
+- `parliscope-home.gif` — 法案一覧のスクロール表示
+- `parliscope-politicians.gif` — 議員カードのグリッドアニメーション
+- `seatmap-home.gif` — 議席バーのスプリングアニメーション
+
+</details>
 
 ---
 
 ## アーキテクチャ
 
 ```
-┌──────────────────────────────────────────────────────────────────────────────┐
-│                              クライアント                                     │
-│           ブラウザ / AIエージェント / MCP クライアント                          │
-└───────┬───────────────┬───────────────┬───────────────┬──────────────────────┘
-        │               │               │               │
-        ▼               ▼               ▼               ▼
-┌───────────────┐ ┌───────────────┐ ┌───────────────┐ ┌───────────────┐
-│  MoneyGlass   │ │  PolicyDiff   │ │  ParliScope   │ │   SeatMap     │
-│  :3000/:3001  │ │    :3002      │ │  :3003/:3004  │ │    :3005      │
-│  Next.js 15   │ │  Next.js 15   │ │  Next.js 15   │ │  Next.js 15   │
-│  App Router   │ │  App Router   │ │  App Router   │ │  App Router   │
-└───────┬───────┘ └───────┬───────┘ └───────┬───────┘ └───────┬───────┘
-        │               │               │               │
-        ▼               ▼               ▼               ▼
+┌──────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                     クライアント                                              │
+│                    ブラウザ / AIエージェント / MCP クライアント                                  │
+└──┬──────────┬──────────┬──────────┬──────────┬──────────────┬────────────────────────────────┘
+   │          │          │          │          │              │
+   ▼          ▼          ▼          ▼          ▼              ▼
+┌────────┐┌────────┐┌────────┐┌────────┐┌─────────────┐┌─────────────┐
+│Money   ││Policy  ││Parli   ││Seat    ││Culture      ││Social       │
+│Glass   ││Diff    ││Scope   ││Map     ││Scope        ││Guard        │
+│:3000   ││:3002   ││:3003   ││:3005   ││:3006        ││:3007        │
+│        ││        ││        ││        ││文化政策      ││社会保障      │
+└──┬─────┘└──┬─────┘└──┬─────┘└──┬─────┘└──┬──────────┘└──┬──────────┘
+   │          │          │          │          │              │
+   ▼          ▼          ▼          ▼          ▼              ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                      共有パッケージ                               │
 │  @ojpp/api  │  @ojpp/ui  │  @ojpp/db  │  @ojpp/ingestion       │
@@ -194,6 +268,8 @@ pnpm dev:moneyglass    # MoneyGlass (port 3000 + 3001)
 pnpm dev:policydiff    # PolicyDiff (port 3002)
 pnpm dev:parliscope    # ParliScope (port 3003 + 3004)
 pnpm dev:seatmap       # SeatMap (port 3005)
+pnpm dev:culturescope  # CultureScope (port 3006)
+pnpm dev:socialguard   # SocialGuard (port 3007)
 ```
 
 ### 品質管理コマンド
@@ -263,11 +339,13 @@ open-japan-politech-platform/
 │   ├── policydiff-web/   :3002   📋 政策比較
 │   ├── parliscope-web/   :3003   🏛️ 国会
 │   ├── parliscope-admin/ :3004   🏛️ 管理画面
-│   └── seatmap-web/      :3005   💺 議席勢力図
+│   ├── seatmap-web/      :3005   💺 議席勢力図
+│   ├── culturescope-web/ :3006   🎨 文化政策
+│   └── socialguard-web/  :3007   🛡️ 社会保障
 ├── packages/
-│   ├── db/                        🗄️ Prisma スキーマ + クライアント
+│   ├── db/                        🗄️ Prisma スキーマ (29モデル) + クライアント
 │   ├── api/                       🔌 共通API ユーティリティ
-│   ├── ui/                        🎨 UIコンポーネント (11個)
+│   ├── ui/                        🎨 UIコンポーネント (14個) + Motion/Lenis
 │   └── ingestion/                 📊 データ取り込みスクリプト
 └── paper/                         📄 学術論文
 ```
@@ -413,7 +491,7 @@ curl http://localhost:3000/api/organizations?limit=2
 
 ## データモデル
 
-Prismaスキーマに21モデル・10 enumを定義。
+Prismaスキーマに29モデル・14 enumを定義。
 
 ```
 政治主体                    政治資金                      議会
@@ -459,7 +537,9 @@ AIエージェント時代に、政党や企業が独占してきた政治プロ
 | Database | PostgreSQL (via Supabase / local) |
 | ORM | Prisma 6 |
 | Styling | Tailwind CSS v4 |
-| Design System | @ojpp/ui — カスタムテーマ、アニメーション、11コンポーネント |
+| Design System | @ojpp/ui — カスタムテーマ、14コンポーネント |
+| Animation | Motion (framer-motion v11+) — スプリング物理、スクロールトリガー、ページ遷移 |
+| Smooth Scroll | Lenis — 慣性スクロール、60fps「ぬるぬる」体験 |
 | Charts | Recharts (全3アプリ) |
 | Markdown | remark + remark-html (PolicyDiff) |
 | Package Manager | pnpm 10 (monorepo with workspaces) |
@@ -494,7 +574,7 @@ open-japan-politech-platform/
 │   ├── parliscope-admin/     # ParliScope 管理画面 (:3004)
 │   └── seatmap-web/          # SeatMap 議席勢力図 (:3005)
 ├── packages/
-│   ├── ui/                   # @ojpp/ui — 11コンポーネント + デザインシステム (theme.css)
+│   ├── ui/                   # @ojpp/ui — 14コンポーネント + Motion/Lenis + デザインシステム (theme.css)
 │   ├── db/                   # @ojpp/db — Prisma スキーマ (21モデル / 10 enum)
 │   ├── api/                  # @ojpp/api — ページネーション, エラー, CORS, BigInt変換
 │   └── ingestion/            # @ojpp/ingestion — 政治資金・議会・マニフェスト取り込み
@@ -531,11 +611,14 @@ open-japan-politech-platform/
 - [x] データ取り込みパイプライン（政治資金・議会・マニフェスト）
 - [x] CI/CD パイプライン
 - [x] ユニットテスト（33テスト）
-- [x] デザインシステム構築（@ojpp/ui — theme.css、11コンポーネント、アニメーション）
+- [x] デザインシステム構築（@ojpp/ui — theme.css、14コンポーネント、アニメーション）
 - [x] 3アプリのグラフィカルデザイン刷新（HeroSection、GradientCard、NavigationBar）
 - [x] インタラクティブチャート拡充（Recharts全3アプリ対応、AnimatedCounter）
 - [x] 法案タイムライン・投票チャート・ページネーション
+- [x] UIアニメーション刷新（Motion + Lenis — スプリング物理、スムーススクロール、ページ遷移、データバーアニメーション）
 - [x] 学術論文（PoliTech 5地域比較分析）
+- [x] CultureScope — 文化政策態度・予算の可視化（文化庁予算推移、文化施策一覧、政党別スタンス比較）
+- [x] SocialGuard — 社会保障政策の可視化（社会保障予算推移、制度一覧、都道府県比較、政党別スタンス比較）
 - [ ] 認証・認可（Supabase Auth）
 - [ ] AIエージェント認証（APIキー・MCP）
 - [ ] GraphQL API
