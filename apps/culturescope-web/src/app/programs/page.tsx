@@ -43,7 +43,7 @@ function getCategoryLabel(category: string): string {
 
 function formatBudgetAmount(amount: bigint): string {
   const num = Number(amount);
-  if (num >= 10000) return `${(num / 10000).toFixed(1)}兆円`;
+  if (num >= 1_000_000) return `${(num / 1_000_000).toFixed(1)}兆円`;
   if (num >= 100) return `${Math.round(num / 100)}億円`;
   return `${num}百万円`;
 }

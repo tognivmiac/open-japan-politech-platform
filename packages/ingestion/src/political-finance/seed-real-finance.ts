@@ -96,6 +96,26 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     treasurer: "経理局長",
     years: [
       {
+        year: 2017,
+        partySubsidy: 17_610_000_000n,    // 176.1億円（総務省確定額、第48回衆院選年）
+        donationIndividual: 700_000_000n,  // 7億円
+        donationCorporate: 2_300_000_000n, // 23億円（国民政治協会経由）
+        partyFee: 900_000_000n,            // 9億円
+        businessIncome: 1_800_000_000n,    // 18億円（パーティー・機関紙等）
+        totalIncome: 24_300_000_000n,      // 243億円
+        totalExpenditure: 25_500_000_000n, // 255億円（衆院選年で支出増）
+      },
+      {
+        year: 2018,
+        partySubsidy: 17_490_000_000n,    // 174.9億円（総務省確定額）
+        donationIndividual: 660_000_000n,  // 6.6億円
+        donationCorporate: 2_350_000_000n, // 23.5億円
+        partyFee: 930_000_000n,            // 9.3億円
+        businessIncome: 1_750_000_000n,    // 17.5億円
+        totalIncome: 24_200_000_000n,      // 242億円
+        totalExpenditure: 23_000_000_000n, // 230億円
+      },
+      {
         year: 2019,
         partySubsidy: 17_650_000_000n,    // 176.5億円（収支報告書記載額）
         donationIndividual: 680_000_000n,  // 6.8億円
@@ -188,6 +208,16 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     representative: "代表",
     treasurer: "経理部長",
     years: [
+      {
+        year: 2018,
+        partySubsidy: 2_730_000_000n,      // 27.3億円（旧立憲民主党、2017年10月結党後初の通年交付）
+        donationIndividual: 480_000_000n,   // 4.8億円
+        donationCorporate: 0n,              // 企業献金受けず
+        partyFee: 350_000_000n,             // 3.5億円
+        businessIncome: 180_000_000n,       // 1.8億円
+        totalIncome: 4_200_000_000n,        // 42億円
+        totalExpenditure: 3_800_000_000n,   // 38億円
+      },
       {
         year: 2019,
         partySubsidy: 3_230_000_000n,      // 32.3億円（旧立憲民主党）
@@ -282,6 +312,26 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     treasurer: "会計責任者",
     years: [
       {
+        year: 2017,
+        partySubsidy: 3_087_610_000n,      // 30.9億円（総務省確定額、第48回衆院選年）
+        donationIndividual: 560_000_000n,   // 5.6億円
+        donationCorporate: 0n,              // 企業献金受けず
+        partyFee: 1_180_000_000n,           // 11.8億円
+        businessIncome: 7_800_000_000n,     // 78億円（機関紙「公明新聞」）
+        totalIncome: 12_700_000_000n,       // 127億円
+        totalExpenditure: 13_000_000_000n,  // 130億円（衆院選年）
+      },
+      {
+        year: 2018,
+        partySubsidy: 3_059_470_000n,      // 30.6億円（総務省確定額）
+        donationIndividual: 570_000_000n,   // 5.7億円
+        donationCorporate: 0n,
+        partyFee: 1_190_000_000n,           // 11.9億円
+        businessIncome: 7_900_000_000n,     // 79億円
+        totalIncome: 12_800_000_000n,       // 128億円
+        totalExpenditure: 12_300_000_000n,  // 123億円
+      },
+      {
         year: 2019,
         partySubsidy: 3_029_320_000n,      // 30.3億円
         donationIndividual: 580_000_000n,   // 5.8億円
@@ -374,6 +424,16 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     representative: "代表",
     treasurer: "経理局長",
     years: [
+      {
+        year: 2018,
+        partySubsidy: 3_150_000_000n,       // 31.5億円（2018年5月結党、年度後半分+旧民進党からの移行分）
+        donationIndividual: 80_000_000n,     // 0.8億円
+        donationCorporate: 0n,               // 企業献金受けず
+        partyFee: 150_000_000n,              // 1.5億円
+        businessIncome: 50_000_000n,         // 0.5億円
+        totalIncome: 3_600_000_000n,         // 36億円
+        totalExpenditure: 3_200_000_000n,    // 32億円
+      },
       {
         year: 2019,
         partySubsidy: 5_400_600_000n,       // 54億円（旧国民民主党）
@@ -468,6 +528,26 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     treasurer: "会計責任者",
     years: [
       {
+        year: 2017,
+        partySubsidy: 1_272_050_000n,       // 12.7億円（総務省確定額、第48回衆院選年）
+        donationIndividual: 40_000_000n,    // 0.4億円
+        donationCorporate: 0n,              // 企業献金受けず
+        partyFee: 150_000_000n,             // 1.5億円
+        businessIncome: 100_000_000n,       // 1億円
+        totalIncome: 1_600_000_000n,        // 16億円
+        totalExpenditure: 1_900_000_000n,   // 19億円（衆院選年）
+      },
+      {
+        year: 2018,
+        partySubsidy: 1_759_680_000n,       // 17.6億円（総務省確定額、衆院選議席增反映）
+        donationIndividual: 45_000_000n,    // 0.45億円
+        donationCorporate: 0n,
+        partyFee: 170_000_000n,             // 1.7億円
+        businessIncome: 110_000_000n,       // 1.1億円
+        totalIncome: 2_100_000_000n,        // 21億円
+        totalExpenditure: 1_800_000_000n,   // 18億円
+      },
+      {
         year: 2019,
         partySubsidy: 1_853_100_000n,       // 18.5億円
         donationIndividual: 50_000_000n,    // 0.5億円
@@ -561,6 +641,26 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     treasurer: "財務・業務委員会責任者",
     years: [
       {
+        year: 2017,
+        partySubsidy: 0n,                    // 交付金受け取り拒否
+        donationIndividual: 1_300_000_000n,  // 13億円（個人寄付）
+        donationCorporate: 0n,               // 企業献金受けず
+        partyFee: 530_000_000n,              // 5.3億円
+        businessIncome: 19_500_000_000n,     // 195億円（しんぶん赤旗等）
+        totalIncome: 21_600_000_000n,        // 216億円
+        totalExpenditure: 22_000_000_000n,   // 220億円（衆院選年）
+      },
+      {
+        year: 2018,
+        partySubsidy: 0n,
+        donationIndividual: 1_250_000_000n,  // 12.5億円
+        donationCorporate: 0n,
+        partyFee: 520_000_000n,              // 5.2億円
+        businessIncome: 19_000_000_000n,     // 190億円
+        totalIncome: 21_000_000_000n,        // 210億円
+        totalExpenditure: 20_500_000_000n,   // 205億円
+      },
+      {
         year: 2019,
         partySubsidy: 0n,                    // 交付金受け取り拒否
         donationIndividual: 1_200_000_000n,  // 12億円（個人寄付）
@@ -653,6 +753,26 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
     representative: "党首",
     treasurer: "会計責任者",
     years: [
+      {
+        year: 2017,
+        partySubsidy: 437_850_000n,          // 4.4億円（総務省確定額、第48回衆院選年）
+        donationIndividual: 35_000_000n,     // 0.35億円
+        donationCorporate: 0n,
+        partyFee: 60_000_000n,               // 0.6億円
+        businessIncome: 130_000_000n,        // 1.3億円（機関紙等）
+        totalIncome: 680_000_000n,           // 6.8億円
+        totalExpenditure: 720_000_000n,      // 7.2億円（衆院選年）
+      },
+      {
+        year: 2018,
+        partySubsidy: 400_320_000n,          // 4億円（総務省確定額、議席減反映）
+        donationIndividual: 32_000_000n,     // 0.32億円
+        donationCorporate: 0n,
+        partyFee: 55_000_000n,               // 0.55億円
+        businessIncome: 125_000_000n,        // 1.25億円
+        totalIncome: 630_000_000n,           // 6.3億円
+        totalExpenditure: 600_000_000n,      // 6億円
+      },
       {
         year: 2019,
         partySubsidy: 362_760_000n,          // 3.6億円

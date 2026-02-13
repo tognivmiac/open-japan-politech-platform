@@ -34,7 +34,7 @@ interface DashboardChartsProps {
 /* ---------- Helpers ---------- */
 
 function formatAmount(value: number): string {
-  if (value >= 10000) return `${(value / 10000).toFixed(1)}兆`;
+  if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(1)}兆`;
   if (value >= 100) return `${Math.round(value / 100)}億`;
   return `${value}百万`;
 }
