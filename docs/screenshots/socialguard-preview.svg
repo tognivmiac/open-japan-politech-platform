@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <linearGradient id="sg-bg" x1="0" y1="0" x2="800" y2="450">
+      <stop offset="0%" stop-color="#042f2e"/>
+      <stop offset="100%" stop-color="#0c1a1a"/>
+    </linearGradient>
+    <linearGradient id="sg-bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="800" height="450" rx="12" fill="url(#sg-bg)"/>
+  <!-- Browser chrome -->
+  <rect width="800" height="36" rx="12" fill="#0d1117"/>
+  <rect y="12" width="800" height="24" fill="#0d1117"/>
+  <circle cx="20" cy="18" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="18" r="6" fill="#febc2e"/>
+  <circle cx="60" cy="18" r="6" fill="#28c840"/>
+  <rect x="200" y="10" width="400" height="16" rx="8" fill="#161b22"/>
+  <text x="400" y="22" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8b949e">localhost:3007</text>
+  <!-- Nav bar -->
+  <rect y="36" width="800" height="44" fill="rgba(13,17,23,0.8)"/>
+  <text x="24" y="64" font-family="system-ui" font-weight="700" font-size="16" fill="#059669">SocialGuard</text>
+  <text x="150" y="64" font-family="system-ui" font-size="12" fill="#8b949e">ダッシュボード</text>
+  <text x="250" y="64" font-family="system-ui" font-size="12" fill="#8b949e">予算</text>
+  <text x="300" y="64" font-family="system-ui" font-size="12" fill="#8b949e">制度一覧</text>
+  <text x="380" y="64" font-family="system-ui" font-size="12" fill="#8b949e">都道府県</text>
+  <text x="470" y="64" font-family="system-ui" font-size="12" fill="#8b949e">政党比較</text>
+  <!-- Hero -->
+  <text x="40" y="118" font-family="system-ui" font-weight="800" font-size="22" fill="white">社会保障の全体像を、ひと目で</text>
+  <text x="40" y="140" font-family="system-ui" font-size="11" fill="#8b949e">年金・医療・介護・子育て・福祉——40兆円規模の社会保障を可視化</text>
+  <!-- Stats cards -->
+  <rect x="40" y="155" width="145" height="56" rx="8" fill="rgba(5,150,105,0.12)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+  <text x="56" y="174" font-family="system-ui" font-size="9" fill="#8b949e">2026年度総額</text>
+  <text x="56" y="198" font-family="system-ui" font-weight="700" font-size="16" fill="#34D399">¥40.4兆</text>
+  <rect x="197" y="155" width="145" height="56" rx="8" fill="rgba(5,150,105,0.12)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+  <text x="213" y="174" font-family="system-ui" font-size="9" fill="#8b949e">対象制度</text>
+  <text x="213" y="198" font-family="system-ui" font-weight="700" font-size="16" fill="#34D399">15制度</text>
+  <rect x="354" y="155" width="145" height="56" rx="8" fill="rgba(5,150,105,0.12)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+  <text x="370" y="174" font-family="system-ui" font-size="9" fill="#8b949e">受給者数</text>
+  <text x="370" y="198" font-family="system-ui" font-weight="700" font-size="16" fill="#34D399">8,400万人</text>
+  <rect x="511" y="155" width="145" height="56" rx="8" fill="rgba(5,150,105,0.12)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+  <text x="527" y="174" font-family="system-ui" font-size="9" fill="#8b949e">対GDP比</text>
+  <text x="527" y="198" font-family="system-ui" font-weight="700" font-size="16" fill="#34D399">7.2%</text>
+  <rect x="668" y="155" width="92" height="56" rx="8" fill="rgba(5,150,105,0.12)" stroke="rgba(5,150,105,0.3)" stroke-width="1"/>
+  <text x="684" y="174" font-family="system-ui" font-size="9" fill="#8b949e">都道府県</text>
+  <text x="684" y="198" font-family="system-ui" font-weight="700" font-size="16" fill="#34D399">47</text>
+  <!-- Donut chart -->
+  <rect x="40" y="224" width="280" height="200" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="56" y="250" font-family="system-ui" font-weight="600" font-size="13" fill="white">分野別構成（2026）</text>
+  <!-- Donut -->
+  <circle cx="180" cy="340" r="58" fill="none" stroke="#059669" stroke-width="18" stroke-dasharray="119 246" stroke-dashoffset="0" opacity="0.9"/>
+  <circle cx="180" cy="340" r="58" fill="none" stroke="#10B981" stroke-width="18" stroke-dasharray="117 248" stroke-dashoffset="-119" opacity="0.8"/>
+  <circle cx="180" cy="340" r="58" fill="none" stroke="#34D399" stroke-width="18" stroke-dasharray="36 329" stroke-dashoffset="-236" opacity="0.7"/>
+  <circle cx="180" cy="340" r="58" fill="none" stroke="#6EE7B7" stroke-width="18" stroke-dasharray="37 328" stroke-dashoffset="-272" opacity="0.6"/>
+  <circle cx="180" cy="340" r="58" fill="none" stroke="#A7F3D0" stroke-width="18" stroke-dasharray="33 332" stroke-dashoffset="-309" opacity="0.5"/>
+  <circle cx="180" cy="340" r="58" fill="none" stroke="#D1FAE5" stroke-width="18" stroke-dasharray="22 343" stroke-dashoffset="-342" opacity="0.4"/>
+  <text x="180" y="336" text-anchor="middle" font-family="system-ui" font-weight="700" font-size="14" fill="white">40.4兆</text>
+  <text x="180" y="352" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8b949e">2026年度</text>
+  <!-- Legend -->
+  <rect x="44" y="262" width="8" height="8" rx="2" fill="#059669"/>
+  <text x="56" y="270" font-family="system-ui" font-size="8" fill="#ccc">年金 13.1兆</text>
+  <rect x="130" y="262" width="8" height="8" rx="2" fill="#10B981"/>
+  <text x="142" y="270" font-family="system-ui" font-size="8" fill="#ccc">医療 13.0兆</text>
+  <rect x="216" y="262" width="8" height="8" rx="2" fill="#34D399"/>
+  <text x="228" y="270" font-family="system-ui" font-size="8" fill="#ccc">介護 3.95兆</text>
+  <!-- Stacked bar chart -->
+  <rect x="340" y="224" width="420" height="200" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="356" y="250" font-family="system-ui" font-weight="600" font-size="13" fill="white">社会保障費推移（兆円）</text>
+  <!-- Year bars stacked -->
+  <!-- 2019 -->
+  <rect x="380" y="290" width="30" height="50" rx="3" fill="#059669" opacity="0.7"/>
+  <rect x="380" y="340" width="30" height="50" rx="3" fill="#10B981" opacity="0.6"/>
+  <rect x="380" y="390" width="30" height="16" rx="3" fill="#34D399" opacity="0.5"/>
+  <text x="395" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2019</text>
+  <!-- 2020 -->
+  <rect x="420" y="280" width="30" height="55" rx="3" fill="#059669" opacity="0.7"/>
+  <rect x="420" y="335" width="30" height="50" rx="3" fill="#10B981" opacity="0.6"/>
+  <rect x="420" y="385" width="30" height="20" rx="3" fill="#34D399" opacity="0.5"/>
+  <text x="435" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2020</text>
+  <!-- 2021 -->
+  <rect x="460" y="278" width="30" height="55" rx="3" fill="#059669" opacity="0.7"/>
+  <rect x="460" y="333" width="30" height="50" rx="3" fill="#10B981" opacity="0.6"/>
+  <rect x="460" y="383" width="30" height="22" rx="3" fill="#34D399" opacity="0.5"/>
+  <text x="475" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2021</text>
+  <!-- 2022 -->
+  <rect x="500" y="276" width="30" height="56" rx="3" fill="#059669" opacity="0.7"/>
+  <rect x="500" y="332" width="30" height="50" rx="3" fill="#10B981" opacity="0.6"/>
+  <rect x="500" y="382" width="30" height="22" rx="3" fill="#34D399" opacity="0.5"/>
+  <text x="515" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2022</text>
+  <!-- 2023 -->
+  <rect x="540" y="273" width="30" height="56" rx="3" fill="#059669" opacity="0.7"/>
+  <rect x="540" y="329" width="30" height="52" rx="3" fill="#10B981" opacity="0.6"/>
+  <rect x="540" y="381" width="30" height="24" rx="3" fill="#34D399" opacity="0.5"/>
+  <text x="555" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2023</text>
+  <!-- 2024 -->
+  <rect x="580" y="268" width="30" height="58" rx="3" fill="#059669" opacity="0.75"/>
+  <rect x="580" y="326" width="30" height="52" rx="3" fill="#10B981" opacity="0.65"/>
+  <rect x="580" y="378" width="30" height="26" rx="3" fill="#34D399" opacity="0.55"/>
+  <text x="595" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2024</text>
+  <!-- 2025 -->
+  <rect x="620" y="262" width="30" height="60" rx="3" fill="#059669" opacity="0.8"/>
+  <rect x="620" y="322" width="30" height="54" rx="3" fill="#10B981" opacity="0.7"/>
+  <rect x="620" y="376" width="30" height="28" rx="3" fill="#34D399" opacity="0.6"/>
+  <text x="635" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2025</text>
+  <!-- 2026 -->
+  <rect x="660" y="256" width="30" height="62" rx="3" fill="#059669" opacity="0.85"/>
+  <rect x="660" y="318" width="30" height="56" rx="3" fill="#10B981" opacity="0.75"/>
+  <rect x="660" y="374" width="30" height="30" rx="3" fill="#34D399" opacity="0.65"/>
+  <text x="675" y="416" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2026</text>
+  <!-- Trend line -->
+  <text x="710" y="260" font-family="system-ui" font-size="9" fill="#34D399">40.4兆</text>
+  <text x="710" y="294" font-family="system-ui" font-size="8" fill="#8b949e">↑ +12%</text>
+</svg>

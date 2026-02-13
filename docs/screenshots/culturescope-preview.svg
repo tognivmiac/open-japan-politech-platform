@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <linearGradient id="cs-bg" x1="0" y1="0" x2="800" y2="450">
+      <stop offset="0%" stop-color="#1a1008"/>
+      <stop offset="100%" stop-color="#1c1520"/>
+    </linearGradient>
+    <linearGradient id="cs-area" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F59E0B" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#F59E0B" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="800" height="450" rx="12" fill="url(#cs-bg)"/>
+  <!-- Browser chrome -->
+  <rect width="800" height="36" rx="12" fill="#0d1117"/>
+  <rect y="12" width="800" height="24" fill="#0d1117"/>
+  <circle cx="20" cy="18" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="18" r="6" fill="#febc2e"/>
+  <circle cx="60" cy="18" r="6" fill="#28c840"/>
+  <rect x="200" y="10" width="400" height="16" rx="8" fill="#161b22"/>
+  <text x="400" y="22" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8b949e">localhost:3006</text>
+  <!-- Nav bar -->
+  <rect y="36" width="800" height="44" fill="rgba(13,17,23,0.8)"/>
+  <text x="24" y="64" font-family="system-ui" font-weight="700" font-size="16" fill="#F59E0B">CultureScope</text>
+  <text x="160" y="64" font-family="system-ui" font-size="12" fill="#8b949e">ダッシュボード</text>
+  <text x="260" y="64" font-family="system-ui" font-size="12" fill="#8b949e">予算推移</text>
+  <text x="340" y="64" font-family="system-ui" font-size="12" fill="#8b949e">プログラム</text>
+  <text x="430" y="64" font-family="system-ui" font-size="12" fill="#8b949e">政党比較</text>
+  <!-- Hero -->
+  <text x="40" y="118" font-family="system-ui" font-weight="800" font-size="22" fill="white">文化を、政治の言語で読み解く</text>
+  <text x="40" y="140" font-family="system-ui" font-size="11" fill="#8b949e">文化庁予算12分野×8年分の推移を可視化</text>
+  <!-- Stats cards -->
+  <rect x="40" y="155" width="170" height="56" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+  <text x="56" y="174" font-family="system-ui" font-size="9" fill="#8b949e">2026年度予算</text>
+  <text x="56" y="198" font-family="system-ui" font-weight="700" font-size="18" fill="#F59E0B">¥1,250億</text>
+  <rect x="222" y="155" width="170" height="56" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+  <text x="238" y="174" font-family="system-ui" font-size="9" fill="#8b949e">前年比</text>
+  <text x="238" y="198" font-family="system-ui" font-weight="700" font-size="18" fill="#22c55e">+3.2%</text>
+  <rect x="404" y="155" width="170" height="56" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+  <text x="420" y="174" font-family="system-ui" font-size="9" fill="#8b949e">登録プログラム</text>
+  <text x="420" y="198" font-family="system-ui" font-weight="700" font-size="18" fill="#F59E0B">20件</text>
+  <rect x="586" y="155" width="174" height="56" rx="8" fill="rgba(245,158,11,0.1)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+  <text x="602" y="174" font-family="system-ui" font-size="9" fill="#8b949e">対象カテゴリ</text>
+  <text x="602" y="198" font-family="system-ui" font-weight="700" font-size="18" fill="#F59E0B">12分野</text>
+  <!-- Area chart -->
+  <rect x="40" y="224" width="440" height="200" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="56" y="250" font-family="system-ui" font-weight="600" font-size="13" fill="white">文化庁予算推移（億円）</text>
+  <!-- Grid lines -->
+  <line x1="80" y1="270" x2="460" y2="270" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="80" y1="310" x2="460" y2="310" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="80" y1="350" x2="460" y2="350" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <line x1="80" y1="390" x2="460" y2="390" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+  <text x="72" y="274" text-anchor="end" font-family="system-ui" font-size="8" fill="#8b949e">1,300</text>
+  <text x="72" y="314" text-anchor="end" font-family="system-ui" font-size="8" fill="#8b949e">1,200</text>
+  <text x="72" y="354" text-anchor="end" font-family="system-ui" font-size="8" fill="#8b949e">1,100</text>
+  <text x="72" y="394" text-anchor="end" font-family="system-ui" font-size="8" fill="#8b949e">1,000</text>
+  <!-- Area fill -->
+  <path d="M 100 385 L 150 378 L 205 370 L 260 362 L 315 340 L 370 320 L 425 298 L 440 288 L 440 400 L 100 400 Z" fill="url(#cs-area)"/>
+  <!-- Line -->
+  <path d="M 100 385 L 150 378 L 205 370 L 260 362 L 315 340 L 370 320 L 425 298 L 440 288" stroke="#F59E0B" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Dots -->
+  <circle cx="100" cy="385" r="4" fill="#F59E0B"/>
+  <circle cx="150" cy="378" r="4" fill="#F59E0B"/>
+  <circle cx="205" cy="370" r="4" fill="#F59E0B"/>
+  <circle cx="260" cy="362" r="4" fill="#F59E0B"/>
+  <circle cx="315" cy="340" r="4" fill="#F59E0B"/>
+  <circle cx="370" cy="320" r="4" fill="#F59E0B"/>
+  <circle cx="425" cy="298" r="4" fill="#F59E0B"/>
+  <circle cx="440" cy="288" r="4" fill="#F59E0B" stroke="white" stroke-width="2"/>
+  <!-- Year labels -->
+  <text x="100" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2019</text>
+  <text x="150" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2020</text>
+  <text x="205" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2021</text>
+  <text x="260" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2022</text>
+  <text x="315" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2023</text>
+  <text x="370" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2024</text>
+  <text x="425" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2025</text>
+  <text x="440" y="414" text-anchor="middle" font-family="system-ui" font-size="8" fill="#8b949e">2026</text>
+  <!-- Category breakdown -->
+  <rect x="500" y="224" width="260" height="200" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <text x="516" y="250" font-family="system-ui" font-weight="600" font-size="13" fill="white">分野別内訳</text>
+  <!-- Horizontal bars -->
+  <text x="516" y="278" font-family="system-ui" font-size="9" fill="#ccc">芸術振興</text>
+  <rect x="590" y="268" width="150" height="14" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="590" y="268" width="120" height="14" rx="3" fill="#F59E0B" opacity="0.8"/>
+  <text x="516" y="302" font-family="system-ui" font-size="9" fill="#ccc">文化財保護</text>
+  <rect x="590" y="292" width="150" height="14" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="590" y="292" width="105" height="14" rx="3" fill="#FBBF24" opacity="0.7"/>
+  <text x="516" y="326" font-family="system-ui" font-size="9" fill="#ccc">メディア芸術</text>
+  <rect x="590" y="316" width="150" height="14" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="590" y="316" width="80" height="14" rx="3" fill="#FCD34D" opacity="0.6"/>
+  <text x="516" y="350" font-family="system-ui" font-size="9" fill="#ccc">著作権</text>
+  <rect x="590" y="340" width="150" height="14" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="590" y="340" width="60" height="14" rx="3" fill="#FDE68A" opacity="0.5"/>
+  <text x="516" y="374" font-family="system-ui" font-size="9" fill="#ccc">国際文化交流</text>
+  <rect x="590" y="364" width="150" height="14" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="590" y="364" width="45" height="14" rx="3" fill="#FEF3C7" opacity="0.4"/>
+  <text x="516" y="398" font-family="system-ui" font-size="9" fill="#ccc">文化教育</text>
+  <rect x="590" y="388" width="150" height="14" rx="3" fill="rgba(255,255,255,0.06)"/>
+  <rect x="590" y="388" width="35" height="14" rx="3" fill="#FFFBEB" opacity="0.35"/>
+</svg>

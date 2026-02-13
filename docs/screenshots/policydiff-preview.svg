@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" fill="none">
+  <defs>
+    <linearGradient id="pd-bg" x1="0" y1="0" x2="800" y2="450">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="800" height="450" rx="12" fill="url(#pd-bg)"/>
+  <!-- Browser chrome -->
+  <rect width="800" height="36" rx="12" fill="#0d1117"/>
+  <rect y="12" width="800" height="24" fill="#0d1117"/>
+  <circle cx="20" cy="18" r="6" fill="#ff5f57"/>
+  <circle cx="40" cy="18" r="6" fill="#febc2e"/>
+  <circle cx="60" cy="18" r="6" fill="#28c840"/>
+  <rect x="200" y="10" width="400" height="16" rx="8" fill="#161b22"/>
+  <text x="400" y="22" text-anchor="middle" font-family="system-ui" font-size="9" fill="#8b949e">localhost:3002</text>
+  <!-- Nav bar -->
+  <rect y="36" width="800" height="44" fill="rgba(13,17,23,0.8)"/>
+  <text x="24" y="64" font-family="system-ui" font-weight="700" font-size="16" fill="#3B82F6">PolicyDiff</text>
+  <text x="140" y="64" font-family="system-ui" font-size="12" fill="#8b949e">ダッシュボード</text>
+  <text x="240" y="64" font-family="system-ui" font-size="12" fill="#8b949e">政策比較</text>
+  <text x="320" y="64" font-family="system-ui" font-size="12" fill="#8b949e">カテゴリ</text>
+  <text x="400" y="64" font-family="system-ui" font-size="12" fill="#8b949e">市民提案</text>
+  <!-- Hero -->
+  <text x="40" y="118" font-family="system-ui" font-weight="800" font-size="22" fill="white">政策を、差分で読み解く</text>
+  <text x="40" y="140" font-family="system-ui" font-size="11" fill="#8b949e">全政党のマニフェストを10カテゴリで構造化比較</text>
+  <!-- Category filter chips -->
+  <rect x="40" y="155" width="60" height="24" rx="12" fill="rgba(59,130,246,0.3)" stroke="rgba(59,130,246,0.6)" stroke-width="1"/>
+  <text x="70" y="171" text-anchor="middle" font-family="system-ui" font-size="9" fill="#93c5fd">経済</text>
+  <rect x="108" y="155" width="60" height="24" rx="12" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+  <text x="138" y="171" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">外交</text>
+  <rect x="176" y="155" width="60" height="24" rx="12" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+  <text x="206" y="171" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">教育</text>
+  <rect x="244" y="155" width="60" height="24" rx="12" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+  <text x="274" y="171" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">社会保障</text>
+  <rect x="312" y="155" width="60" height="24" rx="12" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+  <text x="342" y="171" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">環境</text>
+  <!-- Policy comparison cards -->
+  <rect x="40" y="195" width="230" height="120" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="48" y="203" width="8" height="8" rx="4" fill="#E8312B"/>
+  <text x="62" y="211" font-family="system-ui" font-weight="600" font-size="11" fill="white">自由民主党</text>
+  <text x="48" y="232" font-family="system-ui" font-size="10" fill="#ccc">経済安全保障の強化と</text>
+  <text x="48" y="246" font-family="system-ui" font-size="10" fill="#ccc">サプライチェーン多元化を推進</text>
+  <rect x="48" y="260" width="80" height="20" rx="4" fill="rgba(59,130,246,0.15)"/>
+  <text x="88" y="274" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">経済政策</text>
+  <rect x="134" y="260" width="60" height="20" rx="4" fill="rgba(34,197,94,0.15)"/>
+  <text x="164" y="274" text-anchor="middle" font-family="system-ui" font-size="9" fill="#4ade80">成長戦略</text>
+  <rect x="48" y="290" width="120" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
+  <rect x="48" y="290" width="96" height="6" rx="3" fill="#3B82F6"/>
+
+  <rect x="285" y="195" width="230" height="120" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="293" y="203" width="8" height="8" rx="4" fill="#1E88E5"/>
+  <text x="307" y="211" font-family="system-ui" font-weight="600" font-size="11" fill="white">立憲民主党</text>
+  <text x="293" y="232" font-family="system-ui" font-size="10" fill="#ccc">分配重視の経済政策、</text>
+  <text x="293" y="246" font-family="system-ui" font-size="10" fill="#ccc">最低賃金1500円を目標に</text>
+  <rect x="293" y="260" width="80" height="20" rx="4" fill="rgba(59,130,246,0.15)"/>
+  <text x="333" y="274" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">経済政策</text>
+  <rect x="379" y="260" width="60" height="20" rx="4" fill="rgba(251,191,36,0.15)"/>
+  <text x="409" y="274" text-anchor="middle" font-family="system-ui" font-size="9" fill="#fbbf24">分配重視</text>
+  <rect x="293" y="290" width="120" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
+  <rect x="293" y="290" width="84" height="6" rx="3" fill="#1E88E5"/>
+
+  <rect x="530" y="195" width="230" height="120" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="538" y="203" width="8" height="8" rx="4" fill="#F4B400"/>
+  <text x="552" y="211" font-family="system-ui" font-weight="600" font-size="11" fill="white">国民民主党</text>
+  <text x="538" y="232" font-family="system-ui" font-size="10" fill="#ccc">「給料が上がる経済」を掲げ、</text>
+  <text x="538" y="246" font-family="system-ui" font-size="10" fill="#ccc">積極財政と減税を主張</text>
+  <rect x="538" y="260" width="80" height="20" rx="4" fill="rgba(59,130,246,0.15)"/>
+  <text x="578" y="274" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">経済政策</text>
+  <rect x="624" y="260" width="60" height="20" rx="4" fill="rgba(234,88,12,0.15)"/>
+  <text x="654" y="274" text-anchor="middle" font-family="system-ui" font-size="9" fill="#fb923c">積極財政</text>
+  <rect x="538" y="290" width="120" height="6" rx="3" fill="rgba(255,255,255,0.1)"/>
+  <rect x="538" y="290" width="78" height="6" rx="3" fill="#F4B400"/>
+
+  <!-- Second row -->
+  <rect x="40" y="328" width="230" height="100" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="48" y="336" width="8" height="8" rx="4" fill="#E65100"/>
+  <text x="62" y="344" font-family="system-ui" font-weight="600" font-size="11" fill="white">日本維新の会</text>
+  <text x="48" y="364" font-family="system-ui" font-size="10" fill="#ccc">身を切る改革と規制緩和、</text>
+  <text x="48" y="378" font-family="system-ui" font-size="10" fill="#ccc">フリーハンドの経済改革</text>
+  <rect x="48" y="392" width="80" height="20" rx="4" fill="rgba(59,130,246,0.15)"/>
+  <text x="88" y="406" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">経済政策</text>
+
+  <rect x="285" y="328" width="230" height="100" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="293" y="336" width="8" height="8" rx="4" fill="#F5DEB3"/>
+  <text x="307" y="344" font-family="system-ui" font-weight="600" font-size="11" fill="white">公明党</text>
+  <text x="293" y="364" font-family="system-ui" font-size="10" fill="#ccc">「小さな声を聴く」福祉重視、</text>
+  <text x="293" y="378" font-family="system-ui" font-size="10" fill="#ccc">中小企業支援を重点化</text>
+  <rect x="293" y="392" width="80" height="20" rx="4" fill="rgba(59,130,246,0.15)"/>
+  <text x="333" y="406" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">経済政策</text>
+
+  <rect x="530" y="328" width="230" height="100" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <rect x="538" y="336" width="8" height="8" rx="4" fill="#E8312B"/>
+  <text x="552" y="344" font-family="system-ui" font-weight="600" font-size="11" fill="white">日本共産党</text>
+  <text x="538" y="364" font-family="system-ui" font-size="10" fill="#ccc">大企業優遇税制の是正、</text>
+  <text x="538" y="378" font-family="system-ui" font-size="10" fill="#ccc">消費税減税・廃止を主張</text>
+  <rect x="538" y="392" width="80" height="20" rx="4" fill="rgba(59,130,246,0.15)"/>
+  <text x="578" y="406" text-anchor="middle" font-family="system-ui" font-size="9" fill="#60a5fa">経済政策</text>
+</svg>

@@ -77,6 +77,8 @@ GovTech（行政DX）でもCivicTech（市民技術）でもない。**政治の
 ### MoneyGlass `:3000`
 **政治資金を、ガラスのように透明に**
 
+<img src="docs/screenshots/moneyglass-preview.svg" alt="MoneyGlass Preview" width="100%"/>
+
 全政党・全政治団体の資金の流れを可視化。収支報告書を構造化し、収入9カテゴリ・支出8カテゴリで分類。グラデーション付き棒グラフ・ドーナツチャートで政治資金の実態にアクセス。
 
 `13政党` `8年分` `政治資金収支報告書`
@@ -86,6 +88,8 @@ GovTech（行政DX）でもCivicTech（市民技術）でもない。**政治の
 
 ### PolicyDiff `:3002`
 **全政党の政策を、差分で比較する**
+
+<img src="docs/screenshots/policydiff-preview.svg" alt="PolicyDiff Preview" width="100%"/>
 
 全15政党のマニフェスト・政策を10カテゴリに分類し、政党間の比較を可能にする。カテゴリ別・政党別フィルタリング、政党カラーチップによる直感的UI、市民からの政策提案機能。
 
@@ -99,6 +103,8 @@ GovTech（行政DX）でもCivicTech（市民技術）でもない。**政治の
 ### ParliScope `:3003`
 **議会を、すべての人とエージェントに開く**
 
+<img src="docs/screenshots/parliscope-preview.svg" alt="ParliScope Preview" width="100%"/>
+
 国会の会期・法案・議員・投票・討論データをAPI化。21会期分のデータを構造化し、法案タイムライン、投票結果アニメーション棒グラフ、議員カード一覧で法案追跡と議員分析が可能。
 
 `90法案` `713議員` `21会期`
@@ -108,6 +114,8 @@ GovTech（行政DX）でもCivicTech（市民技術）でもない。**政治の
 
 ### SeatMap `:3005`
 **議会の勢力図を、ひと目で把握する**
+
+<img src="docs/screenshots/seatmap-preview.svg" alt="SeatMap Preview" width="100%"/>
 
 国会の議席構成・政党別勢力を視覚的に表示。スプリング物理に基づくアニメーテッドバーで議席数の変動や与野党の勢力バランスを直感的に理解。過半数ラインdraw-in付き。
 
@@ -119,7 +127,9 @@ GovTech（行政DX）でもCivicTech（市民技術）でもない。**政治の
 <td width="50%">
 
 ### CultureScope `:3006`
-**文化政策を、データで可視化する**
+**文化を、政治の言語で読み解く**
+
+<img src="docs/screenshots/culturescope-preview.svg" alt="CultureScope Preview" width="100%"/>
 
 文化庁予算の推移（2019-2026）、芸術振興・文化財保護・メディア芸術等12分野の予算配分、各政党の文化政策スタンスを一覧比較。20の文化プログラム・補助金制度データベース。
 
@@ -129,9 +139,11 @@ GovTech（行政DX）でもCivicTech（市民技術）でもない。**政治の
 <td width="50%">
 
 ### SocialGuard `:3007`
-**社会保障を、誰もが理解できる形に**
+**社会保障の全体像を、ひと目で**
 
-年金・医療・介護・子育て支援・生活保護——37兆円規模の社会保障関係費を8分野で可視化。47都道府県別福祉指標比較、各政党の社会保障政策スタンス比較。
+<img src="docs/screenshots/socialguard-preview.svg" alt="SocialGuard Preview" width="100%"/>
+
+年金・医療・介護・子育て支援・生活保護——40兆円規模の社会保障関係費を8分野で可視化。47都道府県別福祉指標比較、各政党の社会保障政策スタンス比較。
 
 `64予算データ` `15制度` `47都道府県` `13政党スタンス`
 
