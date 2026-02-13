@@ -1,5 +1,3 @@
-import { Badge, Card } from "@ojpp/ui";
-
 interface PolicyCardProps {
   id: string;
   title: string;
@@ -19,15 +17,32 @@ export function PolicyCard({
   status,
   contentPreview,
 }: PolicyCardProps) {
-  const statusVariant =
-    status === "PUBLISHED" ? "success" : status === "DRAFT" ? "warning" : "default";
+  const statusStyle =
+    status === "PUBLISHED"
+      ? { bg: "rgba(34, 197, 94, 0.15)", color: "#4ade80" }
+      : status === "DRAFT"
+        ? { bg: "rgba(251, 191, 36, 0.15)", color: "#fbbf24" }
+        : { bg: "rgba(148, 163, 184, 0.15)", color: "#94a3b8" };
 
   return (
-    <a href={`/policy/${id}`} className="block transition-shadow hover:shadow-md">
-      <Card padding="sm" className="h-full">
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <Badge variant="info">{category}</Badge>
-          <Badge variant={statusVariant}>{status}</Badge>
+    <a href={`/policy/${id}`} className="block">
+      <div className="glass-card h-full p-5">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <span
+            className="tag-badge"
+            style={{
+              backgroundColor: "rgba(59, 130, 246, 0.15)",
+              color: "#60a5fa",
+            }}
+          >
+            {category}
+          </span>
+          <span
+            className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+            style={{ backgroundColor: statusStyle.bg, color: statusStyle.color }}
+          >
+            {status}
+          </span>
         </div>
         {partyName && (
           <div className="mb-2 flex items-center gap-1.5">
@@ -37,12 +52,19 @@ export function PolicyCard({
                 style={{ backgroundColor: partyColor }}
               />
             )}
-            <span className="text-xs font-medium text-gray-600">{partyName}</span>
+            <span
+              className="text-xs font-medium"
+              style={{ color: partyColor ?? "#94a3b8" }}
+            >
+              {partyName}
+            </span>
           </div>
         )}
-        <h3 className="mb-2 text-sm font-bold leading-snug">{title}</h3>
-        {contentPreview && <p className="line-clamp-2 text-xs text-gray-500">{contentPreview}</p>}
-      </Card>
+        <h3 className="mb-2 text-sm font-bold leading-snug text-white">{title}</h3>
+        {contentPreview && (
+          <p className="line-clamp-2 text-xs text-slate-500">{contentPreview}</p>
+        )}
+      </div>
     </a>
   );
 }

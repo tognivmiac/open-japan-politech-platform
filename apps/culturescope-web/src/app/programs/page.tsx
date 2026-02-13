@@ -1,5 +1,5 @@
 import { prisma } from "@ojpp/db";
-import { HeroSection, Card, FadeIn, StaggerGrid, StaggerItem, GradientCard } from "@ojpp/ui";
+import { FadeIn, StaggerGrid, StaggerItem } from "@ojpp/ui";
 import { unstable_noStore as noStore } from "next/cache";
 
 export const dynamic = "force-dynamic";
@@ -37,27 +37,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   TOTAL: "合計",
 };
 
-const CATEGORY_COLORS: Record<string, { from: string; to: string; bg: string; text: string }> = {
-  ARTS_PROMOTION: { from: "from-amber-400", to: "to-orange-500", bg: "bg-amber-50", text: "text-amber-700" },
-  CULTURAL_PROPERTY: { from: "from-emerald-400", to: "to-teal-500", bg: "bg-emerald-50", text: "text-emerald-700" },
-  MEDIA_ARTS: { from: "from-violet-400", to: "to-purple-500", bg: "bg-violet-50", text: "text-violet-700" },
-  INTERNATIONAL: { from: "from-blue-400", to: "to-indigo-500", bg: "bg-blue-50", text: "text-blue-700" },
-  COPYRIGHT: { from: "from-rose-400", to: "to-pink-500", bg: "bg-rose-50", text: "text-rose-700" },
-  JAPANESE_LANGUAGE: { from: "from-cyan-400", to: "to-sky-500", bg: "bg-cyan-50", text: "text-cyan-700" },
-  RELIGIOUS_AFFAIRS: { from: "from-stone-400", to: "to-gray-500", bg: "bg-stone-50", text: "text-stone-700" },
-  CREATIVE_INDUSTRY: { from: "from-fuchsia-400", to: "to-pink-500", bg: "bg-fuchsia-50", text: "text-fuchsia-700" },
-  CULTURAL_FACILITY: { from: "from-lime-400", to: "to-green-500", bg: "bg-lime-50", text: "text-lime-700" },
-  DIGITAL_ARCHIVE: { from: "from-indigo-400", to: "to-blue-500", bg: "bg-indigo-50", text: "text-indigo-700" },
-  LOCAL_CULTURE: { from: "from-orange-400", to: "to-red-500", bg: "bg-orange-50", text: "text-orange-700" },
-  TOTAL: { from: "from-amber-500", to: "to-yellow-600", bg: "bg-amber-50", text: "text-amber-800" },
-};
-
 function getCategoryLabel(category: string): string {
   return CATEGORY_LABELS[category] ?? category;
-}
-
-function getCategoryColor(category: string) {
-  return CATEGORY_COLORS[category] ?? CATEGORY_COLORS.TOTAL;
 }
 
 function formatBudgetAmount(amount: bigint): string {
@@ -97,33 +78,33 @@ export default async function ProgramsPage() {
 
   if (programs.length === 0) {
     return (
-      <div>
-        <HeroSection
-          title="文化施策一覧"
-          subtitle="文化庁の補助金・助成金プログラムと文化政策を網羅"
-          gradientFrom="from-amber-500"
-          gradientTo="to-yellow-600"
-        />
-        <div className="mx-auto max-w-7xl px-6 py-12">
-          <Card>
-            {fetchError ? (
-              <div className="text-center">
-                <p className="text-red-600 font-medium">データベース接続エラー</p>
-                <code className="mt-2 inline-block rounded bg-red-50 px-3 py-1 text-xs font-mono text-red-700">
-                  {fetchError}
-                </code>
-              </div>
-            ) : (
-              <p className="text-center text-gray-500">
-                文化プログラムデータがまだ投入されていません。
-                <br />
-                <code className="mt-1 inline-block rounded bg-gray-100 px-2 py-1 text-xs font-mono">
-                  pnpm ingest:culture
-                </code>{" "}
-                を実行してデータを投入してください。
-              </p>
-            )}
-          </Card>
+      <div className="mx-auto max-w-7xl px-6 py-20">
+        <FadeIn>
+          <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-white">
+            文化施策一覧
+          </h1>
+          <p className="mb-8 text-zinc-400">
+            文化庁の補助金・助成金プログラムと文化政策を網羅
+          </p>
+        </FadeIn>
+        <div className="glass-card p-8">
+          {fetchError ? (
+            <div className="text-center">
+              <p className="text-red-400 font-medium">データベース接続エラー</p>
+              <code className="mt-3 inline-block rounded-lg bg-red-950/50 border border-red-900/30 px-4 py-2 text-xs font-mono text-red-400">
+                {fetchError}
+              </code>
+            </div>
+          ) : (
+            <p className="text-center text-zinc-500">
+              文化プログラムデータがまだ投入されていません。
+              <br />
+              <code className="mt-2 inline-block rounded-lg bg-amber-950/40 border border-amber-800/20 px-3 py-1 text-xs font-mono text-amber-400">
+                pnpm ingest:culture
+              </code>{" "}
+              を実行してデータを投入してください。
+            </p>
+          )}
         </div>
       </div>
     );
@@ -131,34 +112,44 @@ export default async function ProgramsPage() {
 
   return (
     <div>
-      <HeroSection
-        title="文化施策一覧"
-        subtitle="文化庁の補助金・助成金プログラムと文化政策を網羅"
-        gradientFrom="from-amber-500"
-        gradientTo="to-yellow-600"
-      >
-        <div className="flex flex-wrap gap-4 text-sm text-white/70">
-          <span>全{programs.length}件</span>
-          <span>実施中: {activeCount}件</span>
-          <span>分野数: {categories.length}</span>
+      {/* Hero */}
+      <section className="relative overflow-hidden px-6 pb-8 pt-12">
+        <div className="absolute -top-20 right-1/4 h-40 w-80 rounded-full bg-amber-500/10 blur-3xl" />
+        <div className="relative mx-auto max-w-7xl">
+          <FadeIn>
+            <h1 className="text-3xl font-extrabold tracking-tight text-white">
+              文化施策一覧
+            </h1>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <p className="mt-3 text-base text-zinc-400">
+              文化庁の補助金・助成金プログラムと文化政策を網羅
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.15}>
+            <div className="mt-4 flex flex-wrap gap-4 text-sm text-zinc-500">
+              <span>全{programs.length}件</span>
+              <span>実施中: {activeCount}件</span>
+              <span>分野数: {categories.length}</span>
+            </div>
+          </FadeIn>
         </div>
-      </HeroSection>
+      </section>
 
-      <div className="mx-auto max-w-7xl px-6 py-12">
+      <div className="mx-auto max-w-7xl px-6 pb-16">
         {/* ====== Category Filter Summary ====== */}
         <FadeIn>
-          <div className="mb-8 flex flex-wrap gap-2">
+          <div className="mb-10 flex flex-wrap gap-2">
             {categories.map((cat) => {
-              const colors = getCategoryColor(cat);
               const count = programs.filter((p) => p.category === cat).length;
               return (
                 <a
                   key={cat}
                   href={`#category-${cat}`}
-                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all hover:scale-105 ${colors.bg} ${colors.text}`}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-medium text-zinc-300 transition-all hover:border-amber-500/30 hover:bg-amber-500/10 hover:text-amber-400"
                 >
                   {getCategoryLabel(cat)}
-                  <span className="rounded-full bg-white/60 px-1.5 py-0.5 text-[10px]">{count}</span>
+                  <span className="rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] text-zinc-400">{count}</span>
                 </a>
               );
             })}
@@ -167,83 +158,108 @@ export default async function ProgramsPage() {
 
         {/* ====== Programs by Category ====== */}
         {categories.map((cat) => {
-          const colors = getCategoryColor(cat);
           const catPrograms = programs.filter((p) => p.category === cat);
+          const maxBudget = Math.max(...catPrograms.map((p) => Number(p.budget ?? 0)), 1);
 
           return (
             <section key={cat} id={`category-${cat}`} className="mb-12">
               <FadeIn>
-                <h2 className="mb-6 flex items-center gap-3 text-2xl font-bold">
-                  <span className={`inline-block h-6 w-1 rounded-full bg-gradient-to-b ${colors.from} ${colors.to}`} />
+                <h2 className="mb-6 flex items-center gap-3 text-xl font-bold text-white">
+                  <span className="inline-block h-5 w-1 rounded-full bg-amber-500" />
                   {getCategoryLabel(cat)}
-                  <span className="text-sm font-normal text-gray-400">({catPrograms.length}件)</span>
+                  <span className="text-sm font-normal text-zinc-500">({catPrograms.length}件)</span>
                 </h2>
               </FadeIn>
 
               <StaggerGrid className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {catPrograms.map((p) => (
-                  <StaggerItem key={p.id}>
-                    <GradientCard gradientFrom={colors.from} gradientTo={colors.to}>
-                      {/* Header */}
-                      <div className="mb-3 flex items-start justify-between">
-                        <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${colors.bg} ${colors.text}`}>
-                          {getCategoryLabel(p.category)}
-                        </span>
-                        {p.isActive ? (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700">
-                            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-                            実施中
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-500">
-                            <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
-                            終了
-                          </span>
-                        )}
-                      </div>
+                {catPrograms.map((p) => {
+                  const budgetPct = p.budget ? (Number(p.budget) / maxBudget) * 100 : 0;
 
-                      {/* Title */}
-                      <h3 className="text-lg font-bold tracking-tight leading-tight">{p.name}</h3>
-
-                      {/* Description */}
-                      <p className="mt-2 text-sm text-gray-600 line-clamp-3">{p.description}</p>
-
-                      {/* Metadata */}
-                      <div className="mt-4 flex flex-wrap gap-2 text-xs">
+                  return (
+                    <StaggerItem key={p.id}>
+                      <div className="glass-card group relative overflow-hidden p-5 transition-all duration-300 hover:border-amber-500/20 hover:bg-white/[0.05]">
+                        {/* Budget bar at top */}
                         {p.budget && (
-                          <span className="rounded-lg bg-amber-50 px-2 py-1 font-medium text-amber-700">
-                            {formatBudgetAmount(p.budget)}
-                          </span>
+                          <div className="absolute inset-x-0 top-0 h-0.5 bg-white/5">
+                            <div
+                              className="h-full bg-amber-500/60 transition-all duration-700"
+                              style={{ width: `${budgetPct}%` }}
+                            />
+                          </div>
                         )}
-                        <span className="rounded-lg bg-gray-100 px-2 py-1 text-gray-600">
-                          {p.startYear}年〜{p.endYear ? `${p.endYear}年` : "継続中"}
-                        </span>
-                        {p.targetGroup && (
-                          <span className="rounded-lg bg-blue-50 px-2 py-1 text-blue-700">
-                            対象: {p.targetGroup}
-                          </span>
-                        )}
-                        <span className="rounded-lg bg-gray-100 px-2 py-1 text-gray-600">
-                          {p.ministry}
-                        </span>
-                      </div>
 
-                      {/* Source link */}
-                      {p.sourceUrl && (
-                        <div className="mt-3">
-                          <a
-                            href={p.sourceUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-xs font-medium text-amber-600 hover:text-amber-700 transition-colors"
-                          >
-                            出典を見る &rarr;
-                          </a>
+                        {/* Header */}
+                        <div className="mb-3 flex items-start justify-between">
+                          <span className="inline-block rounded-full bg-amber-500/10 px-2.5 py-0.5 text-xs font-medium text-amber-400">
+                            {getCategoryLabel(p.category)}
+                          </span>
+                          {p.isActive ? (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-green-500/10 px-2 py-0.5 text-xs font-medium text-green-400">
+                              <span className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                              実施中
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 rounded-full bg-white/5 px-2 py-0.5 text-xs font-medium text-zinc-500">
+                              <span className="h-1.5 w-1.5 rounded-full bg-zinc-500" />
+                              終了
+                            </span>
+                          )}
                         </div>
-                      )}
-                    </GradientCard>
-                  </StaggerItem>
-                ))}
+
+                        {/* Title */}
+                        <h3 className="text-base font-bold tracking-tight leading-tight text-white">
+                          {p.name}
+                        </h3>
+
+                        {/* Description */}
+                        <p className="mt-3 text-sm leading-relaxed text-zinc-400 line-clamp-3">
+                          {p.description}
+                        </p>
+
+                        {/* Budget visual */}
+                        {p.budget && (
+                          <div className="mt-4 rounded-lg bg-amber-500/5 border border-amber-500/10 px-3 py-2">
+                            <div className="flex items-center justify-between">
+                              <span className="text-xs text-zinc-500">予算額</span>
+                              <span className="text-sm font-bold text-amber-400">
+                                {formatBudgetAmount(p.budget)}
+                              </span>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Metadata */}
+                        <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                          <span className="rounded-lg bg-white/5 px-2.5 py-1 text-zinc-500">
+                            {p.startYear}年〜{p.endYear ? `${p.endYear}年` : "継続中"}
+                          </span>
+                          {p.targetGroup && (
+                            <span className="rounded-lg bg-blue-500/10 px-2.5 py-1 text-blue-400">
+                              対象: {p.targetGroup}
+                            </span>
+                          )}
+                          <span className="rounded-lg bg-white/5 px-2.5 py-1 text-zinc-500">
+                            {p.ministry}
+                          </span>
+                        </div>
+
+                        {/* Source link */}
+                        {p.sourceUrl && (
+                          <div className="mt-4 pt-3 border-t border-white/5">
+                            <a
+                              href={p.sourceUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs font-medium text-amber-400 hover:text-amber-300 transition-colors"
+                            >
+                              出典を見る &rarr;
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </StaggerItem>
+                  );
+                })}
               </StaggerGrid>
             </section>
           );

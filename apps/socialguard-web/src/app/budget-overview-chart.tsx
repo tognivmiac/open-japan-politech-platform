@@ -36,19 +36,21 @@ export function BudgetOverviewChart({ data }: { data: ChartData[] }) {
                 </linearGradient>
               ))}
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" horizontal={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" horizontal={false} />
             <XAxis
               type="number"
               tickFormatter={(v: number) =>
                 v >= 10000 ? `${(v / 10000).toFixed(0)}兆` : `${v.toLocaleString()}億`
               }
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: "#6B7280" }}
+              stroke="rgba(255,255,255,0.06)"
             />
             <YAxis
               type="category"
               dataKey="category"
               width={100}
-              tick={{ fontSize: 12 }}
+              tick={{ fontSize: 12, fill: "#9CA3AF" }}
+              stroke="rgba(255,255,255,0.06)"
             />
             <Tooltip
               formatter={(value: number) => [
@@ -59,9 +61,13 @@ export function BudgetOverviewChart({ data }: { data: ChartData[] }) {
               ]}
               contentStyle={{
                 borderRadius: "8px",
-                border: "1px solid #E5E7EB",
-                boxShadow: "0 4px 6px -1px rgba(0,0,0,0.1)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                backgroundColor: "rgba(15, 23, 42, 0.95)",
+                color: "#E5E7EB",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.4)",
               }}
+              itemStyle={{ color: "#D1D5DB" }}
+              labelStyle={{ color: "#9CA3AF" }}
             />
             <Bar dataKey="amount" radius={[0, 6, 6, 0]} animationDuration={1200} animationBegin={200}>
               {data.map((d) => (

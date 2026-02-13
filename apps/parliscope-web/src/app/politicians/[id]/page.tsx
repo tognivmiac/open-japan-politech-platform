@@ -50,6 +50,7 @@ export default async function PoliticianDetailPage({ params }: PageProps) {
   };
 
   return (
+    <div className="min-h-screen bg-gradient-to-b from-[#0f0f23] to-[#1a1033]">
     <div className="mx-auto max-w-7xl px-6 py-12">
       <div className="mb-6">
         <a href="/politicians" className="inline-flex items-center gap-1 text-sm text-indigo-400 transition-colors hover:text-indigo-300">
@@ -211,6 +212,7 @@ export default async function PoliticianDetailPage({ params }: PageProps) {
           )}
         </div>
       </div>
+    </div>
     </div>
   );
 }

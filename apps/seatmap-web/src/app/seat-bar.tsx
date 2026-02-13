@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView, AnimatePresence } from "@ojpp/ui";
+import { motion, useInView } from "@ojpp/ui";
 
 /* ---------- Types ---------- */
 

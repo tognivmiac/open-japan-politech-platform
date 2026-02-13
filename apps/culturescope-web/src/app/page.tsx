@@ -64,17 +64,6 @@ function formatBudgetAmount(amount: bigint): string {
   return `${num}百万円`;
 }
 
-function formatBudgetAmountShort(amount: bigint): string {
-  const num = Number(amount);
-  if (num >= 10000) {
-    return `${(num / 10000).toFixed(1)}兆`;
-  }
-  if (num >= 100) {
-    return `${Math.round(num / 100)}億`;
-  }
-  return `${num}百万`;
-}
-
 /* ---------- Data fetching ---------- */
 
 async function getData() {

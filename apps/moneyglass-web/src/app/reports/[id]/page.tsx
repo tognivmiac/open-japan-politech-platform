@@ -1,4 +1,4 @@
-import { Badge, Card, Stat } from "@ojpp/ui";
+import { Badge, Stat, Card, ScrollReveal, FadeIn } from "@ojpp/ui";
 import { notFound } from "next/navigation";
 import { formatCurrency } from "@/lib/format";
 import { ReportCharts } from "./report-charts";
@@ -68,6 +68,8 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
   const report = await getReport(id);
   if (!report) notFound();
 
+  const partyColor = report.organization.party?.color ?? "#6B7280";
+
   const incomeData = report.incomes.map((i) => ({
     name: INCOME_CATEGORY_LABELS[i.category] ?? i.category,
     value: Number(i.amount),
@@ -79,96 +81,128 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ i
   }));
 
   return (
-    <div className="mx-auto max-w-7xl px-6 py-12">
-      <div className="mb-2 text-sm text-gray-500">
-        <a href={`/organizations/${report.organization.id}`} className="hover:underline">
+    <div className="mx-auto max-w-7xl px-8 py-12">
+      {/* Breadcrumb */}
+      <div className="mb-3 text-sm text-[#6e7681]">
+        <a
+          href={`/organizations/${report.organization.id}`}
+          className="text-[#8b949e] transition-colors hover:text-[#FF8C5A]"
+        >
           {report.organization.name}
         </a>
-        {" > "}
-        {report.fiscalYear}年度 収支報告書
+        <span className="mx-2">/</span>
+        <span className="text-[#c9d1d9]">
+          {report.fiscalYear}年度 収支報告書
+        </span>
       </div>
 
-      <div className="mb-8 flex items-center gap-3">
-        <h2 className="text-3xl font-bold">{report.fiscalYear}年度 収支報告書</h2>
-        <Badge variant={report.status === "PUBLISHED" ? "success" : "default"}>
-          {report.status}
-        </Badge>
-      </div>
+      <FadeIn direction="up" delay={0}>
+        <div className="mb-8 flex flex-wrap items-center gap-3">
+          <h2 className="text-3xl font-bold text-[#f0f0f0]">
+            {report.fiscalYear}年度 収支報告書
+          </h2>
+          {report.organization.party && (
+            <span
+              className="rounded-full px-3 py-1 text-sm font-medium text-white"
+              style={{
+                backgroundColor: partyColor,
+                boxShadow: `0 0 12px ${partyColor}40`,
+              }}
+            >
+              {report.organization.party.name}
+            </span>
+          )}
+          <Badge
+            theme="dark"
+            variant={report.status === "PUBLISHED" ? "success" : "default"}
+          >
+            {report.status}
+          </Badge>
+        </div>
+      </FadeIn>
 
-      <div className="mb-8 grid gap-4 sm:grid-cols-4">
-        <Stat label="総収入" value={formatCurrency(report.totalIncome)} />
-        <Stat label="総支出" value={formatCurrency(report.totalExpenditure)} />
-        <Stat label="残高" value={formatCurrency(report.balance)} />
-        <Stat label="届出先" value={report.reportingBody} />
-      </div>
+      <ScrollReveal>
+        <div className="mb-10 grid gap-4 sm:grid-cols-4">
+          <Stat variant="dark" label="総収入" value={formatCurrency(report.totalIncome)} />
+          <Stat variant="dark" label="総支出" value={formatCurrency(report.totalExpenditure)} />
+          <Stat variant="dark" label="残高" value={formatCurrency(report.balance)} />
+          <Stat variant="dark" label="届出先" value={report.reportingBody} />
+        </div>
+      </ScrollReveal>
 
       <div className="mb-8 grid gap-8 lg:grid-cols-2">
-        <section>
-          <h3 className="mb-4 text-xl font-bold">収入内訳</h3>
-          <Card hover>
-            <ReportCharts type="income" data={incomeData} />
-          </Card>
-          <div className="mt-4 overflow-hidden rounded-xl border bg-white shadow-card">
-            <table className="w-full text-left text-sm">
-              <thead className="border-b bg-gray-50/80">
-                <tr>
-                  <th className="px-4 py-3 font-medium text-gray-600">区分</th>
-                  <th className="px-4 py-3 text-right font-medium text-gray-600">金額</th>
-                </tr>
-              </thead>
-              <tbody>
-                {report.incomes.map((income) => (
-                  <tr
-                    key={income.id}
-                    className="border-b transition-colors last:border-0 hover:bg-blue-50/50"
-                  >
-                    <td className="px-4 py-3">
-                      {INCOME_CATEGORY_LABELS[income.category] ?? income.category}
-                      {income.source && (
-                        <span className="ml-2 text-xs text-gray-400">({income.source})</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-right font-medium text-income">
-                      {formatCurrency(income.amount)}
-                    </td>
+        {/* Income section */}
+        <ScrollReveal>
+          <section>
+            <h3 className="mb-4 text-xl font-bold text-[#f0f0f0]">収入内訳</h3>
+            <Card variant="dark" hover>
+              <ReportCharts type="income" data={incomeData} />
+            </Card>
+            <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.03)] backdrop-blur-sm">
+              <table className="w-full text-left text-sm">
+                <thead className="border-b border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium text-[#8b949e]">区分</th>
+                    <th className="px-4 py-3 text-right font-medium text-[#8b949e]">金額</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+                </thead>
+                <tbody>
+                  {report.incomes.map((income) => (
+                    <tr
+                      key={income.id}
+                      className="border-b border-[rgba(255,255,255,0.04)] transition-colors last:border-0 hover:bg-[rgba(16,185,129,0.04)]"
+                    >
+                      <td className="px-4 py-3 text-[#c9d1d9]">
+                        {INCOME_CATEGORY_LABELS[income.category] ?? income.category}
+                        {income.source && (
+                          <span className="ml-2 text-xs text-[#6e7681]">({income.source})</span>
+                        )}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono font-medium text-[#10B981]">
+                        {formatCurrency(income.amount)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </ScrollReveal>
 
-        <section>
-          <h3 className="mb-4 text-xl font-bold">支出内訳</h3>
-          <Card hover>
-            <ReportCharts type="expenditure" data={expenditureData} />
-          </Card>
-          <div className="mt-4 overflow-hidden rounded-xl border bg-white shadow-card">
-            <table className="w-full text-left text-sm">
-              <thead className="border-b bg-gray-50/80">
-                <tr>
-                  <th className="px-4 py-3 font-medium text-gray-600">区分</th>
-                  <th className="px-4 py-3 text-right font-medium text-gray-600">金額</th>
-                </tr>
-              </thead>
-              <tbody>
-                {report.expenditures.map((exp) => (
-                  <tr
-                    key={exp.id}
-                    className="border-b transition-colors last:border-0 hover:bg-red-50/50"
-                  >
-                    <td className="px-4 py-3">
-                      {EXPENDITURE_CATEGORY_LABELS[exp.category] ?? exp.category}
-                    </td>
-                    <td className="px-4 py-3 text-right font-medium text-expenditure">
-                      {formatCurrency(exp.amount)}
-                    </td>
+        {/* Expenditure section */}
+        <ScrollReveal>
+          <section>
+            <h3 className="mb-4 text-xl font-bold text-[#f0f0f0]">支出内訳</h3>
+            <Card variant="dark" hover>
+              <ReportCharts type="expenditure" data={expenditureData} />
+            </Card>
+            <div className="mt-4 overflow-hidden rounded-xl border border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.03)] backdrop-blur-sm">
+              <table className="w-full text-left text-sm">
+                <thead className="border-b border-[rgba(255,255,255,0.06)] bg-[rgba(255,255,255,0.02)]">
+                  <tr>
+                    <th className="px-4 py-3 font-medium text-[#8b949e]">区分</th>
+                    <th className="px-4 py-3 text-right font-medium text-[#8b949e]">金額</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+                </thead>
+                <tbody>
+                  {report.expenditures.map((exp) => (
+                    <tr
+                      key={exp.id}
+                      className="border-b border-[rgba(255,255,255,0.04)] transition-colors last:border-0 hover:bg-[rgba(239,68,68,0.04)]"
+                    >
+                      <td className="px-4 py-3 text-[#c9d1d9]">
+                        {EXPENDITURE_CATEGORY_LABELS[exp.category] ?? exp.category}
+                      </td>
+                      <td className="px-4 py-3 text-right font-mono font-medium text-[#EF4444]">
+                        {formatCurrency(exp.amount)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </ScrollReveal>
       </div>
     </div>
   );

@@ -72,13 +72,15 @@ interface PartyFinanceData {
  *   2020: 総務省確定額（年間合計、政党再編前後を含む）
  *   2021: 総務省確定額（日経新聞2021年11月報道）
  *   2022: nippon.com「政党交付金：2022年の年間総額315億円」
- *   2023: 時事通信・日経新聞2023年報道
- *   2024: nippon.com「政党交付金：2024年は総額315億円余り」
+ *   2023: 総務省確定額（日経新聞・時事通信2023年報道）
+ *   2024: nippon.com「政党交付金：2024年は総額315億円余り」/ joseikin-now.jp
+ *   2025: nippon.com「2025年の政党交付金：自民党は20億円減の136億円」
  *
  * 総収入・総支出の出典:
  *   総務省 政治資金収支報告書（各年定期公表）の政党本部分
  *   日経新聞「自民収入244億円で首位 19年」(2020/11/28)
  *   日経新聞「自民党、23年収入は439億円 支出は3割減」(2024/3/17)
+ *     ※439億円は前年繰越金約240億円を含む「収入総額」。本データでは繰越金を除いた本年収入を使用
  *   しんぶん赤旗「自民収入 7割が税金/21年政治資金収支報告書」(2022/11/26)
  *   JCP「2022年政治資金収支報告」(2023/11/25)
  */
@@ -487,7 +489,7 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
       },
       {
         year: 2021,
-        partySubsidy: 3_170_350_000n,       // 31.7億円（衆院選で躍進後の再算定）
+        partySubsidy: 1_922_000_000n,       // 19.22億円（衆院選後の再算定含む年間合計、日経新聞）
         donationIndividual: 80_000_000n,    // 0.8億円
         donationCorporate: 0n,
         partyFee: 250_000_000n,             // 2.5億円
@@ -985,33 +987,33 @@ const PARTY_FINANCE_DATA: PartyFinanceData[] = [
       },
       {
         year: 2024,
-        partySubsidy: 238_000_000n,          // 2.38億円（推計、衆院選で議席獲得）
+        partySubsidy: 28_810_000n,           // 0.29億円（12月交付分のみ、日経新聞2881万円）
         donationIndividual: 400_000_000n,    // 4億円（推計）
         donationCorporate: 0n,
         partyFee: 150_000_000n,              // 1.5億円（推計）
         businessIncome: 80_000_000n,         // 0.8億円（推計）
-        totalIncome: 950_000_000n,           // 9.5億円（推計）
-        totalExpenditure: 1_000_000_000n,    // 10億円（推計、衆院選年）
+        totalIncome: 750_000_000n,           // 7.5億円（推計）
+        totalExpenditure: 800_000_000n,      // 8億円（推計、衆院選年）
       },
       {
         year: 2025,
-        partySubsidy: 300_000_000n,          // 3億円（推計）
+        partySubsidy: 172_670_000n,          // 1.73億円（nippon.com確定額）
         donationIndividual: 350_000_000n,    // 3.5億円（推計）
         donationCorporate: 0n,
         partyFee: 160_000_000n,              // 1.6億円（推計）
         businessIncome: 90_000_000n,         // 0.9億円（推計）
-        totalIncome: 980_000_000n,           // 9.8億円（推計）
-        totalExpenditure: 900_000_000n,      // 9億円（推計）
+        totalIncome: 850_000_000n,           // 8.5億円（推計）
+        totalExpenditure: 800_000_000n,      // 8億円（推計）
       },
       {
         year: 2026,
-        partySubsidy: 310_000_000n,          // 3.1億円（推計）
+        partySubsidy: 175_000_000n,          // 1.75億円（推計、2025年1.73億からの微増想定）
         donationIndividual: 370_000_000n,    // 3.7億円（推計）
         donationCorporate: 0n,
         partyFee: 170_000_000n,              // 1.7億円（推計）
         businessIncome: 100_000_000n,        // 1億円（推計）
-        totalIncome: 1_050_000_000n,         // 10.5億円（推計）
-        totalExpenditure: 1_100_000_000n,    // 11億円（推計、参院選年）
+        totalIncome: 900_000_000n,           // 9億円（推計）
+        totalExpenditure: 950_000_000n,      // 9.5億円（推計、参院選年）
       },
     ],
   },

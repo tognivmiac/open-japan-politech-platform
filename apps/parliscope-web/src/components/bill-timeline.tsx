@@ -26,20 +26,22 @@ export function BillTimeline({ currentStatus }: BillTimelineProps) {
             <div className="flex flex-col items-center">
               <div
                 className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium transition-all ${
-                  isCompleted ? "bg-purple-600 text-white" : "bg-gray-200 text-gray-500"
-                } ${isCurrent ? "ring-2 ring-purple-300 ring-offset-2" : ""}`}
+                  isCompleted
+                    ? "bg-indigo-600 text-white shadow-md shadow-indigo-500/30"
+                    : "bg-white/[0.06] text-[#6b7280]"
+                } ${isCurrent ? "ring-2 ring-indigo-400/50 ring-offset-2 ring-offset-[#0f0f23]" : ""}`}
               >
                 {isCompleted ? "\u2713" : i + 1}
               </div>
               <span
-                className={`mt-1 text-[10px] ${isCompleted ? "font-medium text-purple-700" : "text-gray-400"}`}
+                className={`mt-1 text-[10px] ${isCompleted ? "font-medium text-indigo-300" : "text-[#6b7280]"}`}
               >
                 {step.label}
               </span>
             </div>
             {i < BILL_STEPS.length - 1 && (
               <div
-                className={`mx-1 h-0.5 w-4 ${i < currentIndex ? "bg-purple-600" : "bg-gray-200"}`}
+                className={`mx-1 h-0.5 w-4 ${i < currentIndex ? "bg-indigo-600" : "bg-white/[0.08]"}`}
               />
             )}
           </div>
@@ -47,10 +49,10 @@ export function BillTimeline({ currentStatus }: BillTimelineProps) {
       })}
       {(isRejected || isWithdrawn) && (
         <div className="ml-2 flex flex-col items-center">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-100 text-xs font-medium text-red-600">
-            \u2715
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red-500/15 text-xs font-medium text-red-400">
+            {"\u2715"}
           </div>
-          <span className="mt-1 text-[10px] font-medium text-red-600">
+          <span className="mt-1 text-[10px] font-medium text-red-400">
             {isRejected ? "否決" : "撤回"}
           </span>
         </div>

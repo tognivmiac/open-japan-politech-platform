@@ -1,5 +1,4 @@
 import { prisma } from "@ojpp/db";
-import { Badge, Card } from "@ojpp/ui";
 
 export const dynamic = "force-dynamic";
 
@@ -21,83 +20,94 @@ export default async function ProposalsPage() {
     WITHDRAWN: proposals.filter((p) => p.status === "WITHDRAWN").length,
   };
 
+  const statusStyleMap: Record<string, { bg: string; color: string }> = {
+    OPEN: { bg: "rgba(59, 130, 246, 0.15)", color: "#60a5fa" },
+    UNDER_REVIEW: { bg: "rgba(251, 191, 36, 0.15)", color: "#fbbf24" },
+    ACCEPTED: { bg: "rgba(34, 197, 94, 0.15)", color: "#4ade80" },
+    REJECTED: { bg: "rgba(239, 68, 68, 0.15)", color: "#f87171" },
+    WITHDRAWN: { bg: "rgba(148, 163, 184, 0.15)", color: "#94a3b8" },
+  };
+
   return (
-    <div className="mx-auto max-w-7xl px-6 py-12">
-      <h2 className="mb-2 text-3xl font-bold">政策変更提案</h2>
-      <p className="mb-8 text-gray-600">
-        市民から寄せられた政策の改善提案一覧です。GitHubのPull
-        Requestのように、政策への変更を提案できます。
-      </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950">
+      <div className="mx-auto max-w-7xl px-6 py-12">
+        <h2 className="mb-2 text-3xl font-bold text-white">政策変更提案</h2>
+        <p className="mb-8 text-slate-400">
+          市民から寄せられた政策の改善提案一覧です。GitHubのPull
+          Requestのように、政策への変更を提案できます。
+        </p>
 
-      <div className="mb-8 flex flex-wrap gap-3">
-        <Badge variant="info">OPEN: {statusCounts.OPEN}</Badge>
-        <Badge variant="warning">UNDER_REVIEW: {statusCounts.UNDER_REVIEW}</Badge>
-        <Badge variant="success">ACCEPTED: {statusCounts.ACCEPTED}</Badge>
-        <Badge variant="danger">REJECTED: {statusCounts.REJECTED}</Badge>
-        <Badge>WITHDRAWN: {statusCounts.WITHDRAWN}</Badge>
-      </div>
-
-      {proposals.length > 0 ? (
-        <div className="space-y-3">
-          {proposals.map((proposal) => {
-            const statusVariant =
-              proposal.status === "OPEN"
-                ? "info"
-                : proposal.status === "UNDER_REVIEW"
-                  ? "warning"
-                  : proposal.status === "ACCEPTED"
-                    ? "success"
-                    : proposal.status === "REJECTED"
-                      ? "danger"
-                      : "default";
+        <div className="mb-8 flex flex-wrap gap-3">
+          {Object.entries(statusCounts).map(([status, count]) => {
+            const style = statusStyleMap[status] ?? statusStyleMap.WITHDRAWN;
             return (
-              <Card key={proposal.id} padding="sm">
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-medium">{proposal.title}</h3>
-                    <p className="mt-1 text-sm text-gray-600">{proposal.description}</p>
-                    <div className="mt-2 flex items-center gap-3 text-xs text-gray-500">
-                      {proposal.policy.party && (
-                        <span className="flex items-center gap-1">
-                          {proposal.policy.party.color && (
-                            <span
-                              className="inline-block h-2 w-2 rounded-full"
-                              style={{ backgroundColor: proposal.policy.party.color }}
-                            />
-                          )}
-                          {proposal.policy.party.name}
-                        </span>
-                      )}
-                      <span>{proposal.policy.title}</span>
-                      <span>{new Date(proposal.createdAt).toLocaleDateString("ja-JP")}</span>
-                    </div>
-                    {proposal.gitPrUrl && (
-                      <a
-                        href={proposal.gitPrUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="mt-2 inline-block text-xs text-green-600 hover:underline"
-                      >
-                        GitHub PR を見る
-                      </a>
-                    )}
-                  </div>
-                  <Badge variant={statusVariant}>{proposal.status}</Badge>
-                </div>
-              </Card>
+              <span
+                key={status}
+                className="rounded-full px-3 py-1 text-xs font-semibold"
+                style={{ backgroundColor: style.bg, color: style.color }}
+              >
+                {status}: {count}
+              </span>
             );
           })}
         </div>
-      ) : (
-        <Card>
-          <div className="text-center text-gray-500">
-            <p>まだ提案がありません。</p>
-            <p className="mt-2 text-sm">
+
+        {proposals.length > 0 ? (
+          <div className="space-y-3">
+            {proposals.map((proposal) => {
+              const style = statusStyleMap[proposal.status] ?? statusStyleMap.WITHDRAWN;
+              return (
+                <div key={proposal.id} className="glass-card p-5">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1">
+                      <h3 className="font-medium text-white">{proposal.title}</h3>
+                      <p className="mt-1 text-sm text-slate-400">{proposal.description}</p>
+                      <div className="mt-2 flex items-center gap-3 text-xs text-slate-500">
+                        {proposal.policy.party && (
+                          <span className="flex items-center gap-1">
+                            {proposal.policy.party.color && (
+                              <span
+                                className="inline-block h-2 w-2 rounded-full"
+                                style={{ backgroundColor: proposal.policy.party.color }}
+                              />
+                            )}
+                            {proposal.policy.party.name}
+                          </span>
+                        )}
+                        <span>{proposal.policy.title}</span>
+                        <span>{new Date(proposal.createdAt).toLocaleDateString("ja-JP")}</span>
+                      </div>
+                      {proposal.gitPrUrl && (
+                        <a
+                          href={proposal.gitPrUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-block text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                        >
+                          GitHub PR を見る
+                        </a>
+                      )}
+                    </div>
+                    <span
+                      className="rounded-full px-3 py-1 text-xs font-semibold"
+                      style={{ backgroundColor: style.bg, color: style.color }}
+                    >
+                      {proposal.status}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="glass-card p-8 text-center">
+            <p className="text-slate-500">まだ提案がありません。</p>
+            <p className="mt-2 text-sm text-slate-600">
               GitHubからPull Requestを送るか、このサイトから提案できます。
             </p>
           </div>
-        </Card>
-      )}
+        )}
+      </div>
     </div>
   );
 }

@@ -1,5 +1,3 @@
-import { Badge, Card } from "@ojpp/ui";
-
 const API_ENDPOINTS = [
   {
     method: "GET",
@@ -62,65 +60,73 @@ const API_ENDPOINTS = [
 
 export default function ApiDocsPage() {
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12">
-      <h2 className="mb-2 text-3xl font-bold">API ドキュメント</h2>
-      <p className="mb-8 text-gray-600">
-        PolicyDiffのRESTful APIを使って、政策データにプログラムからアクセスできます。
-        すべてのエンドポイントはCORS対応済みです。
-      </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950">
+      <div className="mx-auto max-w-4xl px-6 py-12">
+        <h2 className="mb-2 text-3xl font-bold text-white">API ドキュメント</h2>
+        <p className="mb-8 text-slate-400">
+          PolicyDiffのRESTful APIを使って、政策データにプログラムからアクセスできます。
+          すべてのエンドポイントはCORS対応済みです。
+        </p>
 
-      <div className="mb-8">
-        <Card padding="sm">
-          <h3 className="mb-2 text-sm font-bold text-gray-500">ベースURL</h3>
-          <code className="rounded bg-gray-100 px-2 py-1 text-sm">{process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3002"}/api</code>
-        </Card>
-      </div>
+        <div className="mb-8">
+          <div className="glass-card p-5">
+            <h3 className="mb-2 text-sm font-bold text-slate-500 uppercase tracking-wider">ベースURL</h3>
+            <code className="rounded bg-slate-800 px-2 py-1 text-sm text-blue-400">
+              {process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3002"}/api
+            </code>
+          </div>
+        </div>
 
-      <div className="space-y-6">
-        {API_ENDPOINTS.map((endpoint) => (
-          <Card key={endpoint.path}>
-            <div className="mb-3 flex items-center gap-3">
-              <Badge variant="success">{endpoint.method}</Badge>
-              <code className="text-sm font-medium">{endpoint.path}</code>
-            </div>
-            <p className="mb-4 text-sm text-gray-600">{endpoint.description}</p>
-            {endpoint.params.length > 0 && (
-              <div>
-                <h4 className="mb-2 text-xs font-bold text-gray-500">パラメータ</h4>
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b text-left text-xs text-gray-500">
-                      <th className="pb-2 pr-4">名前</th>
-                      <th className="pb-2 pr-4">型</th>
-                      <th className="pb-2">説明</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {endpoint.params.map((param) => (
-                      <tr key={param.name} className="border-b last:border-0">
-                        <td className="py-2 pr-4">
-                          <code className="rounded bg-gray-100 px-1 text-xs">{param.name}</code>
-                        </td>
-                        <td className="py-2 pr-4 text-xs text-gray-500">{param.type}</td>
-                        <td className="py-2 text-xs text-gray-600">{param.description}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+        <div className="space-y-6">
+          {API_ENDPOINTS.map((endpoint) => (
+            <div key={endpoint.path} className="glass-card p-6">
+              <div className="mb-3 flex items-center gap-3">
+                <span
+                  className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  style={{ backgroundColor: "rgba(34, 197, 94, 0.15)", color: "#4ade80" }}
+                >
+                  {endpoint.method}
+                </span>
+                <code className="text-sm font-medium text-white">{endpoint.path}</code>
               </div>
-            )}
-          </Card>
-        ))}
-      </div>
+              <p className="mb-4 text-sm text-slate-400">{endpoint.description}</p>
+              {endpoint.params.length > 0 && (
+                <div>
+                  <h4 className="mb-2 text-xs font-bold text-slate-500 uppercase tracking-wider">パラメータ</h4>
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-white/5 text-left text-xs text-slate-500">
+                        <th className="pb-2 pr-4">名前</th>
+                        <th className="pb-2 pr-4">型</th>
+                        <th className="pb-2">説明</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {endpoint.params.map((param) => (
+                        <tr key={param.name} className="border-b border-white/5 last:border-0">
+                          <td className="py-2 pr-4">
+                            <code className="rounded bg-slate-800 px-1 text-xs text-blue-400">{param.name}</code>
+                          </td>
+                          <td className="py-2 pr-4 text-xs text-slate-500">{param.type}</td>
+                          <td className="py-2 text-xs text-slate-400">{param.description}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
 
-      <div className="mt-8">
-        <Card>
-          <h3 className="mb-3 text-lg font-bold">レスポンス形式</h3>
-          <p className="mb-3 text-sm text-gray-600">
-            ページネーション付きのエンドポイントは以下の形式でレスポンスを返します。
-          </p>
-          <pre className="overflow-x-auto rounded-lg bg-gray-900 p-4 text-sm text-green-400">
-            {`{
+        <div className="mt-8">
+          <div className="glass-card p-6">
+            <h3 className="mb-3 text-lg font-bold text-white">レスポンス形式</h3>
+            <p className="mb-3 text-sm text-slate-400">
+              ページネーション付きのエンドポイントは以下の形式でレスポンスを返します。
+            </p>
+            <pre className="overflow-x-auto rounded-lg bg-slate-950 p-4 text-sm text-green-400">
+              {`{
   "data": [...],
   "pagination": {
     "page": 1,
@@ -129,8 +135,9 @@ export default function ApiDocsPage() {
     "totalPages": 5
   }
 }`}
-          </pre>
-        </Card>
+            </pre>
+          </div>
+        </div>
       </div>
     </div>
   );
