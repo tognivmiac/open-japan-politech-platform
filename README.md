@@ -7,7 +7,7 @@
 政党にも企業にもよらない、完全オープンな政治テクノロジー基盤
 
 [![CI](https://github.com/ochyai/open-japan-politech-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/ochyai/open-japan-politech-platform/actions/workflows/ci.yml)
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
+[![License: AGPL-3.0-or-later](https://img.shields.io/badge/License-AGPL--3.0--or--later-blue.svg)](LICENSE)
 [![Apps](https://img.shields.io/badge/apps-8-FF6B35.svg)](#6-apps)
 [![Models](https://img.shields.io/badge/Prisma_models-29-5B21B6.svg)](#data-model)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
