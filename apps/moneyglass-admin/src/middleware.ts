@@ -2,6 +2,31 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
 /**
+ * 定数時間の文字列比較（タイミング攻撃対策）
+ */
+function safeEqual(a: string, b: string): boolean {
+  const encoder = new TextEncoder();
+  const aBuf = encoder.encode(a);
+  const bBuf = encoder.encode(b);
+  if (aBuf.byteLength !== bBuf.byteLength) {
+    // 長さが異なっても定数時間で比較（ダミー比較）
+    const dummy = new Uint8Array(aBuf.byteLength);
+    crypto.subtle.timingSafeEqual?.(aBuf, dummy);
+    return false;
+  }
+  // Edge Runtime では crypto.subtle.timingSafeEqual が利用可能
+  if (typeof crypto.subtle?.timingSafeEqual === "function") {
+    return crypto.subtle.timingSafeEqual(aBuf, bBuf);
+  }
+  // フォールバック: XOR ベースの定数時間比較
+  let result = 0;
+  for (let i = 0; i < aBuf.byteLength; i++) {
+    result |= aBuf[i] ^ bBuf[i];
+  }
+  return result === 0;
+}
+
+/**
  * Admin アプリの Basic 認証ミドルウェア
  *
  * 環境変数:
@@ -28,7 +53,7 @@ export function middleware(request: NextRequest) {
       const [user, pass] = decoded.split(":");
       const expectedUser = process.env.ADMIN_USERNAME ?? "admin";
 
-      if (user === expectedUser && pass === password) {
+      if (safeEqual(user, expectedUser) && safeEqual(pass, password)) {
         return NextResponse.next();
       }
     }

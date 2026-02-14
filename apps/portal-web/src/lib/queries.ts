@@ -168,7 +168,7 @@ export async function getPortalStats(): Promise<PortalStats> {
       welfarePrefectures,
     };
   } catch (e) {
-    console.warn("[portal] DB unreachable, using fallback stats:", (e as Error).message);
+    console.warn("[portal] DB unreachable, using fallback stats");
     return FALLBACK_STATS;
   }
 }

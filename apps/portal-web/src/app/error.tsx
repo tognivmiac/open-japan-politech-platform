@@ -15,7 +15,7 @@ export default function ErrorBoundary({
         データの取得中にエラーが発生しました。データベース接続を確認してください。
       </p>
       <p className="kpi-value text-[0.6rem] text-[var(--text-ghost)]">
-        {error.digest ?? error.message}
+        {error.digest || "ERR_UNKNOWN"}
       </p>
       <button
         type="button"
