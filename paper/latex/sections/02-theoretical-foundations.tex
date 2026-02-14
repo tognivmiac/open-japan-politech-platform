@@ -1,0 +1,244 @@
+% ===========================================================================
+% Section 2: Theoretical Foundations
+% ===========================================================================
+
+\section{理論的基盤——民主主義理論からAI媒介型熟議へ}
+\label{sec:theoretical-foundations}
+
+本節では、\politech{}の理論的基盤を構成する知的系譜を、古典的民主主義理論から計算論的社会選択理論、分散合意アルゴリズム、そしてデジタルデモクラシーの歴史的展開に至るまで、包括的に跡づける。\politech{}は単なる技術的提案ではなく、民主主義理論の長い歴史的蓄積の上に構築されるものである。その設計原則が理論的にどのように正当化されるのかを明示することが、本節の目的である。
+
+
+% ---------------------------------------------------------------------------
+\subsection{古典的民主主義理論の系譜}
+\label{subsec:classical-democracy}
+
+民主主義の理論的出発点は、紀元前5世紀のアテナイに求められる。アテナイの直接民主制は、市民集会（\textit{ekklesia}）における集合的意思決定を中核とし、すべての市民に対する平等な発言権（\textit{isegoria}）と法の下の平等（\textit{isonomia}）を制度的に保障した。抽選（\textit{sortition}）による公職者の選出は、選挙が本質的に貴族制的であるという洞察に基づいており、この論点は近年Landemoreによって再評価されている\autocite{landemore2013democratic}。ただし、アテナイ民主制が女性・奴隷・在留外国人を排除していたことは、普遍的参加という理念と制度的現実との間の緊張を示している。
+
+近代民主主義理論においては、Rousseauの社会契約論が直接参加の理念を最も強く擁護した。Rousseauにとって、一般意志（\textit{volont\'{e} g\'{e}n\'{e}rale}）は個々の私的利害の総和ではなく、共同体の共通善を志向する集合的意志であり、これは代表者に委任することができない性質のものであった。「イギリス人民は自由だと思っているが、それは大きな間違いだ。自由なのは議員を選挙するあいだだけのことで、議員が選ばれるやいなや、イギリス人民は奴隷となる」というRousseauの警句は、代表制民主主義の根本的限界を指摘するものとして、今日なお参照される。
+
+これに対し、Millは代表制政府（representative government）を擁護しつつも、その質を高めるための熟議（deliberation）の重要性を強調した。Millにとって、議会は単なる投票機構ではなく、「国民の討議の場（Congress of Opinions）」であり、多様な見解が公開的に対峙し、精錬される場でなければならなかった。Tocquevilleはアメリカにおける市民結社（civil associations）の観察を通じて、民主主義が制度のみならず市民の自発的結社と公共的参加の文化によって支えられることを明らかにした\autocite{barber1984strong}。
+
+これらの古典的理論が共有する問題は、\textbf{スケーリングの困難}（scaling problem）である。Rousseau的な直接参加の理想は、人口数百万から数億の近代国民国家においては物理的に実現不可能であり、Millの熟議的議会もまた、代表者の数と審議時間の制約から、扱いうる議題の範囲に限界がある。この「規模の壁」こそが、技術による民主的プロセスの拡張——すなわち\politech{}——が理論的に要請される根本的理由である。
+
+
+% ---------------------------------------------------------------------------
+\subsection{熟議民主主義の理論的基盤}
+\label{subsec:deliberative-democracy}
+
+20世紀後半、民主主義理論は集計的（aggregative）モデルから熟議的（deliberative）モデルへと大きな転換を遂げた。この転換の理論的核心は、民主的正統性の源泉を投票行為そのものではなく、投票に先立つ理由の交換と相互的正当化のプロセスに求める点にある\autocite{cohen1989deliberation}。
+
+\subsubsection{Habermasの討議倫理と理想的発話状況}
+\label{subsubsec:habermas}
+
+J\"{u}rgen Habermasのコミュニケーション的行為の理論（\textit{Theorie des kommunikativen Handelns}, 1981）は、熟議民主主義の最も体系的な哲学的基盤を提供した\autocite{habermas1981theory}。Habermasは、人間の行為を目的合理的行為（\textit{zweckrationales Handeln}）とコミュニケーション的行為（\textit{kommunikatives Handeln}）に区分し、後者が相互了解（\textit{Verst\"{a}ndigung}）を志向する点でより根源的であると論じた。
+
+コミュニケーション的合理性の前提条件として、Habermasは\textbf{理想的発話状況}（\textit{ideale Sprechsituation}）の概念を提示した。これは以下の四つの妥当性要求（validity claims）によって特徴づけられる：
+
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{了解可能性}（Verst\"{a}ndlichkeit）——発話が言語的に理解可能であること
+  \item \textbf{真理性}（Wahrheit）——命題的内容が真であること
+  \item \textbf{誠実性}（Wahrhaftigkeit）——話者が自己の意図を誠実に表現していること
+  \item \textbf{正当性}（Richtigkeit）——発話が規範的に正当であること
+\end{enumerate}
+
+理想的発話状況とは、これらの妥当性要求がすべての参加者によって自由に提起され、批判的に検討されうる状況を指す。現実のコミュニケーションは常にこの理想から逸脱するが、理想的発話状況は反事実的な規制的理念（regulative Idee）として機能し、実際の議論の評価基準を提供する。
+
+\textit{Faktizit\"{a}t und Geltung}（『事実性と妥当性』, 1992）において、Habermasはこの討議倫理を民主的法治国家の理論へと展開した\autocite{habermas1992between}。ここで定式化された\textbf{討議原理}（Diskursprinzip, D）は以下のように述べられる：
+
+\begin{quote}
+「すべての当事者が、合理的な討議の参加者として同意しうる（または同意しえたであろう）規範のみが、妥当性を主張しうる。」\\
+\textit{``Only those norms can claim to be valid that meet (or could meet) with the approval of all affected in their capacity as participants in a practical discourse.''}
+\end{quote}
+
+この討議原理が法と民主主義の文脈に適用されたものが\textbf{民主主義原理}（Demokratieprinzip, d*）であり、法的規範の正統性は、その制定過程における討議的手続きの質に依存するとされる。
+
+\politech{}の設計にとって、Habermasの理論は二つの重要な含意を持つ。第一に、デジタルプラットフォームは理想的発話状況の近似（approximation）として設計されうる——すなわち、すべての参加者に平等な発言機会を保障し、権力や地位による歪みを最小化し、論拠の力のみが結論を左右する環境を技術的に構築することが可能である。第二に、理想的発話状況は完全に実現されるものではなく、常に近似的にしか達成されないという点は、技術的実装の限界を予め承認しつつ、漸進的改善を志向する設計哲学を正当化する。
+
+\subsubsection{Rawlsの公共的理性}
+\label{subsubsec:rawls}
+
+John Rawlsの『政治的リベラリズム』（\textit{Political Liberalism}, 1993）は、合理的多元主義（reasonable pluralism）の事実を前提とした上で、公共的理性（public reason）の概念を展開した\autocite{rawls1993political}。Rawlsにとって、合理的に受容しがたい包括的教説（comprehensive doctrines）に依拠せず、すべての合理的市民が受容しうる理由のみに基づいて政治的議論を行うことが、民主的正統性の条件である。
+
+Rawlsの『正義論』（\textit{A Theory of Justice}, 1971）における\textbf{原初状態}（original position）と\textbf{無知のヴェール}（veil of ignorance）の思考実験は、計算論的な類推を許すものである\autocite{rawls1971theory}。すなわち、個人の特定的属性（社会的地位、人種、性別、能力、善の構想）を遮蔽した上で合理的に選択される正義原理という構想は、匿名化されたデータに基づく集合的意思決定アルゴリズムの設計と構造的に類似している。PoliTech プラットフォームにおける匿名投票・意見表明機能は、この無知のヴェールの部分的な技術的実装と解釈しうる。
+
+HabermasとRawlsの間には重要な理論的差異が存在する。Rawlsが手続き的正義を通じて実質的な正義原理を導出しようとするのに対し、Habermasは正当な規範を生み出す手続きそのもの——すなわち討議の過程——に正統性の源泉を求める。\politech{}の設計において、この差異は「アルゴリズムが正しい結果を出力すべきか（Rawls的）」と「アルゴリズムが正当なプロセスを保障すべきか（Habermas的）」という二つの設計哲学の対立として現れる。本論文は、後者のプロセス志向的アプローチがPoliTechの設計原理としてより適切であると論じる。
+
+\subsubsection{Fishkinの熟議的世論調査}
+\label{subsubsec:fishkin}
+
+James Fishkinの熟議的世論調査（Deliberative Polling\textsuperscript{\textregistered}）は、熟議民主主義理論を経験的に実装した最も重要な試みの一つである\autocite{fishkin1991democracy,fishkin2018thinking}。その方法論は三段階からなる：（1）無作為抽出された市民サンプルに対する事前調査、（2）バランスのとれた情報資料の提供と専門家・政治家との小グループ討論、（3）討論後の事後調査。事前・事後の態度変容を測定することで、「情報を得た上で熟慮した市民」がどのような選好を持つかを推定する。
+
+Fishkinらによる30か国以上・100回以上の実験から、以下の経験的知見が蓄積されている：（a）参加者の政策選好は熟議後に有意に変化する、（b）変化の方向はより情報に基づいた（informed）ものへと収束する傾向がある、（c）参加者間の見解の分極化（polarization）は熟議によって緩和されることが多い、（d）熟議の効果は参加者の教育水準や政治的立場に関わらず観察される。
+
+Fishkinの「Deliberation Day」構想——選挙の2週間前に全国民規模の熟議を実施する提案——は、スケーリングの問題に直面する。デジタルプラットフォームを通じた大規模熟議（scaled deliberation）は、この物理的制約を克服する可能性を持つが、対面的熟議の質をどの程度デジタル環境で再現できるかは、未だ開かれた経験的問題である。
+
+\subsubsection{Dryzekの熟議システム論}
+\label{subsubsec:dryzek}
+
+John Dryzekの熟議システム論（deliberative systems theory）は、熟議を単一のフォーラムにおける営為としてではなく、社会全体にわたるシステミックな過程として理解する視座を提供した\autocite{dryzek2000deliberative,dryzek2010foundations}。Dryzekによれば、民主的熟議は議会、裁判所、メディア、市民社会、日常会話など、複数のサイト（sites）にまたがって分散的に生起し、これらが相互に連結されることで「マクロ熟議」（macro-deliberation）が成立する。
+
+この視座は、\politech{}の設計にとって二つの重要な含意を持つ。第一に、デジタルプラットフォームは熟議システム全体の一構成要素として位置づけられるべきであり、それ自体で完結的な熟議空間を構成するものではない。第二に、Dryzekの\textbf{言説的代表}（discursive representation）の概念——個人の代表ではなく言説（discourses）の代表を重視する立場——は、AIによる意見クラスタリングや論点抽出の理論的正当化を提供する。すなわち、AIが市民の多様な意見から代表的な言説を抽出し、構造化して提示する機能は、Dryzek的な意味での言説的代表の技術的実装と解釈しうるのである。
+
+
+% ---------------------------------------------------------------------------
+\subsection{社会選択理論とその不可能性}
+\label{subsec:social-choice}
+
+熟議民主主義理論が「どのように議論するか」の規範理論であるのに対し、社会選択理論（social choice theory）は「どのように集合的決定を行うか」の数学的理論である。その中核的知見は、一見すると合理的に見える諸条件を同時に満たす集計メカニズムが存在しないという、一連の不可能性定理（impossibility theorems）である。
+
+\subsubsection{Arrowの不可能性定理}
+\label{subsubsec:arrow}
+
+Kenneth Arrowは博士論文において、社会的選択の数学的基礎を確立し、以下の画期的な定理を証明した\autocite{arrow1951social}。
+
+\begin{definition}[社会的厚生関数]
+\label{def:swf}
+$N = \{1, 2, \ldots, n\}$ を個人の集合、$A = \{a_1, a_2, \ldots, a_m\}$（$m \geq 3$）を選択肢の集合とする。各個人 $i \in N$ は $A$ 上の完備かつ推移的な選好順序 $\succeq_i$ を持つ。\textbf{社会的厚生関数}（social welfare function）$F$ とは、個人の選好プロファイル $(\succeq_1, \succeq_2, \ldots, \succeq_n)$ を社会的選好順序 $\succeq^*$ に写す写像 $F: \mathcal{L}(A)^n \to \mathcal{L}(A)$ である。ここで $\mathcal{L}(A)$ は $A$ 上の完備かつ推移的な二項関係の集合を表す。
+\end{definition}
+
+\begin{theorem}[Arrowの不可能性定理, 1951]
+\label{thm:arrow}
+選択肢の数 $|A| \geq 3$ かつ個人の数 $|N| \geq 2$ のとき、以下の四つの条件をすべて同時に満たす社会的厚生関数 $F$ は存在しない：
+\begin{enumerate}[label=\textbf{(A\arabic*)}]
+  \item \textbf{普遍領域}（Universal Domain）：$F$ はすべての論理的に可能な選好プロファイルに対して定義される。
+  \item \textbf{パレート効率性}（Pareto Efficiency）：すべての $i \in N$ について $a \succ_i b$ ならば $a \succ^* b$ である。
+  \item \textbf{無関係な選択肢からの独立性}（Independence of Irrelevant Alternatives, IIA）：$a$ と $b$ の間の社会的順序は、各個人の $a$ と $b$ に関する選好のみに依存し、他の選択肢 $c \in A \setminus \{a, b\}$ に関する選好には依存しない。
+  \item \textbf{非独裁性}（Non-Dictatorship）：$\forall (\succeq_1, \ldots, \succeq_n),\; a \succ_i b \Rightarrow a \succ^* b$ を満たすような個人 $i \in N$（独裁者）は存在しない。
+\end{enumerate}
+\end{theorem}
+
+\begin{remark}
+Arrowの定理の含意は根源的である。この定理は、いかなる投票制度もこれら四条件のうち少なくとも一つを犠牲にせざるをえないことを示す。すなわち、「完全な」集計メカニズムは原理的に不可能であり、あらゆる投票制度にはトレードオフが内在する。この不可能性は、集計的民主主義（aggregative democracy）の根本的限界を数学的に証明するものであり、熟議民主主義への理論的転換を動機づける重要な論拠の一つとなった。Arrowの定理が集計の不可能性を示す一方、熟議は討論を通じて選好そのものを変容させることで——すなわち普遍領域条件を緩和することで——この不可能性を迂回する可能性を持つ。
+\end{remark}
+
+\subsubsection{Gibbard-Satterthwaiteの定理}
+\label{subsubsec:gibbard-satterthwaite}
+
+Arrowの定理が社会的順序の構成に関する不可能性を示すのに対し、Gibbard-Satterthwaiteの定理は\textbf{耐戦略性}（strategy-proofness）に関する不可能性を示す\autocite{gibbard1973manipulation,satterthwaite1975strategy}。
+
+\begin{theorem}[Gibbard-Satterthwaiteの定理, 1973/1975]
+\label{thm:gibbard-satterthwaite}
+選択肢の数 $|A| \geq 3$ のとき、全域的かつ全射的な社会的選択関数 $f: \mathcal{L}(A)^n \to A$ が耐戦略的（すなわち、いかなる個人も真の選好と異なる選好を表明することによって自己にとってより望ましい結果を得ることができない）であるならば、$f$ は独裁的である。
+\end{theorem}
+
+この定理は、デジタルプラットフォームの設計にとって直接的な含意を持つ。オンライン投票やレーティング・システムは、戦略的操作（strategic manipulation）——虚偽の選好表明、組織票、botによる大量投票など——に対して構造的に脆弱である。Gibbard-Satterthwaiteの定理は、完全に耐戦略的なシステムの構築が原理的に不可能であることを示しており、したがって\politech{}プラットフォームの設計は、耐戦略性の完全な保証ではなく、戦略的操作の\textit{コストを高める}ことを目標とすべきである。
+
+\subsubsection{Condorcetの陪審定理とSchulze法}
+\label{subsubsec:condorcet}
+
+Arrowの不可能性定理が近代社会選択理論の礎石であるとすれば、その歴史的先駆はCondorcetの業績に求められる\autocite{condorcet1785essai}。
+
+\textbf{Condorcetの陪審定理}（Condorcet Jury Theorem）は、集合知の数学的基礎を提供する。各個人が正しい判断を下す確率 $p > 1/2$ であり、かつ各個人の判断が独立であるとき、多数決による集合的判断が正しい確率は、集団の規模 $n$ の増大とともに1に収束する。この定理は、大規模な市民参加の認識論的正当化を与えるものであり、Landemoreはこれを「数の中の理性」（reason in numbers）として民主主義の認識論的価値の根拠としている\autocite{landemore2013democratic}。
+
+ただし、陪審定理の前提条件——とりわけ判断の独立性——は、ソーシャルメディアにおけるフィルターバブル\autocite{pariser2011filter}やエコーチェンバー\autocite{sunstein2001republic}の問題を考慮すると、デジタル環境において自明には成立しない。プラットフォーム設計は、意見の独立性を可能な限り保持するよう配慮する必要がある。
+
+\textbf{Condorcetの投票パラドックス}は、ペアワイズ多数決が推移的な社会的順序を生まない場合があることを示す。すなわち、$a$ が $b$ に勝ち、$b$ が $c$ に勝ち、$c$ が $a$ に勝つという循環が生じうる。この問題に対する現代的解法として、\textbf{Schulze法}（Schulze method）がある\autocite{schulze2011new}。Schulze法は、すべてのペアワイズ比較の結果から最強経路（strongest path）を計算することでCondorcet勝者が存在する場合にはそれを選出し、存在しない場合にも一貫した社会的順序を導出する。Schulze法はWikimedia Foundation、Debian、Gentoo Linuxなど多くのオープンソースプロジェクトのガバナンスにおいて採用されており\autocite{kling2015voting}、\politech{}プラットフォームにおける投票機構の候補としても有力である。
+
+同様に、Tidemanの\textbf{Ranked Pairs法}は、ペアワイズ比較の「強度」に基づいて順序付けし、循環を除去することで社会的順序を構成する手法であり、Schulze法と並んでCondorcet整合的な現代的投票方式の代表例である。
+
+\subsubsection{Senの潜在能力アプローチ}
+\label{subsubsec:sen}
+
+Amartya Senの業績は、社会選択理論を単なる選好集計の数学から、実質的な自由と福祉の評価へと拡張した\autocite{sen1970collective}。Senの\textbf{潜在能力アプローチ}（capability approach）は、個人の福祉を効用や所得ではなく、その人が実際に達成しうる機能（functionings）の集合——すなわち潜在能力（capabilities）——によって評価することを提案する。
+
+Senはまた、Arrowの定理の前提条件である序数的・比較不能な選好という枠組みを批判し、個人間比較可能な情報を導入することで不可能性を回避しうることを示した。この視点は、\politech{}の設計において以下の含意を持つ：デジタル参加プラットフォームの評価基準は、単に参加者数や投票数といった量的指標にとどまるべきではなく、誰が参加できているか（デジタルインクルージョン）、参加によって実質的にどのような選択肢が拡大されているか（潜在能力の拡張）という質的次元を含むべきである。Senの「発展としての自由」\autocite{sen1970collective}の視座は、\politech{}がアクセシビリティとインクルージョンを設計原則の中核に据えるべきことの理論的根拠を提供する。
+
+
+% ---------------------------------------------------------------------------
+\subsection{合意形成アルゴリズムの系譜——分散システムから民主主義へ}
+\label{subsec:consensus-algorithms}
+
+民主主義における合意形成の問題は、分散システム理論における合意プロトコル（consensus protocols）の問題と構造的に類似している。すなわち、相互に信頼関係のない複数のアクターが、通信の遅延や一部アクターの悪意ある行動（Byzantine failure）が存在する環境下で、共通の決定に到達するという問題である。本節では、分散合意アルゴリズムの理論的系譜を辿り、その民主主義への含意を析出する。
+
+\subsubsection{ビザンチン障害耐性と分散合意}
+\label{subsubsec:byzantine}
+
+\textbf{ビザンチン将軍問題}（Byzantine Generals Problem）は、Lamport, Shostak, Pease（1982）によって定式化された\autocite{lamport1982byzantine}。$n$ 個のノード（将軍）のうち最大 $f$ 個が任意の悪意ある行動（虚偽メッセージの送信、沈黙、矛盾する情報の発信）をとりうる環境において、正常なノード間で一致した決定に到達するための条件を問う。Lamportらは、$n \geq 3f + 1$、すなわち悪意あるアクターが全体の1/3未満である場合にのみ、合意が達成可能であることを示した。
+
+この結果は民主主義理論に対して深い含意を持つ。民主的討議においても、悪意あるアクター（trolls, bots, 組織的な情報操作）が存在するが、それが全参加者の一定割合以下であれば、適切なプロトコル設計によって合意形成は可能である。
+
+\textbf{FLP不可能性}（Fischer, Lynch, Paterson, 1985）は、非同期（asynchronous）環境において、たとえ1つのノードの故障しか許容しない場合であっても、決定論的な合意プロトコルが必ず合意に到達することを保証できないことを示した\autocite{flp1985impossibility}。この結果は、いかなるシステムも安全性（safety: 誤った合意をしない）と活性（liveness: いずれ合意に到達する）の両方を非同期環境で完全に保証することはできないというCAP定理の先駆ともいえるものである。
+
+実用的な分散合意アルゴリズムとしては、Lamportの\textbf{Paxos}（1998）、Ongaro \& Ousterhoutの\textbf{Raft}（2014）が代表的である\autocite{ongaro2014raft}。これらは、リーダー選出とログ複製を通じて、ノードの一部が故障した環境でも一貫した状態を維持する。ビザンチン障害に対応したプロトコルとしては、Castro \& Liskovの\textbf{PBFT}（Practical Byzantine Fault Tolerance, 1999）が知られる\autocite{castro1999pbft}。PBFTは $3f + 1$ ノードで $f$ 個のビザンチン障害に耐性を持ち、通信計算量 $O(n^2)$ で合意を達成する。
+
+これらのアルゴリズムは、\politech{}プラットフォームの設計に以下の教訓を与える：（1）悪意あるアクターの存在を前提とした設計（Byzantine fault tolerance by design）、（2）安全性と活性のトレードオフの明示的管理、（3）合意形成にはラウンド数（時間的コスト）が必要であり、即時的な合意を期待することは非現実的であること。
+
+\subsubsection{ブロックチェーンガバナンスの教訓}
+\label{subsubsec:blockchain}
+
+Nakamotoコンセンサス（2008）は、Proof-of-Work（PoW）を用いたSybil耐性メカニズムにより、許可なし（permissionless）環境における分散合意を実現した\autocite{nakamoto2008bitcoin}。PoWは計算コストを参加の条件とすることで、一人のアクターが複数のアイデンティティを作成して投票を操作するSybil攻撃を経済的に抑止する。
+
+ブロックチェーン上のガバナンス実験は、\politech{}に対して重要な教訓を提供する。Tezosの自己修正プロトコル（on-chain governance）、Aragonのデジタル組織（DAO: Decentralized Autonomous Organization）フレームワーク、DAOstackのホログラフィック・コンセンサスなどが、透明性の高い意思決定と不変の監査証跡（immutable audit trail）を実現している。
+
+とりわけ注目すべきは、\textbf{二次投票}（Quadratic Voting, QV）と\textbf{二次資金配分}（Quadratic Funding, QF）である\autocite{lalley2018quadratic,buterin2019liberal}。QVでは、$k$ 票を投じるコストが $k^2$ に比例するよう設計されることで、強い選好を持つ少数派の意見を反映しつつ、多数者による専制を防止する。Buterin, Hitzig \& Weylは、QFが公共財の最適供給を分散的に達成しうることを理論的に示した。
+
+また、\textbf{Conviction Voting}——時間加重型の選好表明メカニズム——は、選好の持続性と強度を同時に捉える手法として注目される。投票者はいつでも自分の支持先を変更できるが、特定の提案への支持が時間とともに蓄積（conviction）されることで、一時的な衝動ではなく持続的な選好が意思決定に反映される。
+
+しかし、ブロックチェーンガバナンスの経験は、重大な課題も明らかにしている：（1）トークンベースの投票権は金権政治（plutocracy）を再生産するリスクがある、（2）参加率は極めて低い傾向にある（多くのDAOで投票率は5\%以下）、（3）技術的リテラシーの壁がインクルージョンを阻害する。これらの教訓は、\politech{}プラットフォームが「一人一票」原則を堅持しつつ、参加障壁を最小化する設計を採用すべきことを示唆する。
+
+\subsubsection{Liquid Democracyの理論と実践}
+\label{subsubsec:liquid-democracy}
+
+\textbf{Liquid Democracy}（流動的民主主義）は、直接民主主義と代表制民主主義の中間形態として構想された委任型民主主義（delegative democracy）の一形式である\autocite{ford2002delegative}。その基本構想は以下の通りである：各市民は、すべての議題について自ら直接投票することも、特定の議題領域または包括的に、自分の信頼する他の市民に投票権を委任することもできる。委任は推移的であり（AがBに委任し、BがCに委任すれば、CはAの票も行使する）、かついつでも撤回可能である。
+
+ドイツ海賊党（Piratenpartei）は、LiquidFeedbackプラットフォーム（2009--2012年）を通じて、Liquid Democracyの最も野心的な実践的実験を行った。しかし、この実験は以下の困難に直面した：（1）委任の連鎖による権力集中（超級代理人問題）、（2）参加の不均等（活動的な少数が過大な影響力を持つ）、（3）プラットフォームの技術的複雑性による参加障壁。
+
+Kahng, Mackenzie \& Procaccia（2021）は、Liquid Democracyにおける委任の連鎖を流体力学的に分析し、委任ネットワークにおける「粘性」（viscosity）の問題を理論的に明らかにした\autocite{kahng2021liquid}。すなわち、委任の連鎖が長くなるほど、元の委任者の意図と最終的な投票行動の間の乖離が拡大するという構造的問題である。この分析は、Liquid Democracyが理論的に魅力的でありながら、実践においては委任チェーンの管理と透明性が決定的に重要であることを示している。
+
+\politech{}の設計にとって、Liquid Democracyの経験は以下の教訓を提供する：議題ごとの柔軟な参加形態は望ましいが、委任メカニズムの設計には権力集中を防止するための構造的制約（例えば、委任チェーンの長さ制限、委任されうる最大票数の上限）が不可欠である。
+
+
+% ---------------------------------------------------------------------------
+\subsection{デジタルデモクラシーの歴史的展開}
+\label{subsec:digital-democracy-history}
+
+デジタル技術による民主主義の拡張は、インターネットの普及とともに段階的に展開してきた。本節では、1990年代から現在に至るまでの歴史的展開を、技術的基盤と社会的文脈の双方から整理する。
+
+\paragraph{第一期：初期インターネットと参加の夢想（1990年代）}
+Rheingoldの『ヴァーチャル・コミュニティ』（1993）は、BBSやUsenetにおけるオンライン・コミュニティの政治的可能性を先駆的に論じた\autocite{rheingold1993virtual}。この時期の議論は、インターネットが直接民主主義を復活させうるという楽観的見通し——Barberの「強い民主主義」の技術的実現\autocite{barber1984strong}——に特徴づけられる。Norrisはこの時期のデジタルデモクラシー論を「サイバー楽観主義」として分析し、技術決定論的な傾向に対する批判的検討を行った\autocite{norris2001digital}。
+
+\paragraph{第二期：Web 2.0と選挙キャンペーンのデジタル化（2000年代）}
+2004年のHoward Deanキャンペーンによるオンライン資金調達、2008年のBarack Obamaキャンペーンにおけるソーシャルメディアの戦略的活用は、デジタル技術が政治参加の量的拡大に寄与しうることを実証した\autocite{chadwick2006internet}。2006年の英国e-petitionsの導入は、デジタルプラットフォームが市民のアジェンダ設定権を制度的に保障する先駆的事例となった。しかし、Hindmanが指摘したように、インターネットは政治的発言の機会を民主化する一方で、注意（attention）の分配においてはむしろ集中化を促進するという逆説を内包していた\autocite{hindman2008myth}。Benklerの『ネットワークの富』は、ピア・プロダクションの可能性を理論化しつつも、デジタル公共圏の構造的偏りを指摘した\autocite{benkler2006wealth}。
+
+\paragraph{第三期：ソーシャルメディアと政治運動の交差（2008--2014年）}
+2006年のスウェーデン海賊党（Piratpartiet）の設立は、デジタルネイティブな政治運動の嚆矢であった。2010--2011年のアラブの春、2011年のOccupy運動は、ソーシャルメディアが大規模な政治的動員のインフラストラクチャとして機能しうることを実証した\autocite{shirky2008everybody}。しかし同時に、これらの運動の多くが持続的な制度変革に至らなかったことは、動員と熟議の間の断絶を浮き彫りにした。
+
+2012年の台湾g0v（零時政府）コミュニティの設立、2013年のCode for Japan（代表：関治之）の設立は、「抗議としての技術」から「制度構築としての技術」への転換を象徴する\autocite{chadwick2006internet}。2009年に設立されたCode for Americaは、行政とシビックハッカーの協働モデルの先駆であった。
+
+\paragraph{第四期：制度化の試みとシビックテック（2014--2019年）}
+2014年の台湾ひまわり学生運動は、市民社会とシビックテックの結合の画期的事例であった。この運動を契機に、Audrey Tangをはじめとするシビックハッカーが制度的な政策形成プロセスに参入し、vTaiwanプラットフォーム（2015年〜）の構築につながった。2016年にはAudrey Tangがデジタル担当大臣に就任し、シビックテックの制度化が世界的に注目された。
+
+同時期、スペイン・バルセロナのDecidim（2016年〜）、マドリードのCONSUL（2015年〜）は、市民参加のためのオープンソースプラットフォームとして開発され、世界各地の自治体に導入された。しかし、2017年以降の「シビックテックの冬」と呼ばれる時期には、多くのプロジェクトが持続可能性の課題に直面し、資金難や参加者減少によって縮小・停止を余儀なくされた。
+
+2019--2020年のフランス気候市民会議（Convention Citoyenne pour le Climat）は、無作為抽出された150名の市民が気候変動政策を包括的に審議するという、Fishkinの熟議的世論調査の大規模な制度的実装であった。この取り組みは、デジタルツールのみならず対面的熟議の制度設計においても重要な先例を提供した。
+
+\paragraph{第五期：AI統合とエージェント時代（2020年〜現在）}
+2020年代に入り、大規模言語モデル（LLM）の急速な発展は、民主主義プロセスへのAI統合という新たなフロンティアを切り拓いた。DeepMindによるHabermas Machine（\textit{Science}, 2024）は、AIが参加者の意見を統合し合意文の生成を支援する実験的システムであり、人間の調停者よりも多くの支持を集める合意文を生成しうることを示した。AnthropicのCollective Constitutional AI（CCAI）は、AIの行動原則の策定プロセスに大規模な市民参加を導入する試みである。Gordon, Fish, et al.のGenerative Social Choiceは、LLMを用いた社会的選択関数の新たな形式を提案している。
+
+この第五期の展開——AIの政治プロセスへの統合——は、Zuboffが警告する監視資本主義\autocite{zuboff2019surveillance}のリスクと不可分であり、技術の設計原則が民主的価値と整合的であることの保証が、これまで以上に切実な課題となっている。本論文が提案する\politech{}は、まさにこの文脈に位置する。
+
+
+% ---------------------------------------------------------------------------
+\subsection{小括——理論的系譜からPoliTechへ}
+\label{subsec:theoretical-synthesis}
+
+本節で辿った理論的系譜を総合すると、\politech{}は以下の四つの知的伝統の交差点に位置づけられる。
+
+\begin{enumerate}
+  \item \textbf{熟議民主主義理論}（Habermas, Rawls, Fishkin, Dryzek, Cohen）：民主的正統性の源泉を、投票の結果ではなく、投票に先立つ討議の質に求める。
+  \item \textbf{計算論的社会選択理論}（Arrow, Sen, Gibbard, Satterthwaite, Condorcet, Schulze）：集合的意思決定の数学的基礎とその原理的限界を明らかにする。
+  \item \textbf{分散合意アルゴリズム}（Lamport, Castro \& Liskov, Nakamoto）：相互に信頼関係のないアクター間での合意形成の条件と手法を示す。
+  \item \textbf{AI整合性（alignment）}：大規模言語モデルの社会的意思決定への統合における価値整合の問題。
+\end{enumerate}
+
+これらの理論的知見は、\politech{}の設計原則に以下のように反映される。
+
+第一に、Arrowの不可能性定理は、いかなる集計メカニズムも「完全」ではありえないことを示す。しかし、Habermas的な熟議は、討論を通じて選好そのものを変容させることで——Arrowの定理における普遍領域条件を事実上緩和することで——この不可能性を迂回する道を開く。\politech{}プラットフォームは、したがって単なる投票ツールではなく、選好変容を促す熟議空間として設計されなければならない。
+
+第二に、分散合意アルゴリズムの理論は、悪意あるアクター（bad-faith actors）の存在を前提としつつも、適切なプロトコル設計によって合意が可能であることを示す。民主的討議における荒らし行為、bot攻撃、組織的な情報操作は、ビザンチン障害のアナロジーとして理解でき、これに対する耐性は技術的に構築可能である。
+
+第三に、デジタルプラットフォームは、Habermasの理想的発話状況を大規模に近似しうる可能性を持つ——すべての参加者に平等な発言機会を技術的に保障し、匿名性によって社会的地位の影響を緩和し、AIによる論点整理と翻訳機能によって言語的障壁を低減することが可能である。
+
+しかし第四に、Zuboffの監視資本主義批判\autocite{zuboff2019surveillance}、Pariserのフィルターバブル\autocite{pariser2011filter}、Sunsteinのエコーチェンバー\autocite{sunstein2001republic}は、プラットフォーム設計が意図せずして——あるいは意図的に——民主的討議を歪めうることを警告する。広告収益モデルに基づく商業プラットフォームは、エンゲージメントの最大化を通じて分極化を促進する構造的インセンティブを持つ。
+
+これらの理論的洞察を踏まえ、\politech{}の設計は以下の原則に基づくべきである：（1）\textbf{非党派性}——特定の政治勢力に与しない中立的設計、（2）\textbf{非営利性}——広告収益モデルの排除とオープンソースの採用、（3）\textbf{熟議志向}——単なる集計ではなく選好変容を促す討議機能、（4）\textbf{耐ビザンチン性}——悪意あるアクターの存在を前提とした堅牢な設計、（5）\textbf{エージェントレディ性}——AIエージェントの参入を前提としたプロトコル設計。これらの設計原則の具体的な実装については、第7節で詳述する。

@@ -1,0 +1,147 @@
+% PoliTech: Non-Partisan, Non-Corporate Digitalization of Politics
+% Comprehensive Position Paper with PhD-Level Literature Review
+% Author: Yoichi Ochiai
+% Date: 2026
+\documentclass[12pt,a4paper]{article}
+
+% === Fonts (XeTeX) ===
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Hiragino Mincho ProN}
+\setCJKsansfont{Hiragino Kaku Gothic ProN}
+\setCJKmonofont{Hiragino Kaku Gothic ProN}
+\setmainfont{Times New Roman}
+\setsansfont{Helvetica}
+\setmonofont{Courier New}
+
+% === Layout ===
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% === Mathematics ===
+\usepackage{amsmath,amssymb,amsthm}
+
+% === Graphics & Tables ===
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+% === Colors & Hyperlinks ===
+\usepackage[dvipsnames]{xcolor}
+\usepackage[colorlinks=true,linkcolor=NavyBlue,citecolor=ForestGreen,urlcolor=RoyalBlue]{hyperref}
+
+% === Bibliography ===
+\usepackage[style=authoryear-comp,backend=bibtex,maxbibnames=99,maxcitenames=2,giveninits=true,uniquename=false,uniquelist=false]{biblatex}
+\addbibresource{references.bib}
+
+% === Misc ===
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage{xurl}
+
+% === Theorem Environments ===
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}{Remark}[section]
+
+% === Custom Commands ===
+\newcommand{\politech}{\textsc{PoliTech}}
+\newcommand{\govtech}{\textsc{GovTech}}
+\newcommand{\civictech}{\textsc{CivicTech}}
+
+% ============================================================================
+\begin{document}
+
+% === Title ===
+\title{%
+  \textbf{PoliTech: 政党にも企業にもよらない政治のデジタル化}\\[0.5em]
+  \large オープンソース・エージェントレディな政治テクノロジー基盤の\\国際比較分析とポジション・ペーパー\\[1em]
+  \normalsize\textit{PoliTech: Non-Partisan, Non-Corporate Digitalization of Politics ---}\\
+  \normalsize\textit{A Comparative Analysis of Open-Source, Agent-Ready}\\
+  \normalsize\textit{Political Technology Infrastructure}
+}
+
+\author{%
+  落合陽一 (Yoichi Ochiai)\thanks{筑波大学 デジタルネイチャー開発研究センター / ピクシーダストテクノロジーズ株式会社. Email: ochyai@gmail.com}
+}
+
+\date{2026年2月}
+
+\maketitle
+
+\begin{abstract}
+民主主義の根幹をなす政治プロセスのデジタル化は、世界各地で進行しつつある。しかし、その議論はこれまで「行政のデジタル化（\govtech{}）」と「市民参加の技術（\civictech{}）」の二分法に回収されてきた。本論文は、この二概念では捉えきれない第三の領域——「何を、誰が、どのように決めるか」という政治の意思決定プロセスそのものの技術的変革——を「\politech{}（政治技術）」として定義し、その設計原則を国際比較分析に基づいて導出する。
+
+本論文の学術的貢献は以下の五点である。第一に、Arrowの不可能性定理からHabermasの討議倫理、計算論的社会選択理論に至る民主主義理論の系譜を踏まえ、\politech{}の理論的基盤を構築する。第二に、Polis・vTaiwan・Decidim・Talk to the City・広聴AIなどのブロードリスニング・プラットフォームの包括的サーベイを行い、その技術的基盤と限界を分析する。第三に、Habermas Machine（DeepMind, \textit{Science} 2024）、Collective Constitutional AI（Anthropic）、Generative Social Choice（PROSE）など最先端のAI×民主主義研究を位置づける。第四に、台湾・英国・米国・欧州・日本の5地域における事例を6軸比較フレームワークで分析する。第五に、AIエージェントの政治プロセスへの参入を前提とした「エージェントレディ」設計の原則と、Open Japan PoliTech Platform（OJPP）の実装を提示する。
+
+本論文は、非党派的・非企業的・オープンソースかつエージェントレディな政治インフラが、民主主義の信頼性と持続可能性を担保するための構造的要件であることを論証する。
+
+\medskip
+\noindent\textbf{キーワード}: \politech{}, 熟議民主主義, 計算論的社会選択, ブロードリスニング, エージェントレディ, オープンソースガバナンス, Habermas Machine, AIと民主主義, デジタルデモクラシー
+\end{abstract}
+
+\newpage
+\tableofcontents
+\newpage
+
+% ============================================================================
+% SECTION 1: Introduction
+% ============================================================================
+\input{sections/01-introduction}
+
+% ============================================================================
+% SECTION 2: Theoretical Foundations (NEW - PhD-level genealogy)
+% ============================================================================
+\input{sections/02-theoretical-foundations}
+
+% ============================================================================
+% SECTION 3: Literature Review (NEW - comprehensive survey)
+% ============================================================================
+\input{sections/03-literature-review}
+
+% ============================================================================
+% SECTION 4: GovTech vs CivicTech vs PoliTech Framework
+% ============================================================================
+\input{sections/04-framework}
+
+% ============================================================================
+% SECTION 5: International Comparative Analysis
+% ============================================================================
+\input{sections/05-international-comparison}
+
+% ============================================================================
+% SECTION 6: Japan Case Study
+% ============================================================================
+\input{sections/06-japan-case-study}
+
+% ============================================================================
+% SECTION 7: Agent-Ready Political Infrastructure
+% ============================================================================
+\input{sections/07-agent-ready-design}
+
+% ============================================================================
+% SECTION 8: Discussion
+% ============================================================================
+\input{sections/08-discussion}
+
+% ============================================================================
+% SECTION 9: Conclusion
+% ============================================================================
+\input{sections/09-conclusion}
+
+% ============================================================================
+% Bibliography
+% ============================================================================
+\newpage
+\printbibliography[heading=bibintoc,title={参考文献 (References)}]
+
+\end{document}

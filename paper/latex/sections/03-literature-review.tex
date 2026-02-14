@@ -1,0 +1,849 @@
+% ============================================================================
+% Section 3: Literature Review
+% ============================================================================
+
+\section{文献レビュー——ブロードリスニング・議会監視・AI×民主主義}
+\label{sec:literature-review}
+
+本節では、\politech{}の基盤を構成する先行研究とプラットフォームを包括的にサーベイする。
+第2節で構築した理論的基盤の上に、(1)~ブロードリスニング・プラットフォームの技術アーキテクチャ、
+(2)~自然言語処理とトピックモデリングの手法、(3)~議会監視とテキスト分析の国際的知見、
+(4)~AI と民主主義を結合する最先端研究、(5)~市民議会・ミニパブリクスの実証知見を整理し、
+最後に統合的な小括を示す。これらの知見が\politech{}の設計要件を導出する基礎となる。
+
+
+% ============================================================================
+% 3.1 Broad Listening Platforms
+% ============================================================================
+\subsection{ブロードリスニング・プラットフォーム}
+\label{subsec:broadlistening}
+
+「ブロードリスニング」とは、大規模な市民の意見を収集し、クラスタリング・可視化・
+要約を通じて構造的に理解する手法の総称である。従来の「タウンホールミーティング」や
+「パブリックコメント」が小規模かつ線形的な入力に限られていたのに対し、ブロードリスニングは
+数千--数万人規模の意見を同時並行的に収集・分析できる点で質的に異なる。
+以下では、主要なプラットフォームの技術アーキテクチャと運用実績を検討する。
+
+% --- 3.1.1 Pol.is ---
+\subsubsection{Pol.is——大規模意見クラスタリング}
+\label{subsubsec:polis}
+
+Pol.is は、大規模なオンライン意見集約のための
+オープンソース・プラットフォームである\autocite{small2021polis}。
+その設計思想は、従来のスレッド型オンライン議論（掲示板・SNS コメント欄）が
+陥りがちな「荒らし」や「極端な声の増幅」を構造的に回避し、
+参加者全体の意見分布を可視化することにある。
+
+\paragraph{アーキテクチャ}
+Pol.is のコアとなる技術パイプラインは以下の通りである。
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{投票マトリクスの構築}: 各参加者が提出された意見文（statement）に対して
+    「賛成（agree）」「反対（disagree）」「パス（pass）」の三択で投票する。
+    結果は $N_{\text{participants}} \times M_{\text{statements}}$ の
+    投票行列 $\mathbf{V}$ として表現される。
+  \item \textbf{次元削減}: 投票行列 $\mathbf{V}$ に対して主成分分析（PCA）を適用し、
+    参加者を2次元空間上に射影する。各参加者の位置は、投票パターンの類似性を反映する。
+  \item \textbf{クラスタリング}: $k$-means クラスタリングにより参加者を意見グループに分割する。
+    クラスタ数 $k$ はシルエット分析等のヒューリスティクスにより自動決定される。
+  \item \textbf{ブリッジングアルゴリズム}: Pol.is の核心的イノベーションは
+    「ブリッジング（bridging）」概念にある。ブリッジング・ステートメントとは、
+    異なるクラスタ間で横断的に合意を得た意見文であり、
+    対立するグループ間の共通基盤（common ground）を自動的に発見する機能を果たす。
+    形式的には、ステートメント $s$ のブリッジングスコアは、各クラスタ $C_k$ における
+    賛成率 $p_k(s)$ の最小値として近似される:
+    \begin{equation}
+      \text{bridge}(s) = \min_{k} \, p_k(s)
+      \label{eq:bridging}
+    \end{equation}
+    すなわち、すべてのクラスタで高い賛成率を持つステートメントが
+    高いブリッジングスコアを獲得する。
+\end{enumerate}
+
+\paragraph{運用実績}
+Pol.is は vTaiwan（後述）での採用により国際的な注目を集め、
+その後、台湾政府の公式プラットフォーム gov.tw、日本の広聴AI（kouchou-ai）、
+さらにカナダ、シンガポール等の各国政府でも試験的に利用されている。
+
+\paragraph{技術的限界}
+Pol.is には以下の構造的限界が指摘されている。
+第一に、賛成/反対の二値投票は意見のニュアンスを喪失する。
+Likert スケールや自由記述との比較研究が不足している。
+第二に、クリティカルマス問題がある——参加者が一定数に達しないと
+PCA・クラスタリングが安定しない。
+第三に、英語圏の NLP 処理に最適化されており、日本語等のアジア言語では
+文分割やトークナイゼーションに追加的な前処理が必要である。
+第四に、投票行列の欠損値（参加者がすべてのステートメントに投票するわけではない）の
+処理方法が標準化されていない。
+
+% --- 3.1.2 vTaiwan and Join ---
+\subsubsection{vTaiwan と Join.gov.tw}
+\label{subsubsec:vtaiwan}
+
+vTaiwan は、台湾における先駆的な市民参加型政策立案プラットフォームであり、
+2014年のひまわり学生運動を契機として、g0v（gov zero）コミュニティと
+政府の協働により誕生した\autocite{hsiao2018vtaiwan}。
+
+\paragraph{プロセス設計}
+vTaiwan の政策立案プロセスは4段階で構成される。
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{提案（Proposal）}: 政府機関または市民が議題を提案する。
+  \item \textbf{意見収集（Opinion Gathering）}: Pol.is を用いた大規模意見クラスタリングを実施する。
+    参加者はステートメントへの投票に加え、新規ステートメントの提出も可能である。
+  \item \textbf{省察（Reflection）}: 収集されたデータに基づき、対面またはオンラインの
+    利害関係者会議を開催する。Pol.is の可視化結果がファシリテーション資料として活用される。
+  \item \textbf{立法（Legislation）}: 合意形成された提案が法案・規則案として
+    正式な立法プロセスに移行する。
+\end{enumerate}
+
+\paragraph{運用実績}
+vTaiwan は設立以来26の政策議題を扱い、そのうち約80\%が政府による正式採用に至っている
+\autocite{hsiao2018vtaiwan}。最も著名な事例は UberX 規制問題であり、
+タクシー運転手とライドシェア利用者という対立するステークホルダー間で、
+Pol.is のブリッジングアルゴリズムにより共通合意点が発見され、
+UberX を合法的枠組みに組み込む規制が策定された。
+この事例は、ブロードリスニングが具体的な政策成果に直結した数少ない実証例として
+国際的に引用されている。
+
+\paragraph{Join.gov.tw}
+Join.gov.tw は台湾政府の公式電子参加プラットフォームであり、
+vTaiwan よりも広範な市民アクセスを目的として設計されている。
+登録ユーザー数は1,200万人を超え、台湾のインターネット利用者の約50\%に相当する。
+累計10,000件以上の政策提案が提出され、5,000人以上の賛同を得た提案には
+政府の公式回答が義務づけられている。
+
+\paragraph{g0v コミュニティ}
+これらのプラットフォームを支えるのが g0v（gov zero）コミュニティである。
+2012年以降、隔月でハッカソン（bi-monthly hackathons）を開催し、
+政府データのオープン化、市民技術（\civictech{}）ツールの開発、
+デジタルリテラシーの普及に取り組んでいる。
+g0v の組織原理は「フォーク（fork）」——既存の政府サービスを
+オープンソースで再実装するという戦略——にある。
+唐鳳（Audrey Tang）デジタル担当大臣の就任（2016年）は、
+g0v コミュニティと政府の融合を象徴する出来事であった。
+
+% --- 3.1.3 Talk to the City, OpenClaw, Moltbook ---
+\subsubsection{Talk to the City・OpenClaw・Moltbook}
+\label{subsubsec:talktothecity}
+
+Pol.is が大規模意見収集の基盤を提供するのに対し、
+近年のプラットフォームは収集されたデータの AI による要約・報告書生成に焦点を当てている。
+
+\paragraph{Talk to the City}
+Talk to the City は、AI Commons によって開発されたオープンソースツールであり、
+Pol.is ライクな意見データから LLM（大規模言語モデル）を用いて
+自動的にレポートを生成する。具体的には、意見クラスタごとの代表的主張の要約、
+クラスタ間の対立軸の同定、ブリッジング・ステートメントの自然言語による説明を
+自動化する。技術的には、クラスタリング結果を LLM のコンテキストウィンドウに入力し、
+プロンプトエンジニアリングによって構造化されたレポートを出力する。
+
+\paragraph{OpenClaw}
+OpenClaw は Talk to the City の設計思想を継承しつつ、
+よりモジュラーなアーキテクチャを採用したオープンソース代替である。
+各処理段階（データ収集、前処理、クラスタリング、要約、可視化）が
+独立したモジュールとして実装されており、異なる NLP バックエンド
+（GPT-4、Claude、Llama 等）への差し替えが容易である。
+
+\paragraph{Moltbook}
+Moltbook は熟議（deliberation）と AI 合成を統合したプラットフォームであり、
+参加者間の対話プロセスを構造化しつつ、AI による論点整理と合意形成支援を提供する。
+Pol.is が主として非同期・非対話的な意見収集に特化しているのに対し、
+Moltbook は同期的・対話的な熟議プロセスに AI 支援を組み込む点で
+設計上の差異がある。
+
+% --- 3.1.4 Decidim, CONSUL, Loomio ---
+\subsubsection{Decidim・CONSUL・Loomio}
+\label{subsubsec:decidim}
+
+ブロードリスニング専用プラットフォームとは異なり、
+Decidim・CONSUL・Loomio は包括的な市民参加基盤として設計されている。
+
+\paragraph{Decidim}
+Decidim はバルセロナ市議会によって2017年にリリースされた
+Ruby on Rails ベースのオープンソース・市民参加プラットフォームである
+\autocite{decidim2017}。
+「Decidim」はカタルーニャ語で「我々は決める（we decide）」を意味する。
+モジュラー設計により、提案（proposals）、投票（voting）、予算編成（budgeting）、
+会議（meetings）、議会（assemblies）等の機能を柔軟に組み合わせることができる。
+2026年時点で世界500以上の自治体・組織に導入されており、
+欧州委員会の「Conference on the Future of Europe」でも採用された。
+技術的特徴として、全操作の監査ログ（audit trail）を保持し、
+選挙における検証可能性（verifiability）を担保する設計が注目される。
+
+\paragraph{CONSUL Democracy}
+CONSUL はマドリード市議会によって開発されたオープンソース・プラットフォームであり、
+Decidim と同様にRuby on Rails で実装されている\autocite{consul2017}。
+35か国以上、累計1億人以上のユーザーに利用されており、
+特にスペイン語圏・ポルトガル語圏での普及が顕著である。
+機能面では市民提案・参加型予算編成・投票・公開討論を統合し、
+Decidim よりもモノリシックなアーキテクチャを採用している。
+
+\paragraph{Loomio}
+Loomio はニュージーランド発の合意形成特化型ディスカッション・ツールであり、
+2011年の Occupy Wall Street 運動にインスパイアされて開発された。
+各議論スレッドに対して「合意（agree）」「棄権（abstain）」
+「異議あり（disagree）」「ブロック（block）」の4段階投票を提供し、
+コンセンサスへの収束を可視化する。
+
+\paragraph{Your Priorities}
+Your Priorities はアイスランドの Citizens Foundation によって開発され、
+2010--2011年のアイスランド憲法クラウドソーシングで使用されたことで知られる。
+各提案に対する賛成・反対の論点を構造的に整理する UI 設計が特徴的であり、
+単純な賛否投票を超えた理由づけ（reason-giving）を促進する。
+
+% --- 3.1.5 kouchou-ai ---
+\subsubsection{広聴AI (kouchou-ai)}
+\label{subsubsec:kouchouai}
+
+広聴AI（kouchou-ai）は、日本における Pol.is + LLM のローカライゼーションとして
+注目される取り組みである。「チームみらい（Team Mirai）」および
+「デジタル民主主義2030（DD2030）」プロジェクトの一環として開発されている。
+
+\paragraph{技術アーキテクチャ}
+広聴AI の処理パイプラインは以下の構成をとる。
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Pol.is による意見収集}: 日本語対応の Pol.is インスタンスを用いて
+    市民意見を収集する。
+  \item \textbf{BERTopic によるトピック抽出}: 収集された意見テキストに対して
+    BERTopic\autocite{grootendorst2022bertopic}を適用し、
+    意見のトピック構造を抽出する。日本語 Sentence-BERT モデル
+    （例: \texttt{sonoisa/sentence-bert-base-ja-mean-tokens}）を
+    エンベディングバックエンドとして使用する。
+  \item \textbf{LLM 要約}: 抽出されたトピッククラスタに対して LLM（GPT-4 等）を用いた
+    自然言語要約を生成し、市民・政策立案者双方に可読性の高いレポートを提供する。
+\end{enumerate}
+
+\paragraph{日本的文脈への適応}
+広聴AIの意義は、技術的イノベーションそのものよりも、
+日本の政治的・言語的文脈への適応にある。
+日本語の曖昧表現（「\ldots ではないかと思われる」「検討の余地がある」等）は、
+英語圏で開発された感情分析・意見マイニングツールでは捕捉しにくい。
+また、日本の地方自治体におけるパブリックコメント制度
+（行政手続法第39条）との統合が実装上の課題となっている。
+
+
+% ============================================================================
+% 3.2 NLP and Topic Modeling
+% ============================================================================
+\subsection{自然言語処理とトピックモデリング}
+\label{subsec:nlp}
+
+ブロードリスニング・プラットフォームの技術的基盤は、
+自然言語処理（NLP）とトピックモデリングに依拠している。
+以下では、\politech{}に直接関連する手法を整理する。
+
+% --- 3.2.1 BERTopic ---
+\subsubsection{BERTopic}
+\label{subsubsec:bertopic}
+
+BERTopic は、Grootendorst (2022) によって提案された
+モジュラー・トピックモデリング・フレームワークである
+\autocite{grootendorst2022bertopic}。
+従来の確率的トピックモデル（LDA 等）とは異なり、
+事前学習済み言語モデルによるドキュメント埋め込みを出発点とする。
+
+\paragraph{パイプライン構成}
+BERTopic のパイプラインは4段階で構成される。
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{Sentence-BERT 埋め込み}: 各文書を Sentence-BERT
+    \autocite{reimers2019sentencebert}により固定長ベクトルに変換する。
+    Sentence-BERT は BERT のシャム（Siamese）ネットワーク構成であり、
+    文ペアの意味的類似度を効率的に計算するために設計されている。
+    出力は通常384次元または768次元の dense embedding である。
+  \item \textbf{UMAP 次元削減}: Uniform Manifold Approximation and Projection
+    （UMAP）\autocite{mcinnes2018umap}により、高次元埋め込みを
+    低次元空間（通常5--10次元）に射影する。UMAP はリーマン幾何学と
+    代数的トポロジーに基づく非線形次元削減手法であり、
+    局所構造と大域構造の両方を保存する点で t-SNE に優る。
+  \item \textbf{HDBSCAN クラスタリング}: Hierarchical Density-Based Spatial
+    Clustering of Applications with Noise（HDBSCAN）
+    \autocite{mcinnes2017hdbscan}により、密度ベースのクラスタリングを実行する。
+    HDBSCAN は DBSCAN の階層的拡張であり、クラスタ数の事前指定が不要であること、
+    ノイズ点（いずれのクラスタにも属さない点）を明示的に処理できることが特長である。
+    政治テキスト分析において、少数意見や外れ値的意見をノイズとして除外するか
+    独立クラスタとして保持するかの設計判断は、民主主義的包摂の観点から
+    非自明な倫理的課題を含む。
+  \item \textbf{c-TF-IDF トピック表現}: 各クラスタに対して class-based TF-IDF
+    （c-TF-IDF）を計算し、クラスタを特徴づけるキーワード集合を抽出する。
+    c-TF-IDF は、クラスタ内の全文書を結合した「クラス文書」に対する TF-IDF であり、
+    各クラスタの弁別的語彙を効率的に同定する。
+\end{enumerate}
+
+\paragraph{政治テキストへの応用}
+BERTopic は政策提案の自動分類、国会議事録のトピック分析、
+SNS 上の政治的言説のクラスタリングなどに広く適用されている。
+特に、時系列的なトピック変遷を追跡する Dynamic BERTopic は、
+選挙キャンペーン期間中の争点変化の可視化に有効であることが示されている。
+
+% --- 3.2.2 STM ---
+\subsubsection{構造的トピックモデル (STM)}
+\label{subsubsec:stm}
+
+構造的トピックモデル（Structural Topic Model, STM）は、
+Roberts et al. (2014) によって提案された、
+文書レベルの共変量をトピックモデルに組み込む手法である
+\autocite{roberts2014stm}。
+
+\paragraph{モデル構造}
+STM は LDA の拡張として、トピック出現確率（topic prevalence）と
+トピック内容（topic content）の双方に文書メタデータ（共変量）を導入する。
+具体的には、文書 $d$ のトピック割合 $\boldsymbol{\theta}_d$ が
+共変量 $\mathbf{x}_d$（政党所属、選挙区、発言時期等）の関数として
+モデル化される:
+\begin{equation}
+  \boldsymbol{\theta}_d \sim \text{LogisticNormal}(\boldsymbol{\mu}(\mathbf{x}_d), \boldsymbol{\Sigma})
+  \label{eq:stm}
+\end{equation}
+
+\paragraph{政治学への応用}
+STM の最大の利点は、「政党によってトピック出現頻度がどう異なるか」
+「時間経過とともにトピック構成がどう変化するか」を定量的に推定できる点にある。
+例えば、国会議事録に STM を適用し、与党と野党でどのトピックが
+より多く言及されるかを推定することで、政党間の争点構造を客観的に把握できる。
+
+% --- 3.2.3 Community Notes ---
+\subsubsection{Community Notes アルゴリズム}
+\label{subsubsec:communitynotes}
+
+Twitter/X の Community Notes（旧 Birdwatch）は、
+ユーザー参加型のファクトチェック・メカニズムであり、
+その基盤アルゴリズムはブリッジング・ベースのランキングに基づく
+\autocite{aviv2022bridging}。
+
+\paragraph{数理的定式化}
+Community Notes のコアアルゴリズムは行列分解（matrix factorization）アプローチを採用する。
+評価者 $i$ がノート $j$ に対して付与するhelpfulness 評価 $r_{ij}$ を、
+以下のモデルで近似する:
+\begin{equation}
+  r_{ij} \approx \mu + b_i + b_j + \mathbf{f}_i^{\top} \mathbf{f}_j
+  \label{eq:communitynotes}
+\end{equation}
+ここで、$\mu$ は全体の切片、$b_i$ は評価者のバイアス項、
+$b_j$ はノートのバイアス項、$\mathbf{f}_i, \mathbf{f}_j \in \mathbb{R}^k$ は
+それぞれ評価者とノートの潜在因子ベクトルである。
+
+\paragraph{ブリッジング原理}
+このモデルの核心は、ノートのバイアス項 $b_j$ の解釈にある。
+潜在因子 $\mathbf{f}_i$ が評価者のイデオロギー的立場を捕捉する場合、
+$b_j$ が高いノートは、イデオロギー的立場を超えて
+「有用（helpful）」と評価されたノート——すなわちブリッジング・ノート——である。
+これは Pol.is のブリッジング概念（式\eqref{eq:bridging}参照）と
+本質的に同一の原理であり、分極化した社会における
+「党派を超えた合意」の自動検出という共通課題に対する
+異なるドメインからのアプローチである。
+
+\paragraph{\politech{}への示唆}
+Community Notes のアルゴリズムは、\politech{}における
+クロスパルチザン合意検出（cross-partisan consensus detection）の
+技術的基盤として直接的に応用可能である。
+国会議員の発言や政策提案に対する市民評価に同様の行列分解を適用することで、
+党派的バイアスを除去した「真に有用な」政策提案の同定が期待される。
+
+
+% ============================================================================
+% 3.3 Parliamentary Monitoring and Text Analysis
+% ============================================================================
+\subsection{議会監視とテキスト分析}
+\label{subsec:parliamentary}
+
+議会活動の監視・分析は、\politech{}の核心的機能の一つである。
+本節では、議員のイデオロギー位置推定手法、テキストベースの政策位置推定、
+議会コーパスの整備状況、および国際的な議会監視サービスを概観する。
+
+% --- 3.3.1 Ideological Estimation ---
+\subsubsection{議員のイデオロギー位置推定}
+\label{subsubsec:ideology}
+
+\paragraph{DW-NOMINATE}
+議員のイデオロギー位置推定の標準的手法は、
+Poole \& Rosenthal (1985, 2007) による DW-NOMINATE（Dynamic Weighted NOMINAl
+Three-step Estimation）である\autocite{poole1985nominate}。
+このモデルは、roll-call（記名投票）データから各議員の理想点（ideal point）を
+1次元または2次元の空間上に推定する空間投票モデル（spatial voting model）である。
+
+形式的には、議員 $i$ が議案 $j$ に対して「賛成」する確率を、
+理想点 $\mathbf{x}_i$ と議案パラメータ $(\mathbf{z}_j^{\text{yea}}, \mathbf{z}_j^{\text{nay}})$ の
+距離関数として定式化する:
+\begin{equation}
+  P(\text{yea}_{ij}) = \frac{
+    \exp(-\|\mathbf{x}_i - \mathbf{z}_j^{\text{yea}}\|^2 / 2\sigma^2)
+  }{
+    \exp(-\|\mathbf{x}_i - \mathbf{z}_j^{\text{yea}}\|^2 / 2\sigma^2) +
+    \exp(-\|\mathbf{x}_i - \mathbf{z}_j^{\text{nay}}\|^2 / 2\sigma^2)
+  }
+  \label{eq:nominate}
+\end{equation}
+DW-NOMINATE の第1次元は経済的左右軸（リベラル--保守）、
+第2次元は人種・社会的争点を捕捉することが米国議会データにおいて確認されている。
+
+\paragraph{ベイズ理想点推定}
+項目反応理論（Item Response Theory, IRT）に基づくベイズ推定は、
+DW-NOMINATE の代替として広く用いられている。
+各投票をアイテムと見なし、議員の「能力」パラメータ（＝イデオロギー位置）と
+議案の「困難度」パラメータ（＝党派的対立度）を同時推定する。
+MCMC（マルコフ連鎖モンテカルロ法）による推定は、
+不確実性の定量化と階層モデルへの拡張を可能にする。
+
+\paragraph{日本への適用}
+日本の国会では党議拘束（party discipline）が極めて強いため、
+roll-call データのみからイデオロギー位置を推定することは困難である。
+造反投票（dissenting vote）のデータが乏しく、
+ほとんどの議員が同一政党内で同一方向に投票するため、
+党内の多様性を捕捉できない。この限界を克服するために、
+テキストベースのアプローチ（次項参照）が重要となる。
+
+% --- 3.3.2 Text-based Estimation ---
+\subsubsection{テキストベースのイデオロギー推定}
+\label{subsubsec:textscaling}
+
+\paragraph{Wordscores}
+Wordscores は Laver, Benoit \& Garry (2003) によって提案された
+教師あり（supervised）テキストスケーリング手法である
+\autocite{laver2003wordscores}。
+既知の政策位置を持つ「参照テキスト」（reference texts）に基づいて
+各単語にスコアを付与し、未知のテキスト（「処女テキスト」, virgin texts）の
+政策位置を単語スコアの加重平均として推定する。
+シンプルかつ透明性が高い一方、参照テキストの選定に結果が依存する点、
+およびスケーリングの非線形パターンを捕捉できない点が限界である。
+
+\paragraph{Wordfish}
+Wordfish は Slapin \& Proksch (2008) による
+教師なし（unsupervised）テキストスケーリング手法である
+\autocite{slapin2008wordfish}。
+文書 $d$ における単語 $w$ の出現頻度をポアソン分布でモデル化し、
+文書の「位置」パラメータ $\omega_d$ と単語の「重み」パラメータ $\beta_w$ を
+最尤推定する:
+\begin{equation}
+  y_{dw} \sim \text{Poisson}(\exp(\alpha_d + \psi_w + \beta_w \cdot \omega_d))
+  \label{eq:wordfish}
+\end{equation}
+ここで $\alpha_d$ は文書の長さ効果、$\psi_w$ は単語の頻度効果である。
+Wordfish はマニフェスト分析、国会演説の政策位置推定などに広く適用されている。
+
+\paragraph{日本政治への適用可能性}
+前述の通り、日本では党議拘束の強さから投票データによるイデオロギー推定が困難であり、
+テキストベースの手法が相対的に有用である。
+国会会議録、選挙公報、政党マニフェスト、質問主意書などのテキストデータに対して
+Wordfish や Sentence-BERT ベースの手法を適用することで、
+議員・政党の政策位置を投票行動以外の情報源から推定できる可能性がある。
+
+% --- 3.3.3 Parliamentary Corpora ---
+\subsubsection{議会コーパスと文字起こし}
+\label{subsubsec:corpora}
+
+議会テキスト分析の前提条件は、高品質な議会コーパスの整備である。
+
+\paragraph{ParlaMint}
+ParlaMint コーパスは、Erjavec et al. (2023) が主導する
+29か国の議会議事録を標準化したデータセットである
+\autocite{erjavec2023parlamint}。
+TEI-XML 形式で統一されたアノテーション（話者メタデータ、政党所属、
+セッション情報等）が付与されており、比較政治学的な
+クロスナショナル分析の基盤となっている。
+
+\paragraph{国会会議録検索システム}
+日本の国立国会図書館が運営する国会会議録検索システム
+（kokkai.ndl.go.jp）は、1947年以降の国会本会議・委員会の
+議事録全文をAPI経由で提供している。
+各発言には話者名、所属政党、会議名、発言日時等のメタデータが付与されており、
+テキスト分析の入力データとして直接利用可能である。
+ただし、OCR ベースのテキスト化には誤変換が含まれる場合があり、
+特に1990年代以前の議事録については品質管理が必要である。
+
+\paragraph{音声認識技術}
+近年の議会テキスト整備には、自動音声認識（ASR）技術が重要な役割を果たしている。
+OpenAI の Whisper\autocite{radford2023whisper}は、
+多言語対応の汎用音声認識モデルであり、日本語議会音声の文字起こしにも
+適用可能である。ポルトガルの STAAR プロジェクトは
+Whisper ベースの議会文字起こしシステムの実装例として注目される。
+
+日本の衆議院では2011年に音声認識システムが導入されており、
+速記者による人力起こしから機械支援へのトランジションが進行中である。
+しかし、委員会での専門用語、ヤジ（不規則発言）、
+方言を含む地方議会への適用には依然として課題が残る。
+
+\paragraph{データセット}
+その他、政治学研究に利用される日本の主要データセットとして、
+選挙時朝日・東大谷口研究室共同調査（UTAS）、
+社会科学の方法論的研究会（SMRI）のデータ等がある。
+これらは議員の政策態度・イデオロギー位置に関するサーベイデータを提供し、
+テキストベース推定の検証用基準（ground truth）として機能する。
+
+% --- 3.3.4 GovTrack, TheyWorkForYou ---
+\subsubsection{GovTrack・TheyWorkForYou・類似サービス}
+\label{subsubsec:govtrack}
+
+議会活動をウェブインターフェースを通じて市民にアクセス可能にするサービスは、
+\politech{}の先行形態として位置づけられる。
+
+\paragraph{GovTrack}
+GovTrack（2004年--）は、米国連邦議会の法案追跡・投票記録・議員活動分析を
+提供するウェブサービスである。各法案のステータス（提出、委員会審議、
+本会議採決等）をリアルタイムで追跡し、議員ごとの投票履歴、
+提出法案数、超党派協力度などの統計を算出する。
+オープンデータ・オープンソースの原則に基づき、
+API 経由でのデータアクセスを提供している。
+
+\paragraph{TheyWorkForYou}
+TheyWorkForYou は、英国の mySociety が運営する議会監視サービスであり、
+ハンサード（Hansard, 英国議会公式議事録）をパースして
+各議員の発言・投票・出席を可視化する。
+「あなたの議員は○○についてどう発言したか」を即座に検索できる UI が特徴であり、
+議員と有権者の間の情報の非対称性を削減する。
+
+\paragraph{その他の国際事例}
+\begin{itemize}
+  \item \textbf{OpenStates}: 米国50州の州議会データ（法案、投票、議員情報）を
+    統一的な API で提供する。
+  \item \textbf{Serenata de Amor}: ブラジルにおける AI を用いた
+    公費支出の監査プロジェクトであり、国会議員の経費請求の異常検出に
+    機械学習アルゴリズムを適用している。
+  \item \textbf{ゲリマンダリング検出}: Duchin らによる計量幾何学
+    （metric geometry）アプローチは、選挙区画定の公正性を
+    数学的に評価するフレームワークを提供している。
+    マルコフ連鎖による代替区割りのサンプリングにより、
+    現行区割りのゲリマンダリング度を統計的に検定する。
+\end{itemize}
+
+
+% ============================================================================
+% 3.4 AI x Democracy: State-of-the-Art
+% ============================================================================
+\subsection{AI×民主主義の最先端研究}
+\label{subsec:ai-democracy}
+
+2022年以降、大規模言語モデル（LLM）と民主的プロセスの交差領域において
+画期的な研究成果が相次いでいる。本節では、\politech{}の設計に直接的な
+示唆を与える6つの研究系統を詳細に検討する。
+
+% --- 3.4.1 Habermas Machine ---
+\subsubsection{Habermas Machine (Google DeepMind, \textit{Science} 2024)}
+\label{subsubsec:habermas-machine}
+
+Tessler et al. (2024) は、Google DeepMind のチームにより
+\textit{Science} 誌に発表された「AI can help humans find common ground in
+democratic deliberation」において、LLM を用いた集団意見の調停システム
+「Habermas Machine」を提案した\autocite{tessler2024habermas}。
+
+\paragraph{アーキテクチャ}
+Habermas Machine は、ファインチューニングされた LLM を基盤とし、
+集団的な合意声明（group statement）を反復的に生成・改善するシステムである。
+処理フローは以下の通りである。
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{個人意見の収集}: 各参加者が特定の政治的テーマに関する
+    個人的立場表明（position statement）を自由記述で提出する。
+  \item \textbf{候補声明の生成}: LLM が全参加者の個人意見を入力として受け取り、
+    集団を代表する候補声明（candidate group statements）を複数生成する。
+  \item \textbf{評価フィードバック}: 各参加者が候補声明を評価（rating）し、
+    修正提案を提出する。
+  \item \textbf{反復的改善}: LLM が評価フィードバックに基づいて候補声明を
+    改訂し、ステップ(3)に戻る。この反復は合意度が収束するまで続行される。
+\end{enumerate}
+
+\paragraph{報酬モデル}
+Habermas Machine の技術的革新の核心は、集団承認（group approval）を
+予測する報酬モデル（reward model）の訓練にある。
+RLHF（Reinforcement Learning from Human Feedback）の枠組みを応用し、
+個別参加者の承認ではなく集団全体の承認率を最大化するように
+LLM をファインチューニングする。
+
+\paragraph{実験結果}
+英国における分裂的トピック（NHS、君主制、Brexit 等）について、
+5,734人の参加者を対象とした大規模実験を実施した結果、
+AI 生成の集団声明は人間のメディエーターが作成した声明よりも
+56\%のケースで選好された。この結果は、AI が人間の調停者と
+同等以上の能力で合意形成を支援しうることを示唆する。
+
+\paragraph{限界}
+Tessler et al. 自身が認める限界として、(a)~英語のみでの実験、
+(b)~構造化された討論フォーマットへの限定、
+(c)~LLM による操作（manipulation）の可能性がある。
+特に(c)は深刻であり、LLM が「合意」を生成する際に、
+参加者の本来の意見を歪めて「偽の合意」を製造するリスクがある。
+この問題は AI×民主主義の倫理的核心に位置する。
+
+% --- 3.4.2 Collective Constitutional AI ---
+\subsubsection{Collective Constitutional AI (Anthropic)}
+\label{subsubsec:ccai}
+
+Anthropic は2023年、AI の憲法（constitution）——すなわち AI の行動を規律する
+原則集合——の策定に市民の集団的入力を組み込む試みとして、
+Collective Constitutional AI（CCAI）を発表した
+\autocite{anthropic2023ccai}。
+
+\paragraph{方法論}
+約1,000人の参加者が Pol.is を用いて AI の行動原則に関する意見を提出し、
+ブリッジング・ステートメント（クラスタ横断的合意）を抽出した。
+この「公共入力型憲法（public input constitution）」に基づいて
+Constitutional AI の原則を策定し、「デフォルト憲法」
+（Anthropic 内部で策定された原則）と比較実験を行った。
+
+\paragraph{結果}
+公共入力型モデルは、デフォルトモデルと同等のhelpfulness を維持しつつ、
+人口統計グループ間のバイアスが有意に低減した。
+すなわち、市民の集団的入力を AI のアラインメントプロセスに組み込むことで、
+公平性と有用性のトレードオフを改善できることが示された。
+
+\paragraph{方法論的貢献}
+CCAI の最大の貢献は、熟議（deliberation）と AI 訓練（training）を
+接続した点にある。これは、「AI のアラインメントを誰が決定するか」という
+根本的な問い——AI ガバナンスの民主的正統性——に対する
+実装可能な回答を提示するものである。
+\politech{}の文脈では、政治的 AI ツール（政策要約、議員評価等）の
+設計原則を市民の熟議によって策定するフレームワークとして応用可能である。
+
+% --- 3.4.3 Generative Social Choice ---
+\subsubsection{Generative Social Choice (Fish et al. 2024)}
+\label{subsubsec:generative-social-choice}
+
+Fish et al. (2024) は「Generative Social Choice」を提唱し、
+社会選択理論の枠組みを固定的な選択肢集合から生成的（generative）な
+選択肢空間へと拡張した\autocite{fish2024generative}。
+
+\paragraph{PROSE エンジン}
+核心となる PROSE（Proportionally Representative and Socially Efficient）
+エンジンは以下の手順で動作する。
+\begin{enumerate}[label=(\roman*)]
+  \item \textbf{入力}: 各参加者がテキストで個人的選好を表明する。
+  \item \textbf{候補生成}: LLM が個人選好の集合を入力として受け取り、
+    候補となる結果（outcomes）を生成する。
+  \item \textbf{社会厚生関数による評価}: 生成された候補に対して
+    社会厚生関数（パレート効率性、比例代表性等）を適用し、
+    最適な結果を選択する。
+\end{enumerate}
+
+\paragraph{形式的性質}
+PROSE エンジンは以下の形式的性質を（近似的に）満たすことが証明されている:
+\begin{itemize}
+  \item \textbf{近似パレート効率性}: 他のすべての参加者を悪化させずに
+    いずれかの参加者を改善できる結果が（近似的に）存在しない。
+  \item \textbf{比例代表性}: 各意見グループの選好が、
+    そのグループサイズに比例して最終結果に反映される。
+\end{itemize}
+
+\paragraph{社会選択理論との接続}
+Generative Social Choice は、第2節で論じた Arrow の不可能性定理に対する
+新しいアプローチを提供する。固定的な選択肢集合に対する集約ルールではなく、
+選択肢そのものを生成的に探索することで、不可能性定理の前提条件を迂回する。
+これは、\politech{}における政策提案の AI 支援生成に直接的に応用可能である。
+
+% --- 3.4.4 Democratic Fine-Tuning ---
+\subsubsection{Democratic Fine-Tuning (Bakker et al. 2022)}
+\label{subsubsec:democratic-finetuning}
+
+Bakker et al. (2022) は NeurIPS において、言語モデルを合意声明の生成に向けて
+ファインチューニングする手法を提案した\autocite{bakker2022finetuning}。
+この研究は Habermas Machine の理論的先駆者として位置づけられる。
+
+\paragraph{手法}
+RLHF スタイルの訓練において、報酬信号として個人の選好ではなく
+集団承認率（group approval rate）を使用する。
+具体的には、LLM が生成した候補声明に対するグループ全体の
+平均承認スコアを最大化するように方策最適化を行う。
+
+\paragraph{貢献}
+Bakker et al. の貢献は、(a)~LLM が合意形成の媒介者として機能しうることの
+最初期の実証、(b)~集団選好の集約に RLHF フレームワークを適用可能であることの
+理論的示唆、(c)~Habermas Machine への直接的な技術的基盤の提供、の三点に整理される。
+
+% --- 3.4.5 Modular Pluralism ---
+\subsubsection{Modular Pluralism (Feng et al. 2024)}
+\label{subsubsec:modular-pluralism}
+
+Feng et al. (2024) は NeurIPS 2024 において、多様な価値体系を
+モジュラーに表現する「Modular Pluralism」アプローチを提案した
+\autocite{feng2024modular}。
+
+\paragraph{アーキテクチャ}
+異なる価値体系（例: リベラル、保守、リバタリアン、コミュニタリアン）を
+それぞれ独立したモジュールとして実装し、ルーティング機構によって
+文脈に応じたモジュールの組み合わせを動的に決定する。
+この設計は、単一の「中立的」AI モデルを追求するのではなく、
+多元的な価値の共存を構造的に担保する。
+
+\paragraph{トークンレベル MDP 定式化}
+Feng et al. は公正性（fairness）をトークンレベルのマルコフ決定過程（MDP）として
+定式化する。各トークン生成時点での行動選択が、
+多元的な価値基準に照らして「公正」であるかを逐次的に評価する。
+この定式化は、単一の出力に対する事後的な公正性評価ではなく、
+生成プロセスそのものに公正性を組み込む点で技術的に新規である。
+
+\paragraph{\politech{}への示唆}
+政治的テキスト生成（政策要約、議論の整理、合意案の作成等）において、
+単一モデルの「中立性」を追求するアプローチは原理的に限界がある
+（「中立」の定義自体が政治的であるため）。
+Modular Pluralism は、複数の政治的立場を明示的にモデル化し、
+ユーザーが立場の組み合わせを選択できるようにする設計原則を提供する。
+
+% --- 3.4.6 Political Bias and Manipulation Risk ---
+\subsubsection{AI の政治的バイアスと操作リスク}
+\label{subsubsec:ai-bias}
+
+AI×民主主義の研究は、その潜在的利益とともに、
+深刻なリスクの分析も不可欠である。
+
+\paragraph{AI 政治バイアスの系統的測定}
+Durmus et al. (2024) は、LLM の政治的バイアスを系統的に測定する
+フレームワークを提示した\autocite{durmus2024measuring}。
+同研究は、主要な LLM が Political Compass テスト等において
+リベラル・リバタリアン象限にバイアスを示す傾向を報告しており、
+AI を政治プロセスに組み込む際のバイアス監査（bias auditing）の
+必要性を強調している。
+
+\paragraph{LLM as Silicon Samples}
+Argyle et al. (2023) は「Out of One, Many」において、
+LLM を人間集団のシリコンサンプル（silicon samples）として
+使用する可能性と限界を分析した\autocite{argyle2023outofone}。
+LLM に人口統計的属性（年齢、性別、人種、政党支持等）を
+プロンプトとして付与し、対応する人間集団の意見分布を
+再現できるかを検証した結果、一定の精度で意見分布を模倣できるものの、
+少数派やマージナライズされたグループの意見は
+系統的に過小代表される傾向が確認された。
+
+\paragraph{Marked Personas}
+Cheng et al. (2023) は、LLM がデモグラフィック・ペルソナを付与された際に
+既存の人口統計的バイアスを再生産する問題を「Marked Personas」として
+分析した\autocite{cheng2023marked}。
+「白人男性」のペルソナが「デフォルト」として扱われ、
+「黒人女性」のペルソナがステレオタイプ的に再現される傾向が示された。
+この知見は、\politech{}において AI が「典型的な市民の意見」を
+シミュレートする際の根本的な限界を示唆する。
+
+\paragraph{選挙における AI ペナルティ}
+近年の選挙研究は、AI の関与に対する有権者の反発
+（AI Penalty）を報告している。
+選挙キャンペーンにおいて AI が使用されていることが明示された場合、
+候補者への支持が有意に低下する傾向がある。
+この知見は、\politech{}の設計において AI の役割を
+「意思決定の代替」ではなく「情報提供の支援」として
+慎重にフレーミングする必要性を示唆する。
+
+\paragraph{プロンプトインジェクション脆弱性}
+熟議プラットフォームに LLM を組み込む際の技術的リスクとして、
+プロンプトインジェクション攻撃がある。
+悪意ある参加者が巧妙に設計された意見文を提出し、
+LLM の要約処理を操作することで、合意結果を歪める可能性がある。
+この脆弱性は、\politech{}における LLM 統合の設計において
+サンドボックス化、入力バリデーション、複数モデルの相互検証などの
+対策を不可欠とする。
+
+
+% ============================================================================
+% 3.5 Citizens' Assemblies and Mini-Publics
+% ============================================================================
+\subsection{市民議会とミニ・パブリクス}
+\label{subsec:minipublics}
+
+デジタルプラットフォームと並行して、オフラインの熟議制度設計においても
+重要な進展がある。本節では、市民議会（Citizens' Assemblies）と
+ミニ・パブリクス（mini-publics）の国際的展開を概観する。
+
+\paragraph{OECD 報告書}
+OECD (2020) は、「Innovative Citizen Participation and New Democratic
+Institutions」において、世界で700件以上の熟議プロセスを体系的に記録した
+\autocite{oecd2020innovative}。
+この報告書は、抽選（sortition）による参加者選定、
+情報提供フェーズ、ファシリテートされた熟議、集団的勧告の策定という
+「熟議の波（deliberative wave）」のグローバルなトレンドを確認している。
+
+\paragraph{アイルランド市民議会 (2016--2018)}
+アイルランド市民議会は、99名の無作為抽出市民が同性婚（2015年国民投票で承認）
+および人工妊娠中絶（2018年国民投票で承認）について熟議した事例であり、
+ミニ・パブリクスの成功例として最も頻繁に引用される。
+専門家による情報提供、ファシリテートされた少グループ討論、
+全体会議での投票という三段階プロセスが、
+高度に分極化したテーマにおいても市民が合理的な判断に到達しうることを実証した。
+
+\paragraph{フランス気候市民議会 (2019--2020)}
+Convention Citoyenne pour le Climat は、マクロン大統領の委任により
+無作為抽出された150名の市民が気候変動対策を熟議した。
+149の政策提案が作成されたが、政府による実施率は限定的であり、
+熟議の結果が制度的に拘束力を持つか否かという「実装ギャップ」の問題を
+浮き彫りにした。
+
+\paragraph{英国気候議会 (2020)}
+UK Climate Assembly は、108名の無作為抽出市民が
+2050年ネットゼロ達成のための方策を熟議した。
+COVID-19 パンデミックによりオンラインフォーマットに移行したことで、
+デジタル熟議の実現可能性に関する貴重な知見を提供した。
+
+\paragraph{理論的基盤}
+Curato et al. (2017) は「Twelve Key Findings in Deliberative Democracy
+Research」において、熟議民主主義研究の12の主要知見を
+\textit{Daedalus} 誌に整理した\autocite{curato2017twelve}。
+その中核的知見は、(a)~熟議は参加者の選好を変化させうること、
+(b)~情報提供が意見の質を向上させること、
+(c)~ファシリテーションの質が結果に決定的影響を与えること、
+(d)~ミニ・パブリクスは代表制と熟議を両立させうること、である。
+
+Farrell et al. (2019) は \textit{Annual Review of Political Science} において
+ミニ・パブリクスの包括的サーベイを行い、その制度設計の多様性と
+正統性の条件を分析した\autocite{farrell2019minipublics}。
+特に、ミニ・パブリクスの勧告が制度的に拘束力を持つか
+（binding vs.\ advisory）の設計判断が、参加者のモチベーションと
+公衆の信頼に重大な影響を与えることを指摘している。
+
+\paragraph{デジタルツールとの接続}
+市民議会の文脈では、抽選（sortition）によるオフラインの熟議と、
+ブロードリスニングによるオンラインの大規模意見収集を
+組み合わせるハイブリッドモデルが注目されている。
+例えば、Pol.is による大規模意見クラスタリングで争点を構造化した後、
+市民議会で深い熟議を行うという二段階プロセスが、
+スケーラビリティと熟議の質の両立を可能にする。
+\politech{}の設計は、このハイブリッドモデルをエージェント対応の
+技術基盤として実装することを目指す。
+
+
+% ============================================================================
+% 3.6 小括
+% ============================================================================
+\subsection{小括——分野の収束と残された課題}
+\label{subsec:lit-summary}
+
+本節で概観した文献群は、以下の4つの研究潮流の収束を示している。
+
+\begin{enumerate}[label=(\arabic*)]
+  \item \textbf{熟議理論の計算化}: Habermas の討議倫理（第2節参照）が、
+    LLM によるグループ声明生成（Habermas Machine）、
+    報酬モデルによる合意最適化（Democratic Fine-Tuning）、
+    社会厚生関数による公正な集約（PROSE）として実装されつつある。
+  \item \textbf{NLP/AI とプラットフォーム設計の融合}: BERTopic、Sentence-BERT、
+    UMAP、HDBSCAN 等のモジュラーな NLP パイプラインが、
+    Pol.is、広聴AI、Talk to the City 等のプラットフォームに統合され、
+    大規模意見データの構造的理解を可能にしている。
+  \item \textbf{議会監視の高度化}: DW-NOMINATE、Wordfish 等の
+    計量テキスト分析手法と、ParlaMint、国会会議録 API 等の
+    標準化コーパスの整備により、議員・政党の政策位置の
+    客観的推定が技術的に実現可能となっている。
+  \item \textbf{制度設計とデジタルの接合}: OECD が記録する700以上の
+    熟議プロセスと、Decidim・CONSUL 等のデジタル参加基盤が、
+    ハイブリッドな民主的イノベーションの制度的基盤を形成している。
+\end{enumerate}
+
+\paragraph{残された課題}
+しかし、これらの研究潮流にはいくつかの重大なギャップが存在する。
+
+\begin{description}
+  \item[英語圏バイアス] 主要な研究（Habermas Machine、CCAI、PROSE）は
+    すべて英語で実施されており、日本語を含むアジア言語での検証が不足している。
+    BERTopic 等の NLP パイプラインも英語に最適化されており、
+    日本語の形態素解析・係り受け解析への適応には追加的な技術的工夫が必要である。
+  \item[日本的文脈の過少研究] 日本の党議拘束の強さ、パブリックコメント制度の形骸化、
+    投票率の低下、若年層の政治的無関心といった構造的要因は、
+    英語圏の民主主義理論では十分に扱われていない。
+    広聴AI の取り組みは先駆的であるが、学術的な評価は緒についたばかりである。
+  \item[エージェントレディ設計の不在] 既存のプラットフォーム（Pol.is、Decidim、
+    Talk to the City 等）は、人間ユーザーを前提として設計されている。
+    AI エージェントが政治プロセスに参入する——市民の委任を受けてパブリックコメントを
+    提出する、議会の議事を自動的にモニタリングする等——ことを前提とした
+    アーキテクチャ設計は、文献上ほぼ未踏の領域である。
+  \item[統合フレームワークの欠如] ブロードリスニング、AI 調停、議会監視、
+    エージェントプロトコルの各技術は個別に発展しているが、
+    これらを統合する包括的フレームワークは提示されていない。
+\end{description}
+
+\politech{}は、これらのギャップを埋める統合フレームワークとして位置づけられる。
+すなわち、(a)~ブロードリスニングによる大規模市民意見の構造化、
+(b)~AI 調停による合意形成支援、(c)~議会監視による透明性確保、
+(d)~エージェントプロトコルによる自律的参加の4つの柱を、
+日本語対応のオープンソース基盤として統合する試みである。
+第4節以降では、この統合フレームワークの設計原則と国際比較分析を展開する。

@@ -1,0 +1,243 @@
+% ============================================================================
+% Section 4: GovTech vs CivicTech vs PoliTech Framework
+% ============================================================================
+
+\section{概念整理——GovTech vs CivicTech vs PoliTech}
+\label{sec:framework}
+
+前節までの理論的基盤と文献調査を踏まえ、本節では政治のデジタル化をめぐる三つの概念——\govtech{}、\civictech{}、\politech{}——を体系的に整理し、それぞれの射程と限界を明確化する。さらに、国際比較のための6軸フレームワークを提示する。
+
+% ----------------------------------------------------------------------------
+\subsection{GovTech——「決まった政策をいかに届けるか」}
+\label{subsec:govtech}
+
+\govtech{}（Government Technology）とは、\textbf{既に決定された政策を、市民に対していかに効率的に届けるか}という問いに応答する技術群を指す。その中心的関心は行政サービスのデジタル化と効率化であり、政策の内容そのものの形成過程には関与しない。
+
+\begin{definition}[\govtech{}]
+\govtech{}とは、政府が提供する行政サービスのデジタル化、および行政プロセスの効率化を目的とした技術体系・制度設計・組織運営の総体をいう。その主要な問いは「決まった政策をいかに効率的に届けるか（How to deliver decided policies efficiently?）」である。
+\end{definition}
+
+\govtech{}の代表的事例は以下の通りである。
+
+\paragraph{エストニア X-Road}
+エストニアは2001年にX-Roadと呼ばれるデータ交換基盤を導入し、政府機関・自治体・民間企業のデータベースを相互接続するインフラを構築した\autocite{margetts2016turbulence}。99\%の行政手続がオンラインで完結し、デジタルIDカードの普及率は98\%に達する。しかし、この高度なデジタル行政基盤は、政策の意思決定プロセスそのもののデジタル化を含まない。X-Roadは政策の「配送（delivery）」を効率化するものであり、政策の「形成（formation）」を民主化するものではない。
+
+\paragraph{シンガポール GovTech}
+シンガポール政府技術庁（GovTech）は、Smart Nation構想の中核として、Singpass（国民デジタルID）、LifeSG（統合行政アプリ）、TraceTogether（接触追跡）などのデジタルサービスを開発・運営している。技術的洗練度は世界最高水準であるが、シンガポールの政治体制においては市民の政策形成への参加は限定的であり、\govtech{}の高度化が必ずしも\politech{}の発展を伴わないことを示す典型例である。
+
+\paragraph{日本 デジタル庁}
+2021年に設置された日本のデジタル庁は、行政のデジタル化を所管する官庁として、マイナンバーカードの普及促進、デジタル手続法の整備、ガバメントクラウドの構築を推進している。しかし、その設置目的は「行政のデジタル化」であり、政治プロセスのデジタル化は明示的に射程に含まれていない。国会の議事録APIの整備、政治資金のデジタル公開基盤の構築、市民参加のデジタルプラットフォームの提供——これらはいずれもデジタル庁の主要施策には含まれていない。
+
+\govtech{}の構造的特徴を要約すれば、以下の通りである。データの流れは政府から市民への一方向（top-down）が主であり、AIの利用はチャットボットによる行政相談、書類の自動処理、不正検知など行政効率化に限定される。オープンソースは手段として採用されることがあるが（例：英国GOV.UKのGitHub公開）、構造的要件とはされない。市民は政策の受け手（recipient）として位置づけられ、政策の形成者（co-creator）としては位置づけられない。
+
+% ----------------------------------------------------------------------------
+\subsection{CivicTech——「市民がいかに参加するか」}
+\label{subsec:civictech}
+
+\civictech{}（Civic Technology）とは、\textbf{市民が政治・行政プロセスにいかに参加するか}という問いに応答する技術群を指す。その中心的関心は参加チャネルの拡大と市民のエンパワメントであり、既存の政治制度の枠組みの中で市民の声を届けることに焦点を当てる。
+
+\begin{definition}[\civictech{}]
+\civictech{}とは、市民が政治・行政プロセスに関与するための参加チャネルを技術的に拡大し、市民のエンパワメントと政府の説明責任向上を促進する技術体系・組織・実践の総体をいう。その主要な問いは「市民がいかに参加するか（How can citizens participate?）」である。
+\end{definition}
+
+\civictech{}の代表的事例は以下の通りである。
+
+\paragraph{mySociety（英国）}
+mySocietyは2003年に設立された英国の非営利団体であり、\civictech{}のパイオニアとして国際的に認知されている\autocite{oecd2025civic}。同団体が開発・運営する主要プラットフォームは以下の通りである。
+\begin{itemize}[nosep]
+  \item \textbf{WhatDoTheyKnow}——情報公開請求（Freedom of Information Request）のオンライン提出・追跡プラットフォーム。11万件以上の請求を処理。
+  \item \textbf{TheyWorkForYou}——国会議員の議会活動（発言・投票・質問）の可視化プラットフォーム。
+  \item \textbf{FixMyStreet}——道路の陥没・街灯の故障などの地域課題を自治体に報告するプラットフォーム。
+  \item \textbf{WriteToThem}——選挙区選出の議員に対するオンライン通信プラットフォーム。
+\end{itemize}
+これらのプラットフォームはいずれもオープンソースであり、既存の政治制度（議会・自治体・情報公開法）に対して市民のアクセスを拡大するものである。しかし、政策の意思決定メカニズムそのものを変革するものではない。
+
+\paragraph{Code for America（米国）}
+Code for Americaは2009年にJennifer Pahlkaによって設立された非営利団体であり、米国における\civictech{}運動の中核をなす\autocite{oecd2025civic}。フェローシッププログラムを通じて技術者を行政機関に派遣し、行政サービスのデジタル化を推進してきた。その活動は6億2,000万世帯以上の支援に及ぶとされる。しかし、その活動の主軸はあくまで行政サービスの改善であり、政治的意思決定プロセスそのものの変革には必ずしも踏み込んでいない。
+
+\paragraph{Code for Japan（日本）}
+Code for Japanは2013年に関治之によって設立された日本の\civictech{}コミュニティであり、80以上の地域コミュニティ（Brigade）を組織している。東日本大震災時のSinsai.info（被災情報集約サイト）を起源とし、行政との協働事業・Decidimの日本展開・ハッカソンの開催など、多岐にわたる活動を展開している。
+
+\civictech{}の構造的特徴を要約すれば、以下の通りである。データの流れは市民から政府への一方向（bottom-up）が主であり、市民の声を「届ける」ことに焦点を当てる。しかし、届けられた声がどのように政策に反映されるか——集約のアルゴリズム、優先順位の決定方法、合意形成のプロセス——は、既存の政治制度に委ねられる。AIの利用は情報アクセスの改善や市民報告の自動分類など補助的なものにとどまる。オープンソースは規範として広く共有されているが（「公共のためのコード」という理念）、制度的要件とはされていない。
+
+% ----------------------------------------------------------------------------
+\subsection{PoliTech——「何を、誰が、どのように決めるか」}
+\label{subsec:politech}
+
+\politech{}（Political Technology）とは、\textbf{何を、誰が、どのように決めるかという政治の意思決定メカニズムそのものの技術的変革}を目的とする技術群を指す。その中心的関心は、利益集約・合意形成・政策形成・代表選出・政策監視といった民主主義の核心的機能のデジタル化・再設計であり、既存の政治制度の枠組みそのものに介入する点で、\govtech{}および\civictech{}と質的に異なる。
+
+\begin{definition}[\politech{}]
+\politech{}とは、政治の意思決定プロセス——利益集約、合意形成、政策形成、代表選出、政策監視——そのものを技術的に変革することを目的とした技術体系・設計原則・制度的接合の総体をいう。その主要な問いは「何を、誰が、どのように決めるか（What is decided, by whom, and how?）」である。
+\end{definition}
+
+\politech{}の代表的事例は以下の通りである。
+
+\paragraph{vTaiwan（台湾）}
+vTaiwanは2014年に発足した台湾の参加型政策形成プラットフォームであり、\politech{}の最も成功した事例の一つとして国際的に評価されている\autocite{tang2024plurality}。Pol.isを用いた意見集約、ステークホルダーの対面熟議、行政との制度的接合を一体化したプロセスを特徴とする。2015年から2020年までに26の政策課題を扱い、そのうち約80\%が法制化に至った。vTaiwanは、市民の声を「届ける」にとどまらず、意思決定のプロセスそのものを設計し直した点で、\civictech{}を超えた\politech{}の実装である。
+
+\paragraph{Decidim（スペイン・バルセロナ）}
+Decidimは2015年にバルセロナ市議会によって開発が開始されたオープンソースの参加型民主主義プラットフォームであり、Ruby on Railsで構築されたモジュラー・アーキテクチャを特徴とする。提案（Proposals）、熟議（Debates）、会議（Meetings）、参加型予算（Participatory Budgets）などのコンポーネントを組み合わせることで、多様な意思決定プロセスを構成できる。世界500以上の機関で導入されており、政策形成の意思決定プロセスそのものをデジタル化する点で\politech{}の範疇に属する。
+
+\paragraph{Habermas Machine（DeepMind）}
+Habermas Machineは、Google DeepMindが開発し2024年に\textit{Science}誌に発表したAIシステムであり、グループ内の意見分布を入力として合意可能な声明文を生成する\autocite{fishkin2011people}。Habermasの討議倫理に着想を得たこのシステムは、AI技術を意思決定プロセスそのものに組み込む試みとして、\politech{}の最前線に位置づけられる。
+
+\paragraph{OJPP（Open Japan PoliTech Platform）}
+本論文の著者が設計・開発するOJPPは、政治資金の透明化（MoneyGlass）、国会議事録分析（ParliScope）、政策比較（PolicyDiff）、選挙・議席可視化（SeatMap）などの機能を統合したモノレポ構成の\politech{}プラットフォームであり、第\ref{sec:japan-case-study}節で詳述する。
+
+\politech{}の構造的特徴を要約すれば、以下の通りである。データの流れは双方向・多方向（市民間、市民・政府間、政府内）であり、意思決定のプロセスそのものがデジタル化の対象となる。AIの利用は意見集約・合意形成・政策立案の核心に及び、補助的ツールにとどまらない。オープンソースは、検証可能性と正統性の確保のために構造的要件とされる。市民は政策の共同設計者（co-designer）として位置づけられる。
+
+% ----------------------------------------------------------------------------
+\subsection*{三概念の比較}
+
+以上の三概念を体系的に比較したものが表\ref{tab:comparison-three}である。
+
+\begin{table}[htbp]
+\centering
+\caption{GovTech・CivicTech・PoliTechの比較}
+\label{tab:comparison-three}
+\small
+\begin{tabularx}{\textwidth}{lXXX}
+\toprule
+\textbf{比較軸} & \textbf{\govtech{}} & \textbf{\civictech{}} & \textbf{\politech{}} \\
+\midrule
+定義 & 行政サービスのデジタル化と効率化 & 市民参加チャネルの技術的拡大 & 政治の意思決定メカニズムの技術的変革 \\
+\addlinespace
+主たる問い & 決まった政策をいかに効率的に届けるか & 市民がいかに参加するか & 何を、誰が、どのように決めるか \\
+\addlinespace
+主要アクター & 政府・行政機関 & 市民・NPO/NGO & 市民・研究者・技術者・行政の連合体 \\
+\addlinespace
+データの流れ & 政府$\to$市民（top-down） & 市民$\to$政府（bottom-up） & 双方向・多方向（multi-directional） \\
+\addlinespace
+代表例 & Estonia X-Road, Singapore GovTech, 日本デジタル庁 & mySociety, Code for America, Code for Japan & vTaiwan, Decidim, Habermas Machine, OJPP \\
+\addlinespace
+AIとの関係 & 行政効率化ツール（チャットボット、書類処理） & 情報アクセス改善の補助ツール & 意思決定プロセスの中核（合意形成、政策立案） \\
+\addlinespace
+オープンソース要件 & 手段的（採用は任意） & 規範的（理念として共有） & 構造的（検証可能性と正統性の要件） \\
+\addlinespace
+市民の位置づけ & サービスの受け手（recipient） & 声の発信者（voice） & 意思決定の共同設計者（co-designer） \\
+\addlinespace
+意思決定への関与 & なし（決定後の配送） & 間接的（声を届ける） & 直接的（プロセスの設計・参加） \\
+\addlinespace
+制度的接合 & 行政制度に内包 & 行政の外側から働きかけ & 既存制度との能動的接合 \\
+\addlinespace
+持続可能性モデル & 政府予算 & 寄付・助成金・ボランティア & 公共インフラ＋コミュニティ＋制度的支援 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+三概念の関係は排他的ではなく、相互補完的である。\govtech{}が行政サービスのデジタル基盤を提供し、\civictech{}が市民の参加チャネルを拡大し、\politech{}が意思決定プロセスそのものを再設計する。しかし、現状の議論では\govtech{}と\civictech{}に焦点が集中し、\politech{}の固有の射程——意思決定メカニズムそのものの変革——が十分に理論化されていない。本論文は、この空白を埋めることを目的とする。
+
+% ----------------------------------------------------------------------------
+\subsection{6軸比較フレームワーク}
+\label{subsec:six-axes}
+
+\politech{}の国際比較分析を行うにあたり、本論文は以下の6軸比較フレームワークを提案する。これは、\politech{}プラットフォームの設計特性を多面的に評価するための分析枠組みであり、第\ref{sec:international-comparison}節の国際比較で適用される。
+
+\subsubsection{軸1: 非党派性（Non-partisanship）}
+\label{subsubsec:axis-nonpartisan}
+
+\begin{definition}[非党派性]
+非党派性とは、\politech{}プラットフォームの設計・運営・ガバナンスが特定の政党・政治勢力の利益に従属しない度合いをいう。
+\end{definition}
+
+非党派性の評価基準は以下の通りである。
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{組織的独立性}——プラットフォームの運営主体が特定政党から組織的に独立しているか。
+  \item \textbf{財政的独立性}——運営資金が特定政党からの拠出に依存していないか。
+  \item \textbf{設計的中立性}——プラットフォームの設計（議題設定、意見集約アルゴリズム、可視化方法）が特定の政治的立場を優遇する構造を持たないか。
+  \item \textbf{ガバナンス的中立性}——プラットフォームの運営意思決定が多元的なステークホルダーによって行われているか。
+\end{enumerate}
+
+非党派性は、\textcite{dryzek2010foundations}が論じる「真正な熟議（authentic deliberation）」の前提条件である。熟議空間が特定の政治勢力によって管理されている場合、参加者の自由な意見表明と相互的な理由づけ（mutual reason-giving）が構造的に阻害される。
+
+\subsubsection{軸2: 非企業性（Non-corporateness）}
+\label{subsubsec:axis-noncorporate}
+
+\begin{definition}[非企業性]
+非企業性とは、\politech{}プラットフォームの設計・運営・データ管理が営利企業の利潤動機に従属しない度合いをいう。
+\end{definition}
+
+非企業性の評価基準は以下の通りである。
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{収益モデルの独立性}——プラットフォームの収益が広告収入・データ販売に依存していないか。
+  \item \textbf{データ主権の確保}——市民のデータがプラットフォーム運営企業の資産として扱われず、公共財として管理されているか。
+  \item \textbf{サービス継続性}——プラットフォームの存続が特定企業の経営判断に依存しないか。
+  \item \textbf{設計自律性}——プラットフォームの設計判断が企業の事業戦略に左右されないか。
+\end{enumerate}
+
+第\ref{subsec:corporate-problems}節で論じたように、営利企業が政治インフラを運営することには、利潤動機との相克・検証不可能性・企業利益の埋め込み・サービス継続性リスクという四つの構造的問題が存在する。非企業性はこれらの問題を回避するための設計要件である。
+
+\subsubsection{軸3: オープンソース度（Open-source degree）}
+\label{subsubsec:axis-opensource}
+
+\begin{definition}[オープンソース度]
+オープンソース度とは、\politech{}プラットフォームのソースコード・データ・アルゴリズム・意思決定プロセスが外部から検証可能な形で公開されている度合いをいう。
+\end{definition}
+
+オープンソース度の評価基準は以下の通りである。
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{ソースコード公開}——プラットフォームの全ソースコードがオープンソースライセンスの下で公開されているか。
+  \item \textbf{データ公開}——プラットフォームが扱う政治データ（議事録、政治資金、投票記録等）がオープンデータとして公開されているか。
+  \item \textbf{アルゴリズム透明性}——意見集約・合意形成・推薦等のアルゴリズムが公開・検証可能か。
+  \item \textbf{AIモデル公開}——使用するAIモデルがオープンウェイト（open-weight）または少なくとも監査可能（auditable）か。
+  \item \textbf{ガバナンス透明性}——プラットフォームの運営方針の決定プロセスが公開されているか。
+\end{enumerate}
+
+\textcite{landemore2020open}が「開かれた民主主義」の要件として透明性を重視するのと同様に、\politech{}における検証可能性は民主主義的正統性の構造的要件である。ブラックボックスの中で行われる意思決定は、その結果の妥当性にかかわらず、民主主義的正統性を欠く。
+
+\subsubsection{軸4: 制度的接合性（Institutional coupling）}
+\label{subsubsec:axis-institutional}
+
+\begin{definition}[制度的接合性]
+制度的接合性とは、\politech{}プラットフォームの出力が既存の政治制度（議会・地方自治体・選挙制度）に対して制度的に接合されている度合いをいう。
+\end{definition}
+
+制度的接合性の評価基準は以下の通りである。
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{法的根拠}——プラットフォームの利用が法令・条例によって根拠づけられているか。
+  \item \textbf{政策反映経路}——プラットフォーム上の議論・提案が政策に反映される制度的経路が確立されているか。
+  \item \textbf{行政連携}——プラットフォームと行政機関の間にデータ連携・プロセス連携が存在するか。
+  \item \textbf{説明責任}——プラットフォーム上の市民意見に対して、政策決定者が応答する義務が制度化されているか。
+\end{enumerate}
+
+制度的接合性は、\politech{}が「社会実験」にとどまるか、実効的な民主主義インフラとなるかを決定する重要な軸である。vTaiwanが国際的に評価される理由は、Pol.isによる技術的革新だけでなく、その出力が立法プロセスに制度的に接合されていたことにある\autocite{tang2024plurality}。
+
+\subsubsection{軸5: 参加の包摂性（Participation inclusiveness）}
+\label{subsubsec:axis-inclusiveness}
+
+\begin{definition}[参加の包摂性]
+参加の包摂性とは、\politech{}プラットフォームへの参加が社会の多様な構成員に対して実質的に開かれている度合いをいう。
+\end{definition}
+
+参加の包摂性の評価基準は以下の通りである。
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{デジタルデバイド対応}——デジタルリテラシー・インターネットアクセス・端末保有の格差に対する対策が講じられているか。
+  \item \textbf{言語的包摂性}——多言語対応・やさしい日本語対応など、言語的障壁への配慮があるか。
+  \item \textbf{アクセシビリティ}——障害者・高齢者のアクセシビリティが確保されているか（WCAG準拠等）。
+  \item \textbf{参加の代表性}——参加者の人口統計的構成が、対象コミュニティの構成を反映しているか。
+  \item \textbf{オフライン連携}——デジタルプラットフォームとオフラインの参加機会が連携しているか。
+\end{enumerate}
+
+\textcite{landemore2020open}が指摘するように、参加の機会が形式的に開かれていても、実質的に特定の社会層に偏っている場合、プラットフォームの正統性は損なわれる。特にデジタルプラットフォームは、デジタルリテラシーの格差によって、既存の社会的不平等を再生産するリスクを内包する。
+
+\subsubsection{軸6: エージェントレディ度（Agent-readiness）}
+\label{subsubsec:axis-agentready}
+
+\begin{definition}[エージェントレディ度]
+エージェントレディ度とは、\politech{}プラットフォームがAIエージェントの参入・活用を前提とした設計を備えている度合いをいう。
+\end{definition}
+
+エージェントレディ度の評価基準は以下の通りである。
+\begin{enumerate}[nosep,label=(\roman*)]
+  \item \textbf{構造化API}——政治データにプログラマティックにアクセスするための構造化された、バージョン管理されたAPIが提供されているか。
+  \item \textbf{機械可読データ}——データがJSON-LD、RDFなどの標準化された機械可読形式で提供されているか。
+  \item \textbf{エージェント認証基盤}——AIエージェントの認証・権限管理・行動ログの仕組みが整備されているか。
+  \item \textbf{プロトコル互換性}——MCP（Model Context Protocol）、A2A（Agent-to-Agent）などのエージェントプロトコルとの互換性があるか。
+  \item \textbf{監査証跡}——AIエージェントの行動がすべて記録され、事後的に検証可能か。
+\end{enumerate}
+
+エージェントレディ度は、既存の\politech{}比較フレームワークには含まれない本論文独自の分析軸である。LLMおよび自律型エージェントの急速な発展を踏まえれば、AIエージェントが政治プロセスに参入する時代は数年以内に到来すると予測される。この参入を「事後的に規制する」のではなく、「事前に設計する」ことが、\politech{}プラットフォームの重要な設計要件となる。第\ref{sec:agent-ready-design}節でこの点を詳述する。
+
+\bigskip
+
+以上の6軸比較フレームワークは、\politech{}プラットフォームの設計特性を多面的かつ体系的に評価するための分析枠組みを提供する。各軸はいずれも0（最低）から5（最高）のスコアで評価可能であり、レーダーチャートによる視覚的比較も可能である。次節では、このフレームワークを台湾・英国・米国・欧州・日本の5地域に適用し、国際比較分析を行う。
