@@ -2,7 +2,7 @@
  * seed-real-bills.ts
  *
  * 実際の国会法案データを投入するシードスクリプト。
- * 第210回〜第220回国会（2022〜2026年）の主要法案を含む。
+ * 第200回〜第220回国会（2019〜2026年）の主要法案を含む。
  *
  * データソース:
  *   - 内閣法制局 (https://www.clb.go.jp/recent-laws/)
@@ -16,7 +16,7 @@ import type { BillStatus, SessionType } from "@ojpp/db";
 import { prisma } from "@ojpp/db";
 
 // ============================================
-// 国会会期データ（第210回〜第220回）
+// 国会会期データ（第200回〜第220回）
 // ============================================
 
 interface SessionData {
@@ -27,6 +27,76 @@ interface SessionData {
 }
 
 const SESSIONS: SessionData[] = [
+  // 第200回 臨時国会（2019年秋）安倍内閣
+  {
+    number: 200,
+    type: "EXTRAORDINARY",
+    startDate: "2019-10-04",
+    endDate: "2019-12-09",
+  },
+  // 第201回 通常国会（2020年）安倍内閣・コロナ対応
+  {
+    number: 201,
+    type: "ORDINARY",
+    startDate: "2020-01-20",
+    endDate: "2020-06-17",
+  },
+  // 第202回 臨時国会（2020年9月）菅内閣発足
+  {
+    number: 202,
+    type: "EXTRAORDINARY",
+    startDate: "2020-09-16",
+    endDate: "2020-09-18",
+  },
+  // 第203回 臨時国会（2020年秋）菅内閣
+  {
+    number: 203,
+    type: "EXTRAORDINARY",
+    startDate: "2020-10-26",
+    endDate: "2020-12-05",
+  },
+  // 第204回 通常国会（2021年）菅内閣
+  {
+    number: 204,
+    type: "ORDINARY",
+    startDate: "2021-01-18",
+    endDate: "2021-06-16",
+  },
+  // 第205回 臨時国会（2021年10月）岸田内閣発足・衆院解散
+  {
+    number: 205,
+    type: "EXTRAORDINARY",
+    startDate: "2021-10-04",
+    endDate: "2021-10-14",
+  },
+  // 第206回 特別国会（2021年11月）第49回衆院選後・岸田首相指名
+  {
+    number: 206,
+    type: "SPECIAL",
+    startDate: "2021-11-10",
+    endDate: "2021-11-12",
+  },
+  // 第207回 臨時国会（2021年12月）補正予算
+  {
+    number: 207,
+    type: "EXTRAORDINARY",
+    startDate: "2021-12-06",
+    endDate: "2021-12-21",
+  },
+  // 第208回 通常国会（2022年）岸田内閣
+  {
+    number: 208,
+    type: "ORDINARY",
+    startDate: "2022-01-17",
+    endDate: "2022-06-15",
+  },
+  // 第209回 臨時国会（2022年8月）参院選後・3日間
+  {
+    number: 209,
+    type: "EXTRAORDINARY",
+    startDate: "2022-08-03",
+    endDate: "2022-08-05",
+  },
   // 第210回 臨時国会（2022年秋）岸田内閣
   {
     number: 210,
@@ -125,6 +195,391 @@ interface RealBill {
 
 const REAL_BILLS: RealBill[] = [
   // ============================================================
+  // 第200回国会（2019年臨時国会）— 安倍内閣
+  // 閣法15本提出・全15本成立
+  // ============================================================
+  {
+    sessionNumber: 200,
+    number: "200-閣法-1",
+    title: "会社法の一部を改正する法律案",
+    summary:
+      "株主総会資料の電子提供制度の創設、取締役の報酬等の決定方針の開示義務化、社外取締役の要件厚格化等。会社法の大幅見直し。",
+    proposer: "内閣",
+    category: "経済",
+    status: "ENACTED",
+    submittedAt: "2019-10-18",
+    passedAt: "2019-12-04",
+  },
+  {
+    sessionNumber: 200,
+    number: "200-閣法-3",
+    title: "公職選挙法の一部を改正する法律案",
+    summary:
+      "町村議会議員の選挙における選挙公報の発行を可能とする改正。町村議会議員選挙における候補者情報の充実。",
+    proposer: "内閣",
+    category: "行政",
+    status: "ENACTED",
+    submittedAt: "2019-10-18",
+    passedAt: "2019-11-28",
+  },
+  {
+    sessionNumber: 200,
+    number: "200-閣法-5",
+    title: "外国弁護士による法律事務の取扱いに関する特別措置法の一部を改正する法律案",
+    summary:
+      "外国法事務弁護士制度の見直し。国際仲裁事件等の代理に係る制度の整備、過度の制限の緩和等。",
+    proposer: "内閣",
+    category: "司法",
+    status: "ENACTED",
+    submittedAt: "2019-10-18",
+    passedAt: "2019-12-04",
+  },
+  {
+    sessionNumber: 200,
+    number: "200-閣法-7",
+    title: "医薬品、医療機器等の品質、有効性及び安全性の確保等に関する法律等の一部を改正する法律案",
+    summary:
+      "薬機法改正。先駆的に小児の用法・用量が設定された医薬品の優先審査、地域連携薬局の認定制度の創設、薔薬の見直し等。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2019-10-18",
+    passedAt: "2019-11-27",
+  },
+  {
+    sessionNumber: 200,
+    number: "200-閣法-9",
+    title:
+      "小学校、中学校、高等学校及び特別支援学校の教職員で給料の特別措置に関する法律の一部を改正する法律案",
+    summary:
+      "給特法改正。公立学校教員の勤務時間の上限指針を法制化。時間外勤務の縮減と一年単位の変形労働時間制導入。",
+    proposer: "内閣",
+    category: "教育",
+    status: "ENACTED",
+    submittedAt: "2019-10-18",
+    passedAt: "2019-12-04",
+  },
+  {
+    sessionNumber: 200,
+    number: "200-閣法-10",
+    title: "日本国の自衛隊員等の給与等に関する法律の一部を改正する法律案",
+    summary: "人事院勧告に準じた自衛官等の給与改定。住居手当の引上げ、若年層の俸給月額引上げ等。",
+    proposer: "内閣",
+    category: "安全保障",
+    status: "ENACTED",
+    submittedAt: "2019-10-18",
+    passedAt: "2019-11-15",
+  },
+  {
+    sessionNumber: 200,
+    number: "200-閣法-14",
+    title: "情報通信技術の活用による行政の推進等に関する法律の一部を改正する法律案",
+    summary:
+      "デジタル手続法改正。行政手続のオンライン実施の台帳を全行政機関に拡大。行政のデジタル化推進。",
+    proposer: "内閣",
+    category: "行政",
+    status: "ENACTED",
+    submittedAt: "2019-11-12",
+    passedAt: "2019-12-04",
+  },
+
+  // ============================================================
+  // 第201回国会（2020年通常国会）— 安倍内閣・コロナ対応
+  // 閣法56本提出・55本成立・1本廃案
+  // ============================================================
+  {
+    sessionNumber: 201,
+    number: "201-閣法-4",
+    title: "新型インフルエンザ等対策特別措置法の一部を改正する法律案",
+    summary:
+      "コロナ特措法改正。新型コロナウイルス感染症を新型インフルエンザ等とみなし、緊急事態宣言を可能とする改正。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2020-03-10",
+    passedAt: "2020-03-13",
+  },
+  {
+    sessionNumber: 201,
+    number: "201-閣法-30",
+    title: "年金制度の機能強化のための国民年金法等の一部を改正する法律案",
+    summary:
+      "年金改革法。短時間労働者への被用者保険の適用拡大、在職老齢年金の見直し、受給開始時期の選択肢拡大（75歳まで）。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2020-03-03",
+    passedAt: "2020-05-29",
+  },
+  {
+    sessionNumber: 201,
+    number: "201-閣法-1",
+    title: "所得税法等の一部を改正する法律案",
+    summary:
+      "令和2年度税制改正。オープンイノベーション促進税制の創設、連結納税制度の拜本的見直し、NISA制度の見直し等。",
+    proposer: "内閣",
+    category: "経済",
+    status: "ENACTED",
+    submittedAt: "2020-02-04",
+    passedAt: "2020-03-27",
+  },
+  {
+    sessionNumber: 201,
+    number: "201-閣法-31",
+    title: "社会福祀法等の一部を改正する法律案",
+    summary:
+      "地域住民の複雑化・複合化した支援ニーズに対応する包括的支援体制の構築支援、介護人材確保のための取組強化等。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2020-03-06",
+    passedAt: "2020-06-05",
+  },
+  {
+    sessionNumber: 201,
+    number: "201-閣法-11",
+    title: "新型コロナウイルス感染症等の影響に対応するための国税関係法律の臨時特例に関する法律案",
+    summary:
+      "コロナ影響で収入が急減している事業者のための納税猶予制度の特例等。納税の猛予制度の特例措置。",
+    proposer: "内閣",
+    category: "経済",
+    status: "ENACTED",
+    submittedAt: "2020-04-07",
+    passedAt: "2020-04-30",
+  },
+  {
+    sessionNumber: 201,
+    number: "201-閣法-36",
+    title: "雇用保険法の臨時特例等に関する法律案",
+    summary:
+      "コロナ休業支援金。休業期間中の賃金の支払いを受けられなかった労働者に対し、支援金等を支給する事業を実施できるようにする雇用保険法の特例。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2020-05-26",
+    passedAt: "2020-06-12",
+  },
+  {
+    sessionNumber: 201,
+    number: "201-閣法-52",
+    title: "国家公務員法等の一部を改正する法律案",
+    summary:
+      "国家公務員の定年を段階的に65歳に引き上げる等の措置。検察官の勤務延長規定が争点となり廃案。",
+    proposer: "内閣",
+    category: "行政",
+    status: "WITHDRAWN",
+    submittedAt: "2020-03-13",
+  },
+
+  // ============================================================
+  // 第203回国会（2020年臨時国会）— 菅内閣
+  // 閣法6本提出・6本成立
+  // ============================================================
+  {
+    sessionNumber: 203,
+    number: "203-閣法-1",
+    title: "予防接種法及び検疫法の一部を改正する法律案",
+    summary:
+      "新型コロナワクチンの無料接種を可能とする予防接種法改正。健康被害救済制度、損失補償契約等を規定。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2020-10-27",
+    passedAt: "2020-12-02",
+  },
+  {
+    sessionNumber: 203,
+    number: "203-閣法-2",
+    title: "種苗法の一部を改正する法律案",
+    summary:
+      "種苗法改正。日本の優良品種の海外流出防止のため、登録品種の自家增殖の制限、海外持ち出しの規制等を強化。",
+    proposer: "内閣",
+    category: "経済",
+    status: "ENACTED",
+    submittedAt: "2020-10-27",
+    passedAt: "2020-12-02",
+  },
+  {
+    sessionNumber: 203,
+    number: "203-閣法-3",
+    title:
+      "労働者派遣事業の適正な運営の確保及び派遣労働者の保護等に関する法律等の一部を改正する法律案",
+    summary:
+      "派遣労働者の同一労働同一賃金の義務化に係る労使協定の特例等の整備。派遣法の小幅な技術的改正。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2020-10-27",
+    passedAt: "2020-11-20",
+  },
+
+  // ============================================================
+  // 第204回国会（2021年通常国会）— 菅内閣
+  // 閣法63本提出・全成立
+  // ============================================================
+  {
+    sessionNumber: 204,
+    number: "204-閣法-26",
+    title: "デジタル社会形成基本法案",
+    summary:
+      "デジタル社会の形成に関する基本理念・施策を定める基本法。IT基本法を廃止し、デジタル社会の実現に向けた新たな基本法。",
+    proposer: "内閣",
+    category: "行政",
+    status: "ENACTED",
+    submittedAt: "2021-02-09",
+    passedAt: "2021-05-12",
+  },
+  {
+    sessionNumber: 204,
+    number: "204-閣法-27",
+    title: "デジタル庁設置法案",
+    summary:
+      "デジタル庁の設置。内閣の事務を助ける機関としてデジタル庁を設置し、行政のデジタル化を推進。デジタル大臣をトップに置く。",
+    proposer: "内閣",
+    category: "行政",
+    status: "ENACTED",
+    submittedAt: "2021-02-09",
+    passedAt: "2021-05-12",
+  },
+  {
+    sessionNumber: 204,
+    number: "204-閣法-62",
+    title: "重要施設周辺及び国境離島等における土地等の利用状況の調査及び利用の規制等に関する法律案",
+    summary:
+      "重要土地利用規制法。自衛隊基地・原発等の重要施設周辺および国境離島の土地利用を調査・規制する制度。安全保障上の懸念に対応。",
+    proposer: "内閣",
+    category: "安全保障",
+    status: "ENACTED",
+    submittedAt: "2021-03-26",
+    passedAt: "2021-06-16",
+  },
+  {
+    sessionNumber: 204,
+    number: "204-閣法-35",
+    title: "少年法等の一部を改正する法律案",
+    summary:
+      "少年法改正。18・19歳を「特定少年」と位置付け、原則逆送対象事件の拡大、推知報道の一部解禁等。成年年齢引下げに対応。",
+    proposer: "内閣",
+    category: "司法",
+    status: "ENACTED",
+    submittedAt: "2021-02-19",
+    passedAt: "2021-05-21",
+  },
+  {
+    sessionNumber: 204,
+    number: "204-閣法-6",
+    title: "新型インフルエンザ等対策特別措置法等の一部を改正する法律案",
+    summary:
+      "まん延防止等重点措置の新設。緊急事態宣言に至らない段階での対応強化。行政罰の創設・過料制度の導入。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2021-02-03",
+    passedAt: "2021-02-03",
+  },
+  {
+    sessionNumber: 204,
+    number: "204-閣法-47",
+    title: "地球温暖化対策の推進に関する法律の一部を改正する法律案",
+    summary:
+      "温対法改正。2050年カーボンニュートラル宣言の法制化。地域脱炭素化促進事業計画認定制度の創設。",
+    proposer: "内閣",
+    category: "環境",
+    status: "ENACTED",
+    submittedAt: "2021-03-02",
+    passedAt: "2021-05-26",
+  },
+  {
+    sessionNumber: 204,
+    number: "204-衆法-42",
+    title: "日本国憲法の改正手続に関する法律の一部を改正する法律案",
+    summary:
+      "国民投票法改正。投票環境の向上（共通投票所の設置、期日前投票の弾力化、洋上投票等）。7項目の改正。",
+    proposer: "自由民主党・公明党・日本維新の会・国民民主党",
+    category: "行政",
+    status: "ENACTED",
+    submittedAt: "2018-06-27",
+    passedAt: "2021-06-11",
+  },
+
+  // ============================================================
+  // 第208回国会（2022年通常国会）— 岸田内閣
+  // 閣法61本提出・59本成立
+  // ============================================================
+  {
+    sessionNumber: 208,
+    number: "208-閣法-37",
+    title: "経済施策を一体的に講ずることによる安全保障の確保の推進に関する法律案",
+    summary:
+      "経済安全保障推進法。サプライチェーンの強靡化、基幹インフラの安全性確保、特定重要技術の研究開発促進、特許出願の非公開化の4本柱。",
+    proposer: "内閣",
+    category: "安全保障",
+    status: "ENACTED",
+    submittedAt: "2022-02-25",
+    passedAt: "2022-05-11",
+  },
+  {
+    sessionNumber: 208,
+    number: "208-閣法-38",
+    title: "こども家庭庁設置法案",
+    summary:
+      "こども家庭庁の設置。子供政策の司令塔として内閣府の外局として設置。こども家庭庁設置法とこども基本法を一体的に審議。",
+    proposer: "内閣",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2022-02-25",
+    passedAt: "2022-06-15",
+  },
+  {
+    sessionNumber: 208,
+    number: "208-衆法-22",
+    title: "こども基本法案",
+    summary:
+      "こども基本法。こども施策の基本理念、国・地方公共団体の責務、こどもの意見表明権の尊重等を定める基本法。超党派の議員立法。",
+    proposer: "自由民主党・公明党・日本維新の会・国民民主党",
+    category: "社会保障",
+    status: "ENACTED",
+    submittedAt: "2022-04-01",
+    passedAt: "2022-06-15",
+  },
+  {
+    sessionNumber: 208,
+    number: "208-閣法-48",
+    title: "刑法等の一部を改正する法律案",
+    summary:
+      "侮辱罪の厳罰化。法定刑の上限を1年以下の懲役若しくは禁鋡30万円以下の罰金に引き上げ。ネット上の訹謗中傷対策。",
+    proposer: "内閣",
+    category: "司法",
+    status: "ENACTED",
+    submittedAt: "2022-03-08",
+    passedAt: "2022-06-13",
+  },
+  {
+    sessionNumber: 208,
+    number: "208-衆法-28",
+    title: "AV出演被害防止・救済法案",
+    summary:
+      "性行為映像制品への出演に係る被害の防止を図る法律。契約取消権の付与、公表差止、被害者支援等を規定。",
+    proposer: "超党派",
+    category: "司法",
+    status: "ENACTED",
+    submittedAt: "2022-06-08",
+    passedAt: "2022-06-15",
+  },
+  {
+    sessionNumber: 208,
+    number: "208-閣法-43",
+    title: "電気事業法等の一部を改正する法律案",
+    summary:
+      "電力安定供給確保法。電力市場の監視機能の強化、発電事業者の供給力確保義務、蛇口規制の導入等。",
+    proposer: "内閣",
+    category: "経済",
+    status: "ENACTED",
+    submittedAt: "2022-03-01",
+    passedAt: "2022-05-31",
+  },
+
+  // ============================================================
   // 第210回国会（2022年臨時国会）— 岸田内閣
   // 閣法22本提出・全成立
   // ============================================================
@@ -180,8 +635,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-4",
     title: "特別職の職員の給与に関する法律の一部を改正する法律案",
-    summary:
-      "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の給与改定に準じた改定。",
+    summary: "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の給与改定に準じた改定。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -192,8 +646,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-6",
     title: "防衛省の職員の給与等に関する法律の一部を改正する法律案",
-    summary:
-      "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
+    summary: "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -204,8 +657,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-7",
     title: "地方交付税法及び特別会計に関する法律の一部を改正する法律案",
-    summary:
-      "令和4年度第2次補正予算に伴う地方財政措置。地方交付税の追加交付等。",
+    summary: "令和4年度第2次補正予算に伴う地方財政措置。地方交付税の追加交付等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -240,8 +692,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-2",
     title: "裁判官の報酬等に関する法律の一部を改正する法律案",
-    summary:
-      "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -252,8 +703,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-3",
     title: "検察官の俸給等に関する法律の一部を改正する法律案",
-    summary:
-      "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -276,8 +726,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-10",
     title: "地方税法の一部を改正する法律案",
-    summary:
-      "個人住民税の非課税措置の見直し。森林環境税の課税開始時期の確認等。",
+    summary: "個人住民税の非課税措置の見直し。森林環境税の課税開始時期の確認等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -288,8 +737,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-11",
     title: "地方交付税法の一部を改正する法律案",
-    summary:
-      "令和4年度普通交付税の調整額の復活に伴う措置。経済対策に伴う地方負担の財源手当て。",
+    summary: "令和4年度普通交付税の調整額の復活に伴う措置。経済対策に伴う地方負担の財源手当て。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -299,9 +747,9 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 210,
     number: "210-閣法-13",
-    title: "国際連合安全保障理事会決議第千七百十八号等を踏まえ我が国が実施する貨物検査等に関する特別措置法の一部を改正する法律案",
-    summary:
-      "北朝鮮の核・ミサイル開発に対する制裁措置の強化。貨物検査の対象拡大等。",
+    title:
+      "国際連合安全保障理事会決議第千七百十八号等を踏まえ我が国が実施する貨物検査等に関する特別措置法の一部を改正する法律案",
+    summary: "北朝鮮の核・ミサイル開発に対する制裁措置の強化。貨物検査の対象拡大等。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -312,8 +760,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-15",
     title: "首都直下地震対策特別措置法の一部を改正する法律案",
-    summary:
-      "首都直下地震特措法の期限延長。緊急対策区域における地震防災対策の推進。",
+    summary: "首都直下地震特措法の期限延長。緊急対策区域における地震防災対策の推進。",
     proposer: "内閣",
     category: "社会保障",
     status: "ENACTED",
@@ -323,7 +770,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 210,
     number: "210-閣法-16",
-    title: "日本海溝・千島海溝周辺海溝型地震に係る地震防災対策の推進に関する特別措置法の一部を改正する法律案",
+    title:
+      "日本海溝・千島海溝周辺海溝型地震に係る地震防災対策の推進に関する特別措置法の一部を改正する法律案",
     summary:
       "日本海溝・千島海溝周辺の大規模地震に備えた防災対策の強化。推進地域の指定、津波避難対策の充実等。",
     proposer: "内閣",
@@ -336,8 +784,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-17",
     title: "被災者生活再建支援法の一部を改正する法律案",
-    summary:
-      "被災者生活再建支援金の支給対象の拡大。中規模半壊世帯への支援金支給等。",
+    summary: "被災者生活再建支援金の支給対象の拡大。中規模半壊世帯への支援金支給等。",
     proposer: "内閣",
     category: "社会保障",
     status: "ENACTED",
@@ -347,7 +794,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 210,
     number: "210-閣法-18",
-    title: "国際的な不正資金等の移動等に対処するための国際連合安全保障理事会決議等を踏まえ我が国が実施する国際テロリストの財産の凍結等に関する特別措置法等の一部を改正する法律案",
+    title:
+      "国際的な不正資金等の移動等に対処するための国際連合安全保障理事会決議等を踏まえ我が国が実施する国際テロリストの財産の凍結等に関する特別措置法等の一部を改正する法律案",
     summary:
       "テロ資金対策の強化。FATF（金融活動作業部会）の相互審査結果を踏まえたマネー・ロンダリング対策の強化。",
     proposer: "内閣",
@@ -360,8 +808,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-19",
     title: "所得税法等の一部を改正する法律案",
-    summary:
-      "令和4年度第2次補正予算に伴う税制措置。所得税・法人税の特例措置等。",
+    summary: "令和4年度第2次補正予算に伴う税制措置。所得税・法人税の特例措置等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -384,8 +831,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 210,
     number: "210-閣法-21",
     title: "地方公共団体の議会の議員及び長の選挙期日等の臨時特例に関する法律案",
-    summary:
-      "統一地方選挙の期日設定。令和5年4月の統一地方選挙に関する特例法。",
+    summary: "統一地方選挙の期日設定。令和5年4月の統一地方選挙に関する特例法。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -408,8 +854,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2023-02-03",
     passedAt: "2023-06-16",
-    sourceUrl:
-      "https://www.shugiin.go.jp/internet/itdb_gian.nsf/html/gian/keika/1DD5AEE.htm",
+    sourceUrl: "https://www.shugiin.go.jp/internet/itdb_gian.nsf/html/gian/keika/1DD5AEE.htm",
   },
   {
     sessionNumber: 211,
@@ -422,8 +867,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2023-02-03",
     passedAt: "2023-03-28",
-    sourceUrl:
-      "https://www.mof.go.jp/about_mof/bills/211diet/index.htm",
+    sourceUrl: "https://www.mof.go.jp/about_mof/bills/211diet/index.htm",
   },
   {
     sessionNumber: 211,
@@ -448,8 +892,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2023-02-10",
     passedAt: "2023-05-12",
-    sourceUrl:
-      "https://www.cas.go.jp/jp/houan/211.html",
+    sourceUrl: "https://www.cas.go.jp/jp/houan/211.html",
   },
   {
     sessionNumber: 211,
@@ -467,8 +910,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-19",
     title: "防衛省設置法の一部を改正する法律案",
-    summary:
-      "防衛省の体制強化。自衛官定数の変更、サイバー防衛隊の拡充、統合司令部準備等。",
+    summary: "防衛省の体制強化。自衛官定数の変更、サイバー防衛隊の拡充、統合司令部準備等。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -490,7 +932,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-26",
-    title: "脱炭素社会の実現に向けた電気供給体制の確立を図るための電気事業法等の一部を改正する法律案",
+    title:
+      "脱炭素社会の実現に向けた電気供給体制の確立を図るための電気事業法等の一部を改正する法律案",
     summary:
       "GX脱炭素電源法。原子力発電所の60年超運転を可能とする規制見直し、再エネ特措法の改正等。原発の運転期間制限を見直し。",
     proposer: "内閣",
@@ -538,7 +981,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-46",
-    title: "行政手続における特定の個人を識別するための番号の利用等に関する法律等の一部を改正する法律案",
+    title:
+      "行政手続における特定の個人を識別するための番号の利用等に関する法律等の一部を改正する法律案",
     summary:
       "改正マイナンバー法。マイナンバーカードと健康保険証の一体化（マイナ保険証）、マイナンバーの利用範囲拡大、公金受取口座の登録促進等。",
     proposer: "内閣",
@@ -550,7 +994,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-48",
-    title: "出入国管理及び難民認定法及び日本国との平和条約に基づき日本の国籍を離脱した者等の出入国管理に関する特例法の一部を改正する法律案",
+    title:
+      "出入国管理及び難民認定法及び日本国との平和条約に基づき日本の国籍を離脱した者等の出入国管理に関する特例法の一部を改正する法律案",
     summary:
       "改正入管法。難民認定申請中の送還停止効の例外規定を新設。監理措置制度の創設、補完的保護対象者の認定制度等。送還忌避問題への対応。",
     proposer: "内閣",
@@ -558,8 +1003,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2023-03-07",
     passedAt: "2023-06-09",
-    sourceUrl:
-      "https://www.moj.go.jp/hisho/kouhou/houan211.html",
+    sourceUrl: "https://www.moj.go.jp/hisho/kouhou/houan211.html",
   },
   {
     sessionNumber: 211,
@@ -576,7 +1020,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-47",
-    title: "デジタル社会の形成を図るための規制改革を推進するためのデジタル社会形成基本法等の一部を改正する法律案",
+    title:
+      "デジタル社会の形成を図るための規制改革を推進するためのデジタル社会形成基本法等の一部を改正する法律案",
     summary:
       "アナログ規制の一括見直し。書面・対面・目視等のアナログ規制をデジタル技術で代替可能とする法改正。",
     proposer: "内閣",
@@ -589,8 +1034,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-41",
     title: "刑事訴訟法等の一部を改正する法律案",
-    summary:
-      "被疑者の逃亡を防止するためGPS端末装着命令制度の創設。保釈中の被告人の逃亡防止強化。",
+    summary: "被疑者の逃亡を防止するためGPS端末装着命令制度の創設。保釈中の被告人の逃亡防止強化。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -625,8 +1069,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-5",
     title: "地方交付税法等の一部を改正する法律案",
-    summary:
-      "令和5年度地方財政計画に基づく地方交付税の総額確保。交付税率の改定等。",
+    summary: "令和5年度地方財政計画に基づく地方交付税の総額確保。交付税率の改定等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -673,8 +1116,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-10",
     title: "裁判所職員定員法の一部を改正する法律案",
-    summary:
-      "判事の員数の増加。複雑困難化する事件への対応力強化のため判事を増員。",
+    summary: "判事の員数の増加。複雑困難化する事件への対応力強化のため判事を増員。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -684,9 +1126,9 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-11",
-    title: "在外公館の名称及び位置並びに在外公館に勤務する外務公務員の給与に関する法律の一部を改正する法律案",
-    summary:
-      "在外公館の新設・名称変更。外交ネットワークの拡充に向けた体制整備。",
+    title:
+      "在外公館の名称及び位置並びに在外公館に勤務する外務公務員の給与に関する法律の一部を改正する法律案",
+    summary: "在外公館の新設・名称変更。外交ネットワークの拡充に向けた体制整備。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -697,8 +1139,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-14",
     title: "株式会社国際協力銀行法の一部を改正する法律案",
-    summary:
-      "JBICの業務拡充。サプライチェーン強靭化に資する海外投資への融資機能の強化等。",
+    summary: "JBICの業務拡充。サプライチェーン強靭化に資する海外投資への融資機能の強化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -709,8 +1150,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-15",
     title: "国際通貨基金及び国際復興開発銀行への加盟に伴う措置に関する法律の一部を改正する法律案",
-    summary:
-      "IMF・世界銀行への出資増額。国際金融機関に対する日本の出資枠の拡大。",
+    summary: "IMF・世界銀行への出資増額。国際金融機関に対する日本の出資枠の拡大。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -732,7 +1172,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-18",
-    title: "道路整備特別措置法及び独立行政法人日本高速道路保有・債務返済機構法の一部を改正する法律案",
+    title:
+      "道路整備特別措置法及び独立行政法人日本高速道路保有・債務返済機構法の一部を改正する法律案",
     summary:
       "高速道路の老朽化対策。更新事業のための料金徴収期間の延長（2115年まで）、SA・PAの機能強化等。",
     proposer: "内閣",
@@ -757,8 +1198,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-22",
     title: "日本語教育の適正かつ確実な実施を図るための日本語教育機関の認定等に関する法律案",
-    summary:
-      "日本語教育機関の認定制度の創設。日本語教師の国家資格「登録日本語教員」制度の導入等。",
+    summary: "日本語教育機関の認定制度の創設。日本語教師の国家資格「登録日本語教員」制度の導入等。",
     proposer: "内閣",
     category: "教育",
     status: "ENACTED",
@@ -781,8 +1221,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-25",
     title: "気象業務法及び水防法の一部を改正する法律案",
-    summary:
-      "線状降水帯等の予測精度向上。民間気象事業者との連携強化、水害リスク情報の提供充実等。",
+    summary: "線状降水帯等の予測精度向上。民間気象事業者との連携強化、水害リスク情報の提供充実等。",
     proposer: "内閣",
     category: "社会保障",
     status: "ENACTED",
@@ -793,8 +1232,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-28",
     title: "仲裁法の一部を改正する法律案",
-    summary:
-      "国際仲裁の活性化。UNCITRAL仲裁モデル法2006年改正に対応した国内仲裁法制の整備。",
+    summary: "国際仲裁の活性化。UNCITRAL仲裁モデル法2006年改正に対応した国内仲裁法制の整備。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -805,8 +1243,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-29",
     title: "調停による国際的な和解合意に関する国際連合条約の実施に関する法律案",
-    summary:
-      "シンガポール条約の国内実施法。国際商事調停による和解合意の執行力付与制度の創設。",
+    summary: "シンガポール条約の国内実施法。国際商事調停による和解合意の執行力付与制度の創設。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -852,7 +1289,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-33",
-    title: "日本国の自衛隊とオーストラリア国防軍との間における相互のアクセス及び協力の円滑化に関する日本国とオーストラリアとの間の協定の実施に関する法律案",
+    title:
+      "日本国の自衛隊とオーストラリア国防軍との間における相互のアクセス及び協力の円滑化に関する日本国とオーストラリアとの間の協定の実施に関する法律案",
     summary:
       "日豪円滑化協定（RAA）実施法。自衛隊と豪州国防軍の相互訪問時の法的地位、武器弾薬の輸送手続等を規定。",
     proposer: "内閣",
@@ -864,7 +1302,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-34",
-    title: "日本国の自衛隊とグレートブリテン及び北アイルランド連合王国の軍隊との間における相互のアクセス及び協力の円滑化に関する日本国とグレートブリテン及び北アイルランド連合王国との間の協定の実施に関する法律案",
+    title:
+      "日本国の自衛隊とグレートブリテン及び北アイルランド連合王国の軍隊との間における相互のアクセス及び協力の円滑化に関する日本国とグレートブリテン及び北アイルランド連合王国との間の協定の実施に関する法律案",
     summary:
       "日英円滑化協定（RAA）実施法。自衛隊と英軍の共同訓練・災害救援活動時の法的地位等を規定。",
     proposer: "内閣",
@@ -913,8 +1352,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-42",
     title: "海上運送法等の一部を改正する法律案",
-    summary:
-      "船員の確保・育成対策の強化。内航海運業の生産性向上、船員の働き方改革等。",
+    summary: "船員の確保・育成対策の強化。内航海運業の生産性向上、船員の働き方改革等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -937,8 +1375,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-44",
     title: "地域の自主性及び自立性を高めるための改革の推進を図るための関係法律の整備に関する法律案",
-    summary:
-      "第13次地方分権一括法。国から地方への権限移譲、義務付け・枠付けの見直し等。",
+    summary: "第13次地方分権一括法。国から地方への権限移譲、義務付け・枠付けの見直し等。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -961,8 +1398,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-50",
     title: "国立健康危機管理研究機構法の施行に伴う関係法律の整備に関する法律案",
-    summary:
-      "国立健康危機管理研究機構法の施行に伴い必要な関係法律の整備。",
+    summary: "国立健康危機管理研究機構法の施行に伴い必要な関係法律の整備。",
     proposer: "内閣",
     category: "社会保障",
     status: "ENACTED",
@@ -1021,8 +1457,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 211,
     number: "211-閣法-55",
     title: "中小企業信用保険法及び株式会社商工組合中央金庫法の一部を改正する法律案",
-    summary:
-      "中小企業金融の強化。信用保証制度の見直し、商工中金の民営化延期と機能強化等。",
+    summary: "中小企業金融の強化。信用保証制度の見直し、商工中金の民営化延期と機能強化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -1056,7 +1491,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-59",
-    title: "性的な姿態を撮影する行為等の処罰及び押収物に記録された性的な姿態の影像に係る電磁的記録の消去等に関する法律案",
+    title:
+      "性的な姿態を撮影する行為等の処罰及び押収物に記録された性的な姿態の影像に係る電磁的記録の消去等に関する法律案",
     summary:
       "撮影罪の新設。盗撮行為を独立した犯罪類型として処罰する新法。押収された性的画像の消去命令制度の創設。",
     proposer: "内閣",
@@ -1068,7 +1504,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 211,
     number: "211-閣法-60",
-    title: "民事関係手続等における情報通信技術の活用等の推進を図るための関係法律の整備に関する法律案",
+    title:
+      "民事関係手続等における情報通信技術の活用等の推進を図るための関係法律の整備に関する法律案",
     summary:
       "民事手続のIT化。民事訴訟以外の民事関係手続（民事保全・民事執行・倒産等）へのIT化の拡大。",
     proposer: "内閣",
@@ -1111,8 +1548,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 212,
     number: "212-閣法-5",
     title: "防衛省の職員の給与等に関する法律の一部を改正する法律案",
-    summary:
-      "自衛官等の給与改定。一般職に準じた処遇改善。",
+    summary: "自衛官等の給与改定。一般職に準じた処遇改善。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -1147,8 +1583,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 212,
     number: "212-閣法-8",
     title: "官報の発行に関する法律案",
-    summary:
-      "官報の電子化。官報のインターネット発行を正本化し、法令公布の電子化を実現。",
+    summary: "官報の電子化。官報のインターネット発行を正本化し、法令公布の電子化を実現。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -1183,8 +1618,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 212,
     number: "212-閣法-2",
     title: "特別職の職員の給与に関する法律の一部を改正する法律案",
-    summary:
-      "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の改定に準じた引上げ。",
+    summary: "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の改定に準じた引上げ。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -1195,8 +1629,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 212,
     number: "212-閣法-3",
     title: "裁判官の報酬等に関する法律の一部を改正する法律案",
-    summary:
-      "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -1207,8 +1640,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 212,
     number: "212-閣法-4",
     title: "検察官の俸給等に関する法律の一部を改正する法律案",
-    summary:
-      "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -1219,8 +1651,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 212,
     number: "212-閣法-9",
     title: "特定受託事業者に係る取引の適正化等に関する法律の施行に伴う関係法律の整備に関する法律案",
-    summary:
-      "フリーランス保護法の施行に伴う関係法律の整備。下請法等の適用関係の整理。",
+    summary: "フリーランス保護法の施行に伴う関係法律の整備。下請法等の適用関係の整理。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -1255,8 +1686,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2024-02-02",
     passedAt: "2024-03-28",
-    sourceUrl:
-      "https://www.mof.go.jp/about_mof/bills/213diet/index.htm",
+    sourceUrl: "https://www.mof.go.jp/about_mof/bills/213diet/index.htm",
   },
   {
     sessionNumber: 213,
@@ -1309,7 +1739,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-19",
-    title: "流通業務の総合化及び効率化の促進に関する法律及び貨物自動車運送事業法の一部を改正する法律案",
+    title:
+      "流通業務の総合化及び効率化の促進に関する法律及び貨物自動車運送事業法の一部を改正する法律案",
     summary:
       "物流2024年問題対応法。トラックドライバーの時間外労働規制に伴う輸送力不足への対策。荷主・物流事業者の連携強化、多重下請構造の是正等。",
     proposer: "内閣",
@@ -1321,7 +1752,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-20",
-    title: "令和六年能登半島地震災害の被災者に係る所得税法及び災害被害者に対する租税の減免、徴収猶予等に関する法律の臨時特例に関する法律案",
+    title:
+      "令和六年能登半島地震災害の被災者に係る所得税法及び災害被害者に対する租税の減免、徴収猶予等に関する法律の臨時特例に関する法律案",
     summary:
       "能登半島地震被災者への税制支援。令和5年分の所得税について、雑損控除の特例、災害減免法の特例、事業用資産の損失を必要経費に算入する特例等を措置。",
     proposer: "内閣",
@@ -1341,8 +1773,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2024-02-16",
     passedAt: "2024-06-05",
-    sourceUrl:
-      "https://www.cfa.go.jp/laws/houan/e81845c0",
+    sourceUrl: "https://www.cfa.go.jp/laws/houan/e81845c0",
   },
   {
     sessionNumber: 213,
@@ -1355,8 +1786,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2024-02-27",
     passedAt: "2024-05-10",
-    sourceUrl:
-      "https://www.cas.go.jp/jp/houan/213.html",
+    sourceUrl: "https://www.cas.go.jp/jp/houan/213.html",
   },
   {
     sessionNumber: 213,
@@ -1369,8 +1799,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2024-02-27",
     passedAt: "2024-05-29",
-    sourceUrl:
-      "https://www.maff.go.jp/j/law/bill/213/index.html",
+    sourceUrl: "https://www.maff.go.jp/j/law/bill/213/index.html",
   },
   {
     sessionNumber: 213,
@@ -1407,8 +1836,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2024-03-01",
     passedAt: "2024-05-17",
-    sourceUrl:
-      "https://www.shugiin.go.jp/internet/itdb_gian.nsf/html/gian/keika/1DDBA96.htm",
+    sourceUrl: "https://www.shugiin.go.jp/internet/itdb_gian.nsf/html/gian/keika/1DDBA96.htm",
   },
   {
     sessionNumber: 213,
@@ -1449,7 +1877,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-54",
-    title: "育児休業、介護休業等育児又は家族介護を行う労働者の福祉に関する法律及び次世代育成支援対策推進法の一部を改正する法律案",
+    title:
+      "育児休業、介護休業等育児又は家族介護を行う労働者の福祉に関する法律及び次世代育成支援対策推進法の一部を改正する法律案",
     summary:
       "改正育児介護休業法。男性育休取得促進のための措置義務、テレワークの努力義務、子の看護休暇の拡充等。次世代法の延長。",
     proposer: "内閣",
@@ -1461,7 +1890,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-58",
-    title: "出入国管理及び難民認定法及び出入国管理及び難民認定法及び日本国との平和条約に基づき日本の国籍を離脱した者等の出入国管理に関する特例法の一部を改正する法律案",
+    title:
+      "出入国管理及び難民認定法及び出入国管理及び難民認定法及び日本国との平和条約に基づき日本の国籍を離脱した者等の出入国管理に関する特例法の一部を改正する法律案",
     summary:
       "育成就労制度の創設。技能実習制度を発展的に解消し、外国人材の育成・確保を目的とする新制度を創設。転籍の柔軟化、人権侵害の防止強化。",
     proposer: "内閣",
@@ -1469,13 +1899,13 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2024-03-15",
     passedAt: "2024-06-14",
-    sourceUrl:
-      "https://www.moj.go.jp/hisho/kouhou/houan213.html",
+    sourceUrl: "https://www.moj.go.jp/hisho/kouhou/houan213.html",
   },
   {
     sessionNumber: 213,
     number: "213-閣法-61",
-    title: "学校設置者等及び民間教育保育等事業者による児童対象性暴力等の防止等のための措置に関する法律案",
+    title:
+      "学校設置者等及び民間教育保育等事業者による児童対象性暴力等の防止等のための措置に関する法律案",
     summary:
       "日本版DBS法。子どもに接する仕事に就く者の性犯罪歴を確認する仕組みを創設。学校・保育所・塾等に確認義務を課す。",
     proposer: "内閣",
@@ -1548,8 +1978,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-閣法-5",
     title: "裁判所職員定員法の一部を改正する法律案",
-    summary:
-      "判事の員数の増加。複雑困難化する事件への対応力強化のため判事を増員。",
+    summary: "判事の員数の増加。複雑困難化する事件への対応力強化のため判事を増員。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -1559,9 +1988,9 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-6",
-    title: "在外公館の名称及び位置並びに在外公館に勤務する外務公務員の給与に関する法律の一部を改正する法律案",
-    summary:
-      "在外公館の新設・名称変更。外交ネットワークの拡充に向けた体制整備。",
+    title:
+      "在外公館の名称及び位置並びに在外公館に勤務する外務公務員の給与に関する法律の一部を改正する法律案",
+    summary: "在外公館の新設・名称変更。外交ネットワークの拡充に向けた体制整備。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -1571,7 +2000,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-9",
-    title: "特定防衛調達に係る国庫債務負担行為により支出すべき年限に関する特別措置法の一部を改正する法律案",
+    title:
+      "特定防衛調達に係る国庫債務負担行為により支出すべき年限に関する特別措置法の一部を改正する法律案",
     summary:
       "防衛装備品の長期契約特例法の改正。防衛力抜本強化に必要な装備品の効率的な調達を可能とするため、長期契約の対象拡大。",
     proposer: "内閣",
@@ -1584,8 +2014,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-閣法-10",
     title: "防衛省の職員の給与等に関する法律の一部を改正する法律案",
-    summary:
-      "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
+    summary: "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -1656,8 +2085,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-閣法-25",
     title: "学校教育法等の一部を改正する法律案",
-    summary:
-      "大学の国際化推進。海外大学との共同学位プログラムの制度化、外国人教員の登用促進等。",
+    summary: "大学の国際化推進。海外大学との共同学位プログラムの制度化、外国人教員の登用促進等。",
     proposer: "内閣",
     category: "教育",
     status: "ENACTED",
@@ -1667,7 +2095,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-28",
-    title: "犯罪被害者等の権利利益の保護を図るための刑事手続に付随する措置に関する法律及び犯罪被害者等基本法の一部を改正する法律案",
+    title:
+      "犯罪被害者等の権利利益の保護を図るための刑事手続に付随する措置に関する法律及び犯罪被害者等基本法の一部を改正する法律案",
     summary:
       "犯罪被害者保護の強化。損害賠償命令制度の対象犯罪の拡大、被害者等の個人情報保護の強化等。",
     proposer: "内閣",
@@ -1704,8 +2133,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-閣法-36",
     title: "不動産登記法等の一部を改正する法律案",
-    summary:
-      "所有者不明土地対策。相続登記の義務化に伴う環境整備、登記情報の正確性向上等。",
+    summary: "所有者不明土地対策。相続登記の義務化に伴う環境整備、登記情報の正確性向上等。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -1728,8 +2156,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-閣法-41",
     title: "地域の自主性及び自立性を高めるための改革の推進を図るための関係法律の整備に関する法律案",
-    summary:
-      "第14次地方分権一括法。国から地方への権限移譲、義務付け・枠付けの見直し等。",
+    summary: "第14次地方分権一括法。国から地方への権限移譲、義務付け・枠付けの見直し等。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -1811,7 +2238,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 213,
     number: "213-閣法-57",
-    title: "良質かつ適切な医療を効率的に提供する体制の確保を推進するための医療法等の一部を改正する法律案",
+    title:
+      "良質かつ適切な医療を効率的に提供する体制の確保を推進するための医療法等の一部を改正する法律案",
     summary:
       "医療提供体制の改革。かかりつけ医機能報告制度の創設、地域医療構想の推進、医師の働き方改革への対応等。",
     proposer: "内閣",
@@ -1824,8 +2252,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-閣法-59",
     title: "漁業法及び特定水産動植物等の国内流通の適正化等に関する法律の一部を改正する法律案",
-    summary:
-      "水産業の持続的発展。資源管理の高度化、IUU漁業対策の強化、漁業許可制度の見直し等。",
+    summary: "水産業の持続的発展。資源管理の高度化、IUU漁業対策の強化、漁業許可制度の見直し等。",
     proposer: "内閣",
     category: "農林水産",
     status: "ENACTED",
@@ -1862,8 +2289,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-衆法-8",
     title: "消費税率の引下げ等に関する法律案",
-    summary:
-      "消費税率の時限的な5%への引下げ。物価高騰対策としての消費税減税を提案。",
+    summary: "消費税率の時限的な5%への引下げ。物価高騰対策としての消費税減税を提案。",
     proposer: "日本維新の会",
     category: "経済",
     status: "REJECTED",
@@ -1873,8 +2299,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 213,
     number: "213-参法-3",
     title: "選択的夫婦別姓制度を導入する民法の一部を改正する法律案",
-    summary:
-      "婚姻時に夫婦が各自の氏を称することを選択できる制度の導入。",
+    summary: "婚姻時に夫婦が各自の氏を称することを選択できる制度の導入。",
     proposer: "立憲民主党",
     category: "司法",
     status: "COMMITTEE",
@@ -1913,8 +2338,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 216,
     number: "216-閣法-2",
     title: "特別職の職員の給与に関する法律の一部を改正する法律案",
-    summary:
-      "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の改定に準じた引上げ。",
+    summary: "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の改定に準じた引上げ。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -1925,8 +2349,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 216,
     number: "216-閣法-4",
     title: "情報通信技術を活用した行政の推進等に関する法律の一部を改正する法律案",
-    summary:
-      "行政手続のデジタル化推進。マイナンバーカードを活用した行政手続のオンライン化促進等。",
+    summary: "行政手続のデジタル化推進。マイナンバーカードを活用した行政手続のオンライン化促進等。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -1937,8 +2360,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 216,
     number: "216-閣法-5",
     title: "地方交付税法及び特別会計に関する法律の一部を改正する法律案",
-    summary:
-      "地方交付税の追加交付。令和6年度補正予算に伴う地方財政措置。",
+    summary: "地方交付税の追加交付。令和6年度補正予算に伴う地方財政措置。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -1949,8 +2371,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 216,
     number: "216-閣法-9",
     title: "防衛省の職員の給与等に関する法律の一部を改正する法律案",
-    summary:
-      "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
+    summary: "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -1961,8 +2382,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 216,
     number: "216-閣法-3",
     title: "裁判官の報酬等に関する法律の一部を改正する法律案",
-    summary:
-      "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -1973,8 +2393,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 216,
     number: "216-閣法-6",
     title: "検察官の俸給等に関する法律の一部を改正する法律案",
-    summary:
-      "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2045,7 +2464,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 216,
     number: "216-衆法-20",
-    title: "国会議員の歳費、旅費及び手当等に関する法律の一部を改正する法律案（調査研究広報滞在費の使途公開）",
+    title:
+      "国会議員の歳費、旅費及び手当等に関する法律の一部を改正する法律案（調査研究広報滞在費の使途公開）",
     summary:
       "旧文書通信交通滞在費（現・調査研究広報滞在費）の使途公開義務化。月額100万円の使途を領収書付きで公開。余剰分の国庫返還を義務化。",
     proposer: "超党派",
@@ -2070,15 +2490,13 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2025-02-04",
     passedAt: "2025-03-31",
-    sourceUrl:
-      "https://www.mof.go.jp/about_mof/bills/217diet/index.html",
+    sourceUrl: "https://www.mof.go.jp/about_mof/bills/217diet/index.html",
   },
   {
     sessionNumber: 217,
     number: "217-閣法-2",
     title: "地方税法及び地方税法等の一部を改正する法律の一部を改正する法律案",
-    summary:
-      "個人住民税の基礎控除引上げ等、所得税法改正に連動した地方税の改正。",
+    summary: "個人住民税の基礎控除引上げ等、所得税法改正に連動した地方税の改正。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2096,13 +2514,13 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2025-02-07",
     passedAt: "2025-05-16",
-    sourceUrl:
-      "https://www.cas.go.jp/jp/houan/217.html",
+    sourceUrl: "https://www.cas.go.jp/jp/houan/217.html",
   },
   {
     sessionNumber: 217,
     number: "217-閣法-5",
-    title: "重要電子計算機に対する不正な行為による被害の防止に関する法律の施行に伴う関係法律の整備等に関する法律案",
+    title:
+      "重要電子計算機に対する不正な行為による被害の防止に関する法律の施行に伴う関係法律の整備等に関する法律案",
     summary:
       "サイバー対処能力強化法整備法。能動的サイバー防御法の施行に伴い、電気通信事業法等の関連法律を改正。通信の秘密に関する例外規定等を整備。",
     proposer: "内閣",
@@ -2139,8 +2557,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-21",
     title: "医療法等の一部を改正する法律案",
-    summary:
-      "医師の働き方改革の推進、地域医療構想の実現に向けた医療提供体制の改革等。",
+    summary: "医師の働き方改革の推進、地域医療構想の実現に向けた医療提供体制の改革等。",
     proposer: "内閣",
     category: "社会保障",
     status: "ENACTED",
@@ -2158,8 +2575,7 @@ const REAL_BILLS: RealBill[] = [
     status: "ENACTED",
     submittedAt: "2025-02-28",
     passedAt: "2025-05-28",
-    sourceUrl:
-      "https://www8.cao.go.jp/cstp/ai/ai_act/ai_act.html",
+    sourceUrl: "https://www8.cao.go.jp/cstp/ai/ai_act/ai_act.html",
   },
   {
     sessionNumber: 217,
@@ -2176,7 +2592,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 217,
     number: "217-閣法-59",
-    title: "社会経済の変化を踏まえた年金制度の機能強化のための国民年金法等の一部を改正する等の法律案",
+    title:
+      "社会経済の変化を踏まえた年金制度の機能強化のための国民年金法等の一部を改正する等の法律案",
     summary:
       "年金制度改革法。いわゆる「106万円の壁」の撤廃（厚生年金の適用拡大）、在職老齢年金制度の見直し、基礎年金の給付水準底上げ等。衆院修正を経て成立。",
     proposer: "内閣",
@@ -2189,8 +2606,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-3",
     title: "関税定率法等の一部を改正する法律案",
-    summary:
-      "関税率の改定。暫定税率の延長、知的財産侵害物品の水際取締り強化等。",
+    summary: "関税率の改定。暫定税率の延長、知的財産侵害物品の水際取締り強化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2201,8 +2617,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-6",
     title: "裁判所職員定員法の一部を改正する法律案",
-    summary:
-      "裁判所の職員定員の改定。判事の員数増加及び裁判所書記官等の定員見直し。",
+    summary: "裁判所の職員定員の改定。判事の員数増加及び裁判所書記官等の定員見直し。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2213,8 +2628,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-7",
     title: "地方交付税法等の一部を改正する法律案",
-    summary:
-      "令和7年度地方財政計画に基づく地方交付税の総額確保。交付税率の改定等。",
+    summary: "令和7年度地方財政計画に基づく地方交付税の総額確保。交付税率の改定等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2237,8 +2651,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-13",
     title: "地方税法等の一部を改正する法律案",
-    summary:
-      "令和7年度地方税制改正。個人住民税の定額減税の精算、固定資産税の負担調整措置等。",
+    summary: "令和7年度地方税制改正。個人住民税の定額減税の精算、固定資産税の負担調整措置等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2297,8 +2710,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-37",
     title: "環境影響評価法の一部を改正する法律案",
-    summary:
-      "環境アセスメント制度の合理化。再エネ発電設備設置に関する環境影響評価手続の迅速化等。",
+    summary: "環境アセスメント制度の合理化。再エネ発電設備設置に関する環境影響評価手続の迅速化等。",
     proposer: "内閣",
     category: "環境",
     status: "ENACTED",
@@ -2369,8 +2781,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-13",
     title: "港湾法等の一部を改正する法律案",
-    summary:
-      "港湾の脱炭素化・機能強化。カーボンニュートラルポートの形成促進、港湾施設の耐震化等。",
+    summary: "港湾の脱炭素化・機能強化。カーボンニュートラルポートの形成促進、港湾施設の耐震化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2381,8 +2792,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-14",
     title: "裁判所職員定員法の一部を改正する法律案",
-    summary:
-      "裁判所職員の定員改定。判事の増員、裁判所書記官等の定員見直し。",
+    summary: "裁判所職員の定員改定。判事の増員、裁判所書記官等の定員見直し。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2453,8 +2863,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-23",
     title: "独立行政法人国際協力機構法の一部を改正する法律案",
-    summary:
-      "JICA法改正。ODAの戦略的活用に向けた業務範囲の拡大、民間資金の動員促進等。",
+    summary: "JICA法改正。ODAの戦略的活用に向けた業務範囲の拡大、民間資金の動員促進等。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -2465,8 +2874,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-26",
     title: "漁業災害補償法の一部を改正する法律案",
-    summary:
-      "漁業共済制度の見直し。気候変動に伴う漁業被害の増加に対応した共済制度の充実。",
+    summary: "漁業共済制度の見直し。気候変動に伴う漁業被害の増加に対応した共済制度の充実。",
     proposer: "内閣",
     category: "農林水産",
     status: "ENACTED",
@@ -2488,7 +2896,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 217,
     number: "217-閣法-28",
-    title: "脱炭素成長型経済構造への円滑な移行の推進に関する法律及び資源の有効な利用の促進に関する法律の一部を改正する法律案",
+    title:
+      "脱炭素成長型経済構造への円滑な移行の推進に関する法律及び資源の有効な利用の促進に関する法律の一部を改正する法律案",
     summary:
       "GX推進法改正。蓄電池・水素等の戦略分野への投資促進、資源循環の強化等。GX実現に向けた150兆円投資計画の具体化。",
     proposer: "内閣",
@@ -2525,8 +2934,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-32",
     title: "公益通報者保護法の一部を改正する法律案",
-    summary:
-      "内部告発者保護の強化。公益通報対応体制の義務化、通報者への不利益取扱いの罰則強化等。",
+    summary: "内部告発者保護の強化。公益通報対応体制の義務化、通報者への不利益取扱いの罰則強化等。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2536,7 +2944,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 217,
     number: "217-閣法-34",
-    title: "老朽化マンション等の管理及び再生の円滑化等を図るための建物の区分所有等に関する法律等の一部を改正する法律案",
+    title:
+      "老朽化マンション等の管理及び再生の円滑化等を図るための建物の区分所有等に関する法律等の一部を改正する法律案",
     summary:
       "マンション建替え・管理の円滑化。区分所有法の改正、建替え決議の要件緩和、管理不全マンションへの対策強化等。",
     proposer: "内閣",
@@ -2561,8 +2970,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-39",
     title: "航空法等の一部を改正する法律案",
-    summary:
-      "航空安全・利便性の向上。ドローンの型式認証制度の整備、空港の運用効率化等。",
+    summary: "航空安全・利便性の向上。ドローンの型式認証制度の整備、空港の運用効率化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2573,8 +2981,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-40",
     title: "風俗営業等の規制及び業務の適正化等に関する法律の一部を改正する法律案",
-    summary:
-      "風営法改正。無許可営業への罰則強化、客引き行為の規制強化等。",
+    summary: "風営法改正。無許可営業への罰則強化、客引き行為の規制強化等。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2596,7 +3003,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 217,
     number: "217-閣法-45",
-    title: "労働施策の総合的な推進並びに労働者の雇用の安定及び職業生活の充実等に関する法律の一部を改正する法律案",
+    title:
+      "労働施策の総合的な推進並びに労働者の雇用の安定及び職業生活の充実等に関する法律の一部を改正する法律案",
     summary:
       "パワハラ防止法の強化。カスタマーハラスメント対策の義務化、就活ハラスメント対策の強化等。",
     proposer: "内閣",
@@ -2609,8 +3017,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-46",
     title: "保険業法等の一部を改正する法律案",
-    summary:
-      "保険業の規制見直し。保険代理店の体制整備義務、保険契約者保護の強化等。",
+    summary: "保険業の規制見直し。保険代理店の体制整備義務、保険契約者保護の強化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2633,8 +3040,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-49",
     title: "民事裁判等における情報の活用の促進等に関する法律案",
-    summary:
-      "民事裁判情報のオープンデータ化。判決のデータベース整備、裁判情報の利活用促進等。",
+    summary: "民事裁判情報のオープンデータ化。判決のデータベース整備、裁判情報の利活用促進等。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2645,8 +3051,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-50",
     title: "食品等の流通の合理化及び取引の適正化に関する法律及び卸売市場法の一部を改正する法律案",
-    summary:
-      "食品流通の効率化。卸売市場の機能強化、食品ロス削減に向けた流通の合理化等。",
+    summary: "食品流通の効率化。卸売市場の機能強化、食品ロス削減に向けた流通の合理化等。",
     proposer: "内閣",
     category: "農林水産",
     status: "ENACTED",
@@ -2657,8 +3062,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-51",
     title: "電気通信事業法の一部を改正する法律案",
-    summary:
-      "NTT法の見直し。NTTの外国人役員規制等の廃止、通信市場の公正競争確保等。",
+    summary: "NTT法の見直し。NTTの外国人役員規制等の廃止、通信市場の公正競争確保等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2681,8 +3085,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-閣法-54",
     title: "信託業法の一部を改正する法律案",
-    summary:
-      "信託業の規制見直し。フィンテック企業の参入促進、信託商品の多様化等。",
+    summary: "信託業の規制見直し。フィンテック企業の参入促進、信託商品の多様化等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2718,8 +3121,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 217,
     number: "217-衆法-11",
     title: "手話言語法案",
-    summary:
-      "手話を言語として法的に位置づけ、手話の普及・研究・利用促進に関する施策を規定。",
+    summary: "手話を言語として法的に位置づけ、手話の普及・研究・利用促進に関する施策を規定。",
     proposer: "超党派",
     category: "社会保障",
     status: "ENACTED",
@@ -2747,8 +3149,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-2",
     title: "配偶者からの暴力の防止及び被害者の保護等に関する法律の一部を改正する法律案",
-    summary:
-      "改正DV防止法。接近禁止命令の対象拡大、精神的DV（モラハラ）に対する保護命令の適用等。",
+    summary: "改正DV防止法。接近禁止命令の対象拡大、精神的DV（モラハラ）に対する保護命令の適用等。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2759,8 +3160,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-3",
     title: "更生保護制度の充実を図るための保護司法等の一部を改正する法律案",
-    summary:
-      "保護司法改正。保護司の処遇改善、なり手不足への対応等。",
+    summary: "保護司法改正。保護司の処遇改善、なり手不足への対応等。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2771,8 +3171,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-4",
     title: "気象業務法及び水防法の一部を改正する法律案",
-    summary:
-      "線状降水帯等の予測精度向上に向けた観測体制の強化、水防情報の高度化等。",
+    summary: "線状降水帯等の予測精度向上に向けた観測体制の強化、水防情報の高度化等。",
     proposer: "内閣",
     category: "社会保障",
     status: "ENACTED",
@@ -2783,8 +3182,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-5",
     title: "一般職の職員の給与に関する法律等の一部を改正する法律案",
-    summary:
-      "人事院勧告に基づく国家公務員の給与改定。月例給・ボーナスの引上げ。",
+    summary: "人事院勧告に基づく国家公務員の給与改定。月例給・ボーナスの引上げ。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -2795,8 +3193,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-6",
     title: "特別職の職員の給与に関する法律の一部を改正する法律案",
-    summary:
-      "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の改定に準じた引上げ。",
+    summary: "内閣総理大臣・国務大臣等の特別職の給与改定。一般職の改定に準じた引上げ。",
     proposer: "内閣",
     category: "行政",
     status: "ENACTED",
@@ -2807,8 +3204,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-7",
     title: "地方交付税法及び特別会計に関する法律の一部を改正する法律案",
-    summary:
-      "令和7年度補正予算に伴う地方財政措置。地方交付税の追加交付等。",
+    summary: "令和7年度補正予算に伴う地方財政措置。地方交付税の追加交付等。",
     proposer: "内閣",
     category: "経済",
     status: "ENACTED",
@@ -2819,8 +3215,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-10",
     title: "防衛省の職員の給与等に関する法律の一部を改正する法律案",
-    summary:
-      "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
+    summary: "自衛官等の給与改定。一般職国家公務員の給与改定に準じた処遇改善。",
     proposer: "内閣",
     category: "安全保障",
     status: "ENACTED",
@@ -2831,8 +3226,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-8",
     title: "裁判官の報酬等に関する法律の一部を改正する法律案",
-    summary:
-      "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "裁判官の報酬改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2843,8 +3237,7 @@ const REAL_BILLS: RealBill[] = [
     sessionNumber: 219,
     number: "219-閣法-9",
     title: "検察官の俸給等に関する法律の一部を改正する法律案",
-    summary:
-      "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
+    summary: "検察官の俸給改定。一般職国家公務員の給与改定に準じた引上げ。",
     proposer: "内閣",
     category: "司法",
     status: "ENACTED",
@@ -2855,7 +3248,8 @@ const REAL_BILLS: RealBill[] = [
   {
     sessionNumber: 219,
     number: "219-衆法-1",
-    title: "租税特別措置法及び東日本大震災の被災者等に係る国税関係法律の臨時特例に関する法律の一部を改正する法律案",
+    title:
+      "租税特別措置法及び東日本大震災の被災者等に係る国税関係法律の臨時特例に関する法律の一部を改正する法律案",
     summary:
       "ガソリン税暫定税率の廃止。旧暫定税率（1リットルあたり約25.1円）を2025年12月31日付で廃止し、ガソリン価格の引下げを実現。第218回国会で野党7党が提出し、第219回で与野党6党合意の修正を経て成立。",
     proposer: "立憲民主党・日本維新の会・国民民主党・日本共産党・参政党・日本保守党・社会民主党",
@@ -3004,7 +3398,7 @@ async function printStats() {
 
 async function main() {
   console.log("========================================================");
-  console.log("  実データシード: 国会法案データ (第210回〜第220回)");
+  console.log("  実データシード: 国会法案データ (第200回〜第220回)");
   console.log("========================================================\n");
 
   try {
