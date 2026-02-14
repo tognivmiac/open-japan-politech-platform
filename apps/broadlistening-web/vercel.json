@@ -1,13 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "ignoreCommand": "npx turbo-ignore seatmap-web",
+  "ignoreCommand": "npx turbo-ignore broadlistening-web",
   "installCommand": "pnpm install",
-  "buildCommand": "pnpm --filter @ojpp/db generate && bash ../../scripts/copy-prisma-engine.sh && pnpm --filter seatmap-web build",
+  "buildCommand": "pnpm --filter @ojpp/db generate && bash ../../scripts/copy-prisma-engine.sh && pnpm --filter broadlistening-web build",
   "headers": [
     {
       "source": "/api/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "s-maxage=60, stale-while-revalidate=300" }]
+      "headers": [
+        { "key": "Cache-Control", "value": "s-maxage=60, stale-while-revalidate=300" }
+      ]
     },
     {
       "source": "/(.*)",
