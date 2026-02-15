@@ -82,6 +82,8 @@ WebGPU流体シェーダー × レインボーグラデーション × 日本地
 ### BroadListening β `:3009`
 **意見を生態系として可視化する**
 
+<img src="docs/screenshots/broadlistening-preview.png" alt="BroadListening β — 意見生態系プラットフォーム" width="100%"/>
+
 市民の意見をデジタル生態系としてモデリング。Argument Mining（LLM）で議論構造を自動抽出し、デジタルフェロモン（Stigmergy）で支持の軌跡を記録。適応度ランドスケープとShannon多様性指数でクオーラムセンシングによるフェーズ自動遷移。多数決ではない、自己組織化的合意形成。
 
 `5トピック` `200+意見` `k-means++クラスタリング` `TF-IDF埋め込み` `フェロモン減衰`
