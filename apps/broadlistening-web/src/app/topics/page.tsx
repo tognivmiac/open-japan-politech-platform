@@ -25,18 +25,28 @@ const PHASE_MAP: Record<string, { label: string; badge: string; dot: string }> =
   CLOSED: { label: "Closed", badge: "badge-lumi badge-lumi--rose", dot: "bg-white/30" },
 };
 
+type SortKey = "hot" | "new" | "opinions";
+
+const SORT_OPTIONS: { key: SortKey; label: string; icon: string }[] = [
+  { key: "hot", label: "Hot", icon: "🔥" },
+  { key: "new", label: "New", icon: "✦" },
+  { key: "opinions", label: "Opinions", icon: "💬" },
+];
+
 export default function TopicsPage() {
   const [topics, setTopics] = useState<TopicSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
+  const [sort, setSort] = useState<SortKey>("hot");
 
   useEffect(() => {
-    fetch("/api/topics?limit=50")
+    setLoading(true);
+    fetch(`/api/topics?limit=50&sort=${sort}`)
       .then((r) => (r.ok ? r.json() : { data: [] }))
       .then((d) => setTopics(d.data ?? []))
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  }, [sort]);
 
   async function handleSeed() {
     setSeeding(true);
@@ -102,8 +112,30 @@ export default function TopicsPage() {
         </div>
       </section>
 
-      {/* Topic grid */}
+      {/* Sort bar + Topic grid */}
       <section className="mx-auto max-w-5xl px-6 py-8">
+        {topics.length > 0 && (
+          <div className="flex items-center gap-1 mb-6 rounded-xl bg-white/[0.03] border border-white/[0.04] p-1 w-fit">
+            {SORT_OPTIONS.map((opt) => (
+              <button
+                type="button"
+                key={opt.key}
+                onClick={() => setSort(opt.key)}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-300 flex items-center gap-1.5 ${
+                  sort === opt.key
+                    ? "bg-white/[0.08] text-white shadow-lg shadow-cyan-500/5"
+                    : "text-white/30 hover:text-white/60"
+                }`}
+              >
+                <span className="text-sm opacity-60">{opt.icon}</span>
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </section>
+
+      <section className="mx-auto max-w-5xl px-6 pb-8 -mt-2">
         {loading ? (
           <div className="grid gap-4 md:grid-cols-2">
             {["skel-1", "skel-2", "skel-3", "skel-4"].map((id) => (

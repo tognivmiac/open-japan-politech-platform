@@ -11,12 +11,30 @@ export async function GET(request: NextRequest) {
     const where: Record<string, unknown> = {};
     if (phase) where.phase = phase;
 
+    const sort = url.searchParams.get("sort"); // "hot" | "new" | "opinions"
+
+    // Build orderBy based on sort parameter
+    let orderBy: Record<string, unknown>[];
+    switch (sort) {
+      case "hot":
+        // Hot = most opinions, then newest
+        orderBy = [{ opinions: { _count: "desc" } }, { createdAt: "desc" }];
+        break;
+      case "opinions":
+        orderBy = [{ opinions: { _count: "desc" } }];
+        break;
+      case "new":
+      default:
+        orderBy = [{ createdAt: "desc" }];
+        break;
+    }
+
     const [topics, total] = await Promise.all([
       prisma.bLTopic.findMany({
         where,
         skip,
         take: limit,
-        orderBy: { createdAt: "desc" },
+        orderBy,
         include: {
           bill: { select: { id: true, title: true } },
           _count: { select: { opinions: true, clusters: true } },
