@@ -1098,7 +1098,7 @@ function EmptyState({
       <button
         type="button"
         onClick={onAi}
-        disabled={aiRunning}
+        disabled={aiRunning || !hasApiKey}
         className="btn-glow text-xs py-2.5 px-5"
       >
         {aiRunning ? "AI生成中..." : "AIに意見を生成させる（3つの視点）"}
